@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesion Conecta Hogar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/registro.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Bienvenido a Conecta Hogar</h1>
+
+        <div class="tabs">
+            
+        <div class="subtitulo">Ingresa tus datos</div>
+        </div>
+        <form>
+
+            <input type="text" placeholder="Nombres" required>
+            <input type="text" placeholder="Apellidos" required>
+            <input type="text" placeholder="Correo Electrónico" required> 
+            <input type="text" placeholder="Usuario" required>
+            <input type="password" placeholder="Contraseña" required>
+
+            <div class="remember">
+                <span><strong>Acpetar terminos y condiciones - Notificaciones </strong></span>
+                <input type="checkbox">
+            </div>
+
+            <button type="submit" class="login-button">Entrar</button>
+
+            <div class="link">
+                <span>¿Tienes cuenta? <a href="registro.html">Inicia Sesión aquí</a></span>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function activarTab(tab) {
+            const botones = document.querySelectorAll(".tabs button");
+            botones.forEach(btn => btn.classList.remove("active"));
+            if (tab === "ruc") botones[0].classList.add("active");
+            else botones[1].classList.add("active");
+        }
+    </script>
+</body>
+</html>
