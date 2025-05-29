@@ -1,0 +1,161 @@
+/* Tipografía general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+/* Navbar transparente que cambia al hacer scroll */
+#mainNav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: background-color 0.3s ease-in-out;
+    background-color: transparent !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#mainNav.navbar-shrink {
+    background-color: #fff !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+#mainNav .navbar-brand {
+    color: #fff;
+    font-weight: 700;
+}
+
+#mainNav .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s ease;
+}
+
+#mainNav .nav-link:hover {
+    color: #fff;
+}
+
+#mainNav.navbar-shrink .navbar-brand,
+#mainNav.navbar-shrink .nav-link {
+    color: #343a40;
+}
+
+#mainNav.navbar-shrink .btn-outline-light {
+    color: #198754;
+    border-color: #198754;
+}
+
+/* Hero section a pantalla completa */
+.hero-bg {
+    height: 100vh;
+    min-height: 500px;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('../img/bg-masthead.jpg') center center / cover no-repeat;
+    padding: 0;
+}
+
+.hero-content {
+    max-width: 700px;
+    padding: 0 20px;
+}
+
+/* Texto más claro sobre la imagen */
+.hero-bg h1, .hero-bg p {
+    color: #fff;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .hero-content h1 {
+        font-size: 4rem;
+    }
+}
+
+/* Ajuste para el botón en el navbar */
+#mainNav .btn-primary {
+    color: #fff;
+}
+
+#mainNav .btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+}
+
+#mainNav .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hero section */
+section.bg-light h1 {
+    color: #198754; /* Verde de Bootstrap */
+}
+
+section.bg-light p {
+    font-size: 1.2rem;
+}
+
+/* Botones personalizados */
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+/* Tarjetas de categorías */
+.card-title {
+    color: #198754;
+    font-weight: bold;
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* Testimonios */
+blockquote {
+    font-style: italic;
+    border-left: 4px solid #198754;
+    padding-left: 1rem;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f3f5;
+}
+
+footer h5 {
+    color: #198754;
+    font-weight: bold;
+}
+
+footer .nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    h1.display-5 {
+        font-size: 2rem;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+}
