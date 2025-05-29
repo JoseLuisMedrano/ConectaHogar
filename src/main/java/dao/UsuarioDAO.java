@@ -1,5 +1,4 @@
 package dao;
-
 import util.ConexionBD;
 import java.sql.*;
 import model.Usuario;
