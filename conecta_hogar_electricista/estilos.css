@@ -1,0 +1,138 @@
+/* Archivo: estilos.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  background: #ccdef3;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  background: #004080;
+  color: rgb(255, 255, 255);
+  padding: 15px 1;
+
+}
+
+header h1 {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+nav a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background: url('Electro.jpg') no-repeat center center/cover;
+  color: rgb(255, 255, 255);
+  padding: 100px 0;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background: #ffaa00;
+  color: rgb(5, 0, 0);
+  padding: 10px 25px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.servicios {
+  padding: 50px 0;
+  background: #ffffff;
+}
+
+.servicio {
+  margin-bottom: 30px;
+}
+
+.servicio img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.servicio h3 {
+  margin-top: 15px;
+  font-size: 24px;
+  color: #004080;
+}
+
+.contacto {
+  background: #eaf1f8;
+  padding: 40px 0;
+}
+
+.contacto h2 {
+  margin-bottom: 20px;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #090dee;
+  border-radius: 4px;
+}
+
+footer {
+  background: #004080;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero h2 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .servicio img {
+    width: 100%;
+  }
+
+  .container {
+    width: 95%;
+  }
+}
