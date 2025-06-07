@@ -1,0 +1,278 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    padding-top: 56px;
+}
+
+/* Hero Section con Video */
+.jardineria-hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+#heroVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 0 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero-content .lead {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Servicios Destacados */
+.servicios-destacados {
+    padding: 80px 0;
+}
+
+.servicio-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    height: 100%;
+}
+
+.servicio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.servicio-card img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.servicio-card .card-body {
+    padding: 25px;
+}
+
+.servicio-card .card-title {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.servicio-card .card-text {
+    margin-bottom: 20px;
+    color: #7f8c8d;
+}
+
+.servicio-card ul li {
+    margin-bottom: 10px;
+}
+
+/* Trabajadores Destacados */
+.trabajadores-destacados {
+    padding: 80px 0;
+}
+
+.trabajador-card {
+    transition: all 0.3s ease;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.trabajador-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.worker-photo-container {
+    position: relative;
+    margin-top: -40px;
+    text-align: center;
+    z-index: 2;
+}
+
+.worker-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    padding-top: 60px !important;
+    padding-bottom: 20px;
+}
+
+.card-header h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.rating {
+    color: #3498db;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.card-body ul li {
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+.especialidades {
+    margin: 20px 0;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 8px 12px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    border-radius: 50px;
+}
+
+/* Footer */
+footer {
+    background-color: #1a252f;
+}
+
+footer a {
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    transform: translateY(-3px);
+    color: #28a745 !important;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-content .lead {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .worker-photo {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .card-header h3 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .jardineria-hero {
+        height: 70vh;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content .lead {
+        font-size: 1.3rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .worker-photo {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content .lead {
+        font-size: 1.1rem;
+    }
+    
+    .servicios-destacados,
+    .trabajadores-destacados {
+        padding: 60px 0;
+    }
+}
+/* Estilos para las fotos circulares de los trabajadores */
+.worker-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustes para que las tarjetas se vean bien en móviles */
+@media (max-width: 768px) {
+    .worker-photo {
+        width: 100px;
+        height: 100px;
+    }
+    .trabajador-card .row {
+        text-align: center;
+    }
+}

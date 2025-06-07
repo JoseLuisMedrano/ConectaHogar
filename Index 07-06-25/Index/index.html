@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ConectaHogar | Conecta con Profesionales Técnicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<!-- Navbar Mejorado con Efectos Simples -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">
+            <img src="./0 - Imgenes/Variados/logo-conecta-hogar.jpeg" alt="Logo ConectaHogar" width="75" height="75" class="bg-white rounded-circle p-1" />
+        </a>
+        <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+ <!-- Botón Quiero Contratar Mejorado -->
+<li class="nav-item me-lg-3">
+    <a class="nav-link contratar-btn" href="#quiero-contratar" id="contratarBtn">
+        <i class="fas fa-home me-1"></i> Quiero Contratar
+        <div class="hover-panel"></div>
+    </a>
+</li>
+    
+     <!-- Botón Quiero Trabajar Mejorado -->
+<li class="nav-item me-lg-3">
+    <a class="nav-link trabajar-btn" href="#quiero-trabajar" id="trabajarBtn">
+        <i class="fas fa-tools me-1"></i> Quiero Trabajar
+        <div class="hover-panel"></div>
+    </a>
+</li>
+                
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light ms-lg-2" href="./1 - Login/login.html">
+                        <i class="fas fa-sign-in-alt me-1"></i> Ingresar
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <!-- Hero Section -->
+    <header class="hero-bg d-flex align-items-center justify-content-center text-center text-white">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-4">
+                ConectaHogar: los mejores técnicos y trabajadores a tu alcance
+            </h1>
+            <p class="lead mb-4">
+                Solicita servicios de confianza en segundos con ConectaHogar.
+            </p>
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <button class="btn btn-success btn-lg px-4 py-3 fw-bold" id="openRoleModalBtn">
+                    <i class="fas fa-user-plus me-2"></i>Registrarse
+                </button>
+            </div>
+        </div>
+    </header>
+<a href="/Index/index.html"></a>
+    <!-- Sección de categorías -->
+    <section class="py-5 bg-light" id="categorias">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">Categorías populares</h1>
+                <p class="lead text-muted">
+                    Encuentra al profesional ideal para tu hogar
+                </p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <!-- Jardineros -->
+                <div class="col-md-4 col-6">
+                    <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
+                        <div class="category-img-container">
+                            <img src="./0 - Imgenes/Variados/Jardineria.jfif" class="card-img-top" alt="Jardinero" />
+                            <div class="category-overlay"></div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Jardineros</h5>
+                            <p class="card-text">
+                                Diseño, mantenimiento y cuidado de jardines y áreas verdes.
+                            </p>
+                            <a href="/1 - Categorías/1 - Jardineria/jardineria.html" class="btn btn-outline-primary">Ver perfiles</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Electricistas -->
+                <div class="col-md-4 col-6">
+                    <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
+                        <div class="category-img-container">
+                            <img src="./0 - Imgenes/Variados/electriista.jfif" class="card-img-top" alt="Electricista" />
+                            <div class="category-overlay"></div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Electricistas</h5>
+                            <p class="card-text">
+                                Soluciona fallas eléctricas con profesionales certificados.
+                            </p>
+                            <a href="./1 - Categorías/1 - Electricista/Electricista.html" class="btn btn-outline-primary">Ver perfiles</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gasfiteros -->
+                <div class="col-md-4 col-6">
+                    <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
+                        <div class="category-img-container">
+                            <img src="./0 - Imgenes/Variados/Gasfitero.jfif" class="card-img-top" alt="Gasfitero" />
+                            <div class="category-overlay"></div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Gasfiteros</h5>
+                            <p class="card-text">
+                                Instalación y reparación de tuberías y sanitarios.
+                            </p>
+                            <a href="./1 - Categorías/1 - Gasfiteros/Gastiferos.html" class="btn btn-outline-primary">Ver perfiles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Opiniones de Clientes - Versión Mujeres de Molina -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Lo que dicen nuestras clientas de Molina</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!-- Testimonios de mujeres -->
+                <div class="row g-4">
+                    <!-- Testimonio 1 -->
+                    <div class="col-md-6">
+                        <div class="testimonio p-4 h-100">
+                            <div class="rating mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="mb-3 fst-italic">
+                                "El jardinera que envió ConectaHogar transformó completamente mi patio en Villa Túpac Amaru. ¡Quedó espectacular!"
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <img src="./0 - Imgenes/Caras/Rostro 1.jfif" alt="Rosa Quispe" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Rosa Quispe</h6>
+                                    <small class="text-muted">Villa Túpac Amaru, Molina</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 2 -->
+                    <div class="col-md-6">
+                        <div class="testimonio p-4 h-100">
+                            <div class="rating mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="mb-3 fst-italic">
+                                "El electricista resolvió mi problema de cortocircuito en Urb. Los Jardines en menos de 1 hora. Muy profesional."
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <img src="./0 - Imgenes/Caras/Rostro 2.png" alt="Carmen Huamán" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Carmen Huamán</h6>
+                                    <small class="text-muted">Urb. Los Jardines, Molina</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 3 -->
+                    <div class="col-md-6">
+                        <div class="testimonio p-4 h-100">
+                            <div class="rating mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="mb-3 fst-italic">
+                                "El gasfitera arregló la fuga en mi baño y además me dio consejos para mantener las tuberías. ¡Servicio completo en La Florida!"
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <img src="./0 - Imgenes/Caras/Rostro 3.jfif" alt="Luisa Mendoza" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Luisa Mendoza</h6>
+                                    <small class="text-muted">La Florida, Molina</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 4 -->
+                    <div class="col-md-6">
+                        <div class="testimonio p-4 h-100">
+                            <div class="rating mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <p class="mb-3 fst-italic">
+                                "Contraté a una técnico para instalar mi ducha eléctrica en Pampa Inalámbrica. Llegó puntual y con todas las medidas de seguridad."
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <img src="./0 - Imgenes/Caras/Rostro 4.jpg" alt="Sofía Rojas" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Sofía Rojas</h6>
+                                    <small class="text-muted">Pampa Inalámbrica, Molina</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 5 -->
+                    <div class="col-md-6">
+                        <div class="testimonio p-4 h-100">
+                            <div class="rating mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="mb-3 fst-italic">
+                                "El especialista en jardines verticales hizo un trabajo increíble en mi terraza de Villa Hermosa. Ahora es el orgullo del barrio."
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <img src="./0 - Imgenes/Caras/Rostro 5.jfif" alt="Ana Castillo" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Ana Castillo</h6>
+                                    <small class="text-muted">Villa Hermosa, Molina</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 6 -->
+                    <div class="col-md-6">
+                        <div class="testimonio p-4 h-100">
+                            <div class="rating mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="mb-3 fst-italic">
+                                "El tecnico no solo arregló mi problema eléctrico en El Molino, sino que me explicó todo con paciencia. ¡Excelente trato!"
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <img src="./0 - Imgenes/Caras/Rostro 6.webp" alt="María Torres" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">María Torres</h6>
+                                    <small class="text-muted">El Molino, Molina</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Sección Sobre Nosotros - Versión Funcional -->
+<section class="py-5 bg-light" id="nosotros">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <!-- Contenedor de imagen optimizado -->
+                <div class="position-relative" style="min-height: 350px;">
+                    <!-- Opción 1: Ruta directa sin espacios -->
+                    <img src="/Index/0 - Imgenes/Variados/SobreNosotros-conectahogar.png" 
+                         alt="Equipo ConectaHogar" 
+                         class="img-fluid rounded shadow h-100 w-100"
+                         style="object-fit: cover;"
+                         onerror="this.onerror=null; this.src='imagenes/equipo-conectahogar-backup.jpg'">
+                    
+                    <!-- Opción 2: Ruta alternativa (eliminamos el fallback de icono) -->
+                    <img src="/0 - Imgenes/Variados/SobreNosotros-conectahogar.png" 
+                         alt="Equipo ConectaHogar" 
+                         class="img-fluid rounded shadow h-100 w-100"
+                         style="display: none; object-fit: cover;"
+                         id="backupImage">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4 text-center text-lg-start">SOBRE NOSOTROS</h2>
+                <div class="bg-white p-4 rounded shadow-sm">
+                    <p class="fst-italic">Somos especialistas en conectar hogares con técnicos calificados, con varios años de experiencia dedicados a facilitar servicios de calidad en Lima y todo Perú.</p>
+                    
+                    <p>En ConectaHogar nos apasiona solucionar tus necesidades del hogar conectándote con los mejores profesionales en:</p>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-leaf text-success me-2"></i> Jardinería y paisajismo</li>
+                        <li class="mb-2"><i class="fas fa-bolt text-success me-2"></i> Instalaciones y reparaciones eléctricas</li>
+                        <li class="mb-2"><i class="fas fa-tint text-success me-2"></i> Soluciones de gasfitería y fontanería</li>
+                    </ul>
+                    
+                    <p>Nuestro equipo verifica las credenciales de cada técnico para garantizar un servicio confiable. Además, ofrecemos atención personalizada por WhatsApp sin compromiso alguno.</p>
+                    
+                    <div class="text-center text-lg-start mt-4">
+                        <a href="#" class="btn btn-success px-4 me-2">
+                            <i class="fab fa-whatsapp me-2"></i> Contáctanos
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary px-4">
+                            <i class="fas fa-users me-2"></i> Conoce al equipo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">ConectaHogar</h5>
+                    <p>Conectando hogares con profesionales de confianza desde 2023.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6 mb-4">
+                    <h5 class="fw-bold mb-3">Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Inicio</a></li>
+                        <li class="mb-2"><a href="#categorias" class="text-white text-decoration-none">Servicios</a></li>
+                        <li class="mb-2"><a href="#nosotros" class="text-white text-decoration-none">Nosotros</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4">
+                    <h5 class="fw-bold mb-3">Legal</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Términos</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Privacidad</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Suscríbete</h5>
+                    <p>Recibe las últimas novedades y ofertas especiales.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Tu correo" aria-label="Tu correo">
+                        <button class="btn btn-success" type="button">Suscribir</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="text-center pt-2">
+                <p class="mb-0">&copy; 2023 ConectaHogar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de selección de rol -->
+    <div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header border-0">
+                    <h2 class="modal-title fw-bold text-center w-100">¿Cómo quieres registrarte?</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <!-- Opción Cliente -->
+                        <div class="col-md-6">
+                            <div class="role-option p-4 rounded-3 text-center h-100" 
+                                 data-role="cliente" 
+                                 tabindex="0">
+                                <i class="fas fa-home fa-3x mb-3 text-success"></i>
+                                <h3>Cliente</h3>
+                                <p class="mb-0">Busca profesionales para tus necesidades del hogar</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Opción Trabajador -->
+                        <div class="col-md-6">
+                            <div class="role-option p-4 rounded-3 text-center h-100" 
+                                 data-role="trabajador" 
+                                 tabindex="0">
+                                <i class="fas fa-tools fa-3x mb-3 text-success"></i>
+                                <h3>Trabajador</h3>
+                                <p class="mb-0">Ofrece tus servicios y conecta con clientes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn btn-success px-4 py-2 fw-bold" id="confirmRoleBtn" disabled style="min-width: 150px;">
+                        Continuar <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+</body>
+</html>

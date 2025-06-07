@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasfitería | Conecta Hogar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="Gasfiteros.css">
+</head>
+<body>
+    <!-- Barra de navegación mejorada -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <i class="fas fa-arrow-left me-2"></i>Volver al inicio
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary mx-1" href="#servicios">
+                            <i class="fas fa-tools me-1"></i> Servicios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary mx-1" href="#trabajadores">
+                            <i class="fas fa-users me-1"></i> Profesionales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary mx-1" href="#contacto">
+                            <i class="fas fa-phone-alt me-1"></i> Contacto
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-warning mx-1" href="#" style="color: white;">
+                            <i class="fas fa-star me-1"></i> Destacados
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section con Video -->
+    <header class="jardineria-hero">
+        <video autoplay muted loop id="heroVideo">
+            <source src="./Video/Gastiferia.mp4" type="video/mp4">
+            <img src="/0 - Imgenes/Variados/Jardineria.jfif" alt="Gasfitería profesional">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Soluciones Profesionales en Gasfitería</h1>
+            <p class="lead">Expertos certificados listos para resolver tus problemas de fontanería</p>
+            <div class="hero-buttons">
+                <a href="#trabajadores" class="btn btn-primary btn-lg me-2">Ver Gasfiteros</a>
+                <a href="#servicios" class="btn btn-outline-light btn-lg">Nuestros Servicios</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Servicios Destacados -->
+    <section class="servicios-destacados" id="servicios">
+        <div class="container">
+            <h2 class="text-center mb-5">Servicios Destacados</h2>
+            <div class="row">
+                <!-- Servicio 1 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Instalación de Tuberías.jpg" class="card-img-top" alt="Instalación de tuberías">
+                        <div class="card-body">
+                            <h5 class="card-title">Instalación de Tuberías</h5>
+                            <p class="card-text">Profesionales capacitados para instalación y mantenimiento de sistemas de tuberías en hogares y empresas.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-primary"></i> Tuberías de agua fría y caliente</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Materiales de primera calidad</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Soluciones personalizadas</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Servicio 2 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Reparación de Fugas.jpg" class="card-img-top" alt="Reparación de fugas">
+                        <div class="card-body">
+                            <h5 class="card-title">Reparación de Fugas</h5>
+                            <p class="card-text">Soluciones rápidas y efectivas para todo tipo de fugas en tuberías, grifería y conexiones.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-primary"></i> Detección precisa</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Reparación sin romper</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Garantía por escrito</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Servicio 3 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Instalación de Grifería.jpg" class="card-img-top" alt="Instalación de grifería">
+                        <div class="card-body">
+                            <h5 class="card-title">Instalación de Grifería</h5>
+                            <p class="card-text">Instalación profesional de todo tipo de grifos, duchas y accesorios para baños y cocinas.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-primary"></i> Amplia variedad de marcas</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Asesoría en selección</li>
+                                <li><i class="fas fa-check-circle text-primary"></i> Instalación garantizada</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Trabajadores Destacados -->
+<section class="trabajadores-destacados bg-light py-5" id="trabajadores">
+    <div class="container">
+        <h2 class="text-center mb-5">Nuestros Gasfiteros Expertos</h2>
+        <div class="row g-4">
+            <!-- Trabajador 1 - Marco Rojas -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Perfil 1.webp" class="worker-photo rounded-circle" alt="Marco Rojas">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Marco Rojas</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ms-2">4.7 (128)</span>
+                                </div>
+                                <p class="card-text">Especialista en instalaciones sanitarias con más de 12 años de experiencia en proyectos residenciales y comerciales.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-primary"></i> <strong>Zona:</strong> Urb. Los Olivos, Molina</li>
+                                    <li><i class="fas fa-clock text-primary"></i> <strong>Horario:</strong> Mañanas (8am - 12pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-primary"></i> <strong>Tarifa:</strong> S/80 - S/150 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Instalaciones sanitarias</span>
+                                    <span class="badge bg-light text-dark">Sistemas hidráulicos</span>
+                                    <span class="badge bg-light text-dark">Proyectos comerciales</span>
+                                </div>
+                                <a href="#marco-perfil" class="btn btn-primary" data-bs-toggle="modal">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 2 - Javier Quispe -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Perfil 2.jpeg" class="worker-photo rounded-circle" alt="Javier Quispe">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Javier Quispe</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ms-2">4.2 (87)</span>
+                                </div>
+                                <p class="card-text">Especialista en sistemas de gas domiciliario y calentadores de agua con certificación en seguridad.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-primary"></i> <strong>Zona:</strong> Villa Hermosa, Molina</li>
+                                    <li><i class="fas fa-clock text-primary"></i> <strong>Horario:</strong> Noches (6pm - 9pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-primary"></i> <strong>Tarifa:</strong> S/100 - S/200 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Sistemas de gas</span>
+                                    <span class="badge bg-light text-dark">Calentadores</span>
+                                    <span class="badge bg-light text-dark">Seguridad</span>
+                                </div>
+                                <a href="#javier-perfil" class="btn btn-primary" data-bs-toggle="modal">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 3 - Ricardo Castro -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Perfil 3.jpg" class="worker-photo rounded-circle" alt="Ricardo Castro">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Ricardo Castro</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="ms-2">5.0 (75)</span>
+                                </div>
+                                <p class="card-text">Experto en reparación de fugas y emergencias con respuesta rápida las 24 horas.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-primary"></i> <strong>Zona:</strong> Urb. Las Palmeras, Molina</li>
+                                    <li><i class="fas fa-clock text-primary"></i> <strong>Horario:</strong> Tardes (1pm - 5pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-primary"></i> <strong>Tarifa:</strong> S/70 - S/130 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Emergencias</span>
+                                    <span class="badge bg-light text-dark">Reparación de fugas</span>
+                                    <span class="badge bg-light text-dark">Servicio 24/7</span>
+                                </div>
+                                <a href="#" class="btn btn-primary">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 4 - Oscar Díaz -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Perfil 4.jpg" class="worker-photo rounded-circle" alt="Oscar Díaz">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Oscar Díaz</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ms-2">4.8 (102)</span>
+                                </div>
+                                <p class="card-text">Especialista en instalación y mantenimiento de sistemas de agua caliente y calefacción.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-primary"></i> <strong>Zona:</strong> Urb. Golf Club, Molina</li>
+                                    <li><i class="fas fa-clock text-primary"></i> <strong>Horario:</strong> Fines de semana (9am - 4pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-primary"></i> <strong>Tarifa:</strong> S/120 - S/250 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Agua caliente</span>
+                                    <span class="badge bg-light text-dark">Calefacción</span>
+                                    <span class="badge bg-light text-dark">Termas</span>
+                                </div>
+                                <a href="#" class="btn btn-primary">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 5 - Felipe Morales -->
+            <div class="col-lg-6 mx-auto">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Perfil 5.jpg" class="worker-photo rounded-circle" alt="Felipe Morales">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Felipe Morales</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ms-2">4.3 (64)</span>
+                                </div>
+                                <p class="card-text">Técnico especializado en instalación y reparación de grifería de alta gama y accesorios de baño.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-primary"></i> <strong>Zona:</strong> Urb. Los Huertos, Molina</li>
+                                    <li><i class="fas fa-clock text-primary"></i> <strong>Horario:</strong> Mañanas (7am - 11am)</li>
+                                    <li><i class="fas fa-dollar-sign text-primary"></i> <strong>Tarifa:</strong> S/65 - S/110 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Grifería</span>
+                                    <span class="badge bg-light text-dark">Accesorios de baño</span>
+                                    <span class="badge bg-light text-dark">Diseño</span>
+                                </div>
+                                <a href="#" class="btn btn-primary">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal para perfil de Marco Rojas -->
+<div class="modal fade" id="marco-perfil" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h2 class="modal-title">Marco Rojas - Perfil Completo</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="./Img/Perfil 1.webp" alt="Marco Rojas" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-2">4.7 (128 reseñas)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="border-bottom pb-2">Información Profesional</h3>
+                        <p>Especialista en instalaciones sanitarias con más de 12 años de experiencia en proyectos residenciales y comerciales. Certificado en sistemas hidráulicos por el Colegio de Ingenieros del Perú. Mi enfoque combina calidad, eficiencia y cumplimiento de normas técnicas.</p>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Experiencia</h4>
+                        <ul>
+                            <li>Instalación de sistemas sanitarios en más de 80 proyectos residenciales</li>
+                            <li>Supervisor de obras de fontanería en centros comerciales</li>
+                            <li>Instructor en cursos de instalaciones sanitarias en SENATI</li>
+                            <li>Consultor para proyectos de remodelación de baños y cocinas</li>
+                        </ul>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Servicios Ofrecidos</h4>
+                        <div class="especialidades mb-3">
+                            <span class="badge bg-primary text-white">Instalaciones sanitarias</span>
+                            <span class="badge bg-primary text-white">Sistemas hidráulicos</span>
+                            <span class="badge bg-primary text-white">Proyectos comerciales</span>
+                            <span class="badge bg-primary text-white">Remodelaciones</span>
+                            <span class="badge bg-primary text-white">Certificaciones</span>
+                            <span class="badge bg-primary text-white">Consultoría</span>
+                        </div>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Disponibilidad</h4>
+                        <p><strong>Zona de cobertura:</strong> Urb. Los Olivos, Molina y distritos aledaños (radio de 15km)</p>
+                        <p><strong>Horario:</strong> Lunes a Viernes de 8am a 12pm / Sábados de 9am a 1pm</p>
+                        <p><strong>Tarifa base:</strong> S/80 - S/150 por servicio (dependiendo de la complejidad)</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Galería de Trabajos</h4>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <img src="./Img/Marco Rojas01.jpg" class="img-thumbnail" alt="Instalación residencial">
+                                <p class="small text-center mt-1">Instalación residencial</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/Marco Rojas02.jpg" class="img-thumbnail" alt="Proyecto comercial">
+                                <p class="small text-center mt-1">Proyecto comercial</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/Marco Rojas03.jpg" class="img-thumbnail" alt="Sistema hidráulico">
+                                <p class="small text-center mt-1">Sistema hidráulico</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Reseñas Recientes</h4>
+                        <div class="review">
+                            <div class="d-flex justify-content-between">
+                                <strong>Ana S.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>"Marco realizó una excelente instalación en mi casa nueva. Todo funciona perfectamente y cumplió con los plazos establecidos."</p>
+                            <p class="text-muted small">Hace 2 semanas</p>
+                        </div>
+                        
+                        <div class="review mt-3">
+                            <div class="d-flex justify-content-between">
+                                <strong>Roberto M.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <p>"Profesional y conocedor. Solucionó un problema complejo en nuestro edificio que otros no pudieron resolver."</p>
+                            <p class="text-muted small">Hace 1 mes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para perfil de Javier Quispe -->
+<div class="modal fade" id="javier-perfil" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h2 class="modal-title">Javier Quispe - Perfil Completo</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="./Img/Perfil 2.jpeg" alt="Javier Quispe" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="ms-2">4.2 (87 reseñas)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="border-bottom pb-2">Información Profesional</h3>
+                        <p>Especialista en sistemas de gas domiciliario y calentadores de agua con 8 años de experiencia. Certificado en seguridad de instalaciones de gas por Osinergmin y técnico certificado por las principales marcas de calentadores.</p>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Experiencia</h4>
+                        <ul>
+                            <li>Instalación de más de 150 sistemas de gas domiciliario</li>
+                            <li>Mantenimiento preventivo y correctivo de calentadores</li>
+                            <li>Técnico certificado por Rheem, Bosch y Lorenzetti</li>
+                            <li>Especialista en detección y reparación de fugas de gas</li>
+                        </ul>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Servicios Ofrecidos</h4>
+                        <div class="especialidades mb-3">
+                            <span class="badge bg-primary text-white">Sistemas de gas</span>
+                            <span class="badge bg-primary text-white">Calentadores</span>
+                            <span class="badge bg-primary text-white">Seguridad</span>
+                            <span class="badge bg-primary text-white">Termas</span>
+                            <span class="badge bg-primary text-white">Certificaciones</span>
+                            <span class="badge bg-primary text-white">Emergencias</span>
+                        </div>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Disponibilidad</h4>
+                        <p><strong>Zona de cobertura:</strong> Villa Hermosa, Molina y zonas cercanas (radio de 20km)</p>
+                        <p><strong>Horario:</strong> Lunes a Viernes de 6pm a 9pm / Sábados de 10am a 2pm</p>
+                        <p><strong>Tarifa base:</strong> S/100 - S/200 por servicio (dependiendo de la complejidad)</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Galería de Trabajos</h4>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <img src="./Img/Javier Quispe01.jpg" class="img-thumbnail" alt="Instalación de gas">
+                                <p class="small text-center mt-1">Instalación de gas</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/Javier Quispe02.jpg" class="img-thumbnail" alt="Mantenimiento de terma">
+                                <p class="small text-center mt-1">Mantenimiento de terma</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/Javier Quispe03.jpg" class="img-thumbnail" alt="Certificación de instalación">
+                                <p class="small text-center mt-1">Certificación de instalación</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Reseñas Recientes</h4>
+                        <div class="review">
+                            <div class="d-flex justify-content-between">
+                                <strong>Lucía T.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>"Javier instaló nuestro sistema de gas de manera impecable. Muy profesional y cumplidor. Lo recomiendo totalmente."</p>
+                            <p class="text-muted small">Hace 3 semanas</p>
+                        </div>
+                        
+                        <div class="review mt-3">
+                            <div class="d-flex justify-content-between">
+                                <strong>Carlos R.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p>"Buen trabajo en general, aunque llegó un poco tarde a la cita. Solucionó nuestro problema de fuga de gas eficientemente."</p>
+                            <p class="text-muted small">Hace 1 mes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4" id="contacto">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+                <a href="#" class="text-white me-3"><i class="fas fa-phone fa-2x"></i></a>
+                <a href="#" class="text-white"><i class="fas fa-envelope fa-2x"></i></a>
+            </div>
+            <p>© 2023 Conecta Hogar. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="Gastiferos.js"></script>
+</body>
+</html>

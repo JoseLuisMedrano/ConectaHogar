@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardinería | Conecta Hogar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./jardineria.css">
+</head>
+<body>
+    <!-- Barra de navegación mejorada -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <i class="fas fa-arrow-left me-2"></i>Volver al inicio
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-success mx-1" href="#servicios">
+                            <i class="fas fa-leaf me-1"></i> Servicios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-success mx-1" href="#trabajadores">
+                            <i class="fas fa-users me-1"></i> Profesionales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-success mx-1" href="#contacto">
+                            <i class="fas fa-phone-alt me-1"></i> Contacto
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-warning mx-1" href="#" style="color: white;">
+                            <i class="fas fa-star me-1"></i> Destacados
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section con Video -->
+    <header class="jardineria-hero">
+        <video autoplay muted loop id="heroVideo">
+            <source src="./Video/Jardineria.mp4" type="video/mp4">
+            <img src="/0 - Imgenes/Variados/Jardineria.jfif" alt="Jardinería profesional">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Transforma tu Espacio con Expertos en Jardinería</h1>
+            <p class="lead">Profesionales certificados listos para crear tu jardín ideal</p>
+            <div class="hero-buttons">
+                <a href="#trabajadores" class="btn btn-success btn-lg me-2">Ver Jardineros</a>
+                <a href="#servicios" class="btn btn-outline-light btn-lg">Nuestros Servicios</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Servicios Destacados -->
+    <section class="servicios-destacados" id="servicios">
+        <div class="container">
+            <h2 class="text-center mb-5">Servicios Destacados</h2>
+            <div class="row">
+                <!-- Servicio 1 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Diseño de Jardines.jpg" class="card-img-top" alt="Diseño de jardines">
+                        <div class="card-body">
+                            <h5 class="card-title">Diseño de Jardines</h5>
+                            <p class="card-text">Transformamos tu espacio exterior en un oasis personalizado según tus preferencias.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-success"></i> Planos detallados</li>
+                                <li><i class="fas fa-check-circle text-success"></i> Selección de plantas</li>
+                                <li><i class="fas fa-check-circle text-success"></i> Diseños sostenibles</li>
+                            </ul>
+                            <a href="#" class="btn btn-success">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Servicio 2 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Mantenimiento Regular.jpg" class="card-img-top" alt="Mantenimiento de jardines">
+                        <div class="card-body">
+                            <h5 class="card-title">Mantenimiento Regular</h5>
+                            <p class="card-text">Mantenemos tu jardín siempre impecable con visitas programadas.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-success"></i> Corte de césped</li>
+                                <li><i class="fas fa-check-circle text-success"></i> Podas controladas</li>
+                                <li><i class="fas fa-check-circle text-success"></i> Control de plagas</li>
+                            </ul>
+                            <a href="#" class="btn btn-success">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Servicio 3 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Instalación de Riego.jpg" class="card-img-top" alt="Sistemas de riego">
+                        <div class="card-body">
+                            <h5 class="card-title">Instalación de Riego</h5>
+                            <p class="card-text">Sistemas de riego eficientes que ahorran agua y mantienen tus plantas saludables.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-success"></i> Automatización</li>
+                                <li><i class="fas fa-check-circle text-success"></i> Ahorro de agua</li>
+                                <li><i class="fas fa-check-circle text-success"></i> Programación personalizada</li>
+                            </ul>
+                            <a href="#" class="btn btn-success">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Trabajadores Destacados -->
+<section class="trabajadores-destacados bg-light py-5" id="trabajadores">
+    <div class="container">
+        <h2 class="text-center mb-5">Nuestros Jardineros Expertos</h2>
+        <div class="row g-4">
+            <!-- Trabajador 1 - Carlos Mendoza -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Trabajador 1.jpg" class="worker-photo rounded-circle" alt="Carlos Mendoza">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Carlos Mendoza</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ms-2">4.7 (128)</span>
+                                </div>
+                                <p class="card-text">Especialista en diseño de jardines verticales y techos verdes con más de 10 años de experiencia.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-success"></i> <strong>Zona:</strong> Urb. Los Jardines, Molina</li>
+                                    <li><i class="fas fa-clock text-success"></i> <strong>Horario:</strong> Mañanas (8am - 12pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-success"></i> <strong>Tarifa:</strong> S/80 - S/150 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Diseño de jardines</span>
+                                    <span class="badge bg-light text-dark">Jardines verticales</span>
+                                    <span class="badge bg-light text-dark">Paisajismo</span>
+                                </div>
+                                <a href="#carlos-perfil" class="btn btn-success" data-bs-toggle="modal">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 2 - Juan Pérez -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Trabajador 2.jpg" class="worker-photo rounded-circle" alt="Juan Pérez">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Juan Pérez</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ms-2">4.2 (87)</span>
+                                </div>
+                                <p class="card-text">Especialista en instalación de sistemas de riego automatizado y jardines inteligentes.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-success"></i> <strong>Zona:</strong> Villa Hermosa, Molina</li>
+                                    <li><i class="fas fa-clock text-success"></i> <strong>Horario:</strong> Noches (6pm - 9pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-success"></i> <strong>Tarifa:</strong> S/100 - S/200 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Sistemas de riego</span>
+                                    <span class="badge bg-light text-dark">Automatización</span>
+                                    <span class="badge bg-light text-dark">Techos verdes</span>
+                                </div>
+                                <a href="#juan-perfil" class="btn btn-success" data-bs-toggle="modal">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 3 - Luis Ramírez -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Trabajador 3.jpg" class="worker-photo rounded-circle" alt="Luis Ramírez">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Luis Ramírez</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="ms-2">5.0 (75)</span>
+                                </div>
+                                <p class="card-text">Especialista en poda artística y diseño de bonsáis con 8 años de experiencia.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-success"></i> <strong>Zona:</strong> Urb. Las Palmeras, Molina</li>
+                                    <li><i class="fas fa-clock text-success"></i> <strong>Horario:</strong> Tardes (1pm - 5pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-success"></i> <strong>Tarifa:</strong> S/70 - S/130 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Poda artística</span>
+                                    <span class="badge bg-light text-dark">Bonsáis</span>
+                                    <span class="badge bg-light text-dark">Topiaria</span>
+                                </div>
+                                <a href="#" class="btn btn-success">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 4 - Pedro Gómez -->
+            <div class="col-lg-6">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Trabajador 4.jpg" class="worker-photo rounded-circle" alt="Pedro Gómez">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Pedro Gómez</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="ms-2">4.8 (102)</span>
+                                </div>
+                                <p class="card-text">Experto en césped deportivo y mantenimiento de campos de golf.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-success"></i> <strong>Zona:</strong> Urb. Golf Club, Molina</li>
+                                    <li><i class="fas fa-clock text-success"></i> <strong>Horario:</strong> Fines de semana (9am - 4pm)</li>
+                                    <li><i class="fas fa-dollar-sign text-success"></i> <strong>Tarifa:</strong> S/120 - S/250 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Césped deportivo</span>
+                                    <span class="badge bg-light text-dark">Campos de golf</span>
+                                    <span class="badge bg-light text-dark">Mantenimiento</span>
+                                </div>
+                                <a href="#" class="btn btn-success">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trabajador 5 - Miguel Torres -->
+            <div class="col-lg-6 mx-auto">
+                <div class="card trabajador-card h-100 border-0 shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 text-center p-3">
+                            <img src="./Img/Trabajador 5.jpg" class="worker-photo rounded-circle" alt="Miguel Torres">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">Miguel Torres</h3>
+                                <div class="rating mb-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="ms-2">4.3 (64)</span>
+                                </div>
+                                <p class="card-text">Especialista en huertos urbanos y jardines comestibles.</p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-map-marker-alt text-success"></i> <strong>Zona:</strong> Urb. Los Huertos, Molina</li>
+                                    <li><i class="fas fa-clock text-success"></i> <strong>Horario:</strong> Mañanas (7am - 11am)</li>
+                                    <li><i class="fas fa-dollar-sign text-success"></i> <strong>Tarifa:</strong> S/65 - S/110 por servicio</li>
+                                </ul>
+                                <div class="especialidades mb-3">
+                                    <span class="badge bg-light text-dark">Huertos urbanos</span>
+                                    <span class="badge bg-light text-dark">Jardines comestibles</span>
+                                    <span class="badge bg-light text-dark">Agricultura urbana</span>
+                                </div>
+                                <a href="#" class="btn btn-success">Ver perfil completo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal para perfil de Carlos Mendoza -->
+<div class="modal fade" id="carlos-perfil" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h2 class="modal-title">Carlos Mendoza - Perfil Completo</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="./Img/Trabajador 1.jpg" alt="Carlos Mendoza" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-2">4.7 (128 reseñas)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="border-bottom pb-2">Información Profesional</h3>
+                        <p>Especialista en diseño de jardines verticales y techos verdes con más de 10 años de experiencia en el rubro. Certificado en paisajismo sostenible por la Universidad Agraria. Mi enfoque combina estética, funcionalidad y sostenibilidad ambiental.</p>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Experiencia</h4>
+                        <ul>
+                            <li>Diseño e implementación de más de 50 jardines verticales en residencias y edificios</li>
+                            <li>Especialista en techos verdes para edificios corporativos</li>
+                            <li>Instructor en cursos de jardinería urbana en el Instituto de Paisajismo de Lima</li>
+                            <li>Consultor para proyectos municipales de áreas verdes</li>
+                        </ul>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Servicios Ofrecidos</h4>
+                        <div class="especialidades mb-3">
+                            <span class="badge bg-success text-white">Diseño de jardines</span>
+                            <span class="badge bg-success text-white">Jardines verticales</span>
+                            <span class="badge bg-success text-white">Paisajismo</span>
+                            <span class="badge bg-success text-white">Techos verdes</span>
+                            <span class="badge bg-success text-white">Sistemas de riego</span>
+                            <span class="badge bg-success text-white">Consultoría</span>
+                        </div>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Disponibilidad</h4>
+                        <p><strong>Zona de cobertura:</strong> Urb. Los Jardines, Molina y distritos aledaños (radio de 15km)</p>
+                        <p><strong>Horario:</strong> Lunes a Viernes de 8am a 12pm / Sábados de 9am a 1pm</p>
+                        <p><strong>Tarifa base:</strong> S/80 - S/150 por servicio (dependiendo de la complejidad)</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Galería de Trabajos</h4>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <img src="./Img/CarlosMendoza 01.jpg" class="img-thumbnail" alt="Jardín vertical residencial">
+                                <p class="small text-center mt-1">Jardín vertical residencial</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/CarlosMendoza 02.jpg" class="img-thumbnail" alt="Techo verde corporativo">
+                                <p class="small text-center mt-1">Techo verde corporativo</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/CarlosMendoza 03.jpg" class="img-thumbnail" alt="Diseño de paisajismo">
+                                <p class="small text-center mt-1">Diseño de paisajismo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Reseñas Recientes</h4>
+                        <div class="review">
+                            <div class="d-flex justify-content-between">
+                                <strong>Ana S.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>"Carlos transformó nuestro pequeño balcón en un oasis urbano. Su atención al detalle y conocimiento de plantas son excepcionales."</p>
+                            <p class="text-muted small">Hace 2 semanas</p>
+                        </div>
+                        
+                        <div class="review mt-3">
+                            <div class="d-flex justify-content-between">
+                                <strong>Roberto M.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <p>"Excelente trabajo en nuestro techo verde. El sistema de riego automático que instaló funciona perfectamente y ahorra mucha agua."</p>
+                            <p class="text-muted small">Hace 1 mes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para perfil de Juan Pérez -->
+<div class="modal fade" id="juan-perfil" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h2 class="modal-title">Juan Pérez - Perfil Completo</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="./Img/Trabajador 2.jpg" alt="Juan Pérez" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="ms-2">4.2 (87 reseñas)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="border-bottom pb-2">Información Profesional</h3>
+                        <p>Especialista en instalación de sistemas de riego automatizado y jardines inteligentes con 7 años de experiencia. Certificado en hidráulica aplicada a jardinería y sistemas IoT para el cuidado de plantas.</p>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Experiencia</h4>
+                        <ul>
+                            <li>Instalación de más de 120 sistemas de riego automatizado en residencias</li>
+                            <li>Diseño de jardines inteligentes con sensores de humedad y control remoto</li>
+                            <li>Técnico certificado por Rain Bird y Hunter Industries</li>
+                            <li>Especialista en sistemas de riego por goteo y aspersión</li>
+                        </ul>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Servicios Ofrecidos</h4>
+                        <div class="especialidades mb-3">
+                            <span class="badge bg-success text-white">Sistemas de riego</span>
+                            <span class="badge bg-success text-white">Automatización</span>
+                            <span class="badge bg-success text-white">Techos verdes</span>
+                            <span class="badge bg-success text-white">Jardines inteligentes</span>
+                            <span class="badge bg-success text-white">Hidroponía</span>
+                            <span class="badge bg-success text-white">Reparaciones</span>
+                        </div>
+                        
+                        <h4 class="mt-4 border-bottom pb-2">Disponibilidad</h4>
+                        <p><strong>Zona de cobertura:</strong> Villa Hermosa, Molina y zonas cercanas (radio de 20km)</p>
+                        <p><strong>Horario:</strong> Lunes a Viernes de 6pm a 9pm / Sábados de 10am a 2pm</p>
+                        <p><strong>Tarifa base:</strong> S/100 - S/200 por servicio (dependiendo de la complejidad)</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Galería de Trabajos</h4>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <img src="./Img/juan Perez.jpg" class="img-thumbnail" alt="Sistema de riego automatizado">
+                                <p class="small text-center mt-1">Sistema de riego automatizado</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/juan Perez 2.jpg" class="img-thumbnail" alt="Controlador inteligente">
+                                <p class="small text-center mt-1">Controlador inteligente</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./Img/juan Perez 3.jpg" class="img-thumbnail" alt="Instalación profesional">
+                                <p class="small text-center mt-1">Instalación profesional</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h4 class="border-bottom pb-2">Reseñas Recientes</h4>
+                        <div class="review">
+                            <div class="d-flex justify-content-between">
+                                <strong>Lucía T.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p>"Juan instaló un sistema de riego en mi jardín que puedo controlar desde mi celular. Funciona perfectamente y ahorra mucha agua."</p>
+                            <p class="text-muted small">Hace 3 semanas</p>
+                        </div>
+                        
+                        <div class="review mt-3">
+                            <div class="d-flex justify-content-between">
+                                <strong>Carlos R.</strong>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p>"Buen trabajo en general, aunque llegó un poco tarde a la cita. El sistema que instaló funciona muy bien y me dio buenas recomendaciones."</p>
+                            <p class="text-muted small">Hace 1 mes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4" id="contacto">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+                <a href="#" class="text-white me-3"><i class="fas fa-phone fa-2x"></i></a>
+                <a href="#" class="text-white"><i class="fas fa-envelope fa-2x"></i></a>
+            </div>
+            <p>© 2023 Conecta Hogar. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./jardineria.js"></script>
+</body>
+</html>

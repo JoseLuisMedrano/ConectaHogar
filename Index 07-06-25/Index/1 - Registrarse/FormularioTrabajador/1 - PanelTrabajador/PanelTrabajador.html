@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel Trabajador</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Panel.css">
+</head>
+<body class="theme-verde">
+  <nav>
+    <h1><i class="fas fa-user-hard-hat"></i> Panel Trabajador</h1>
+    <ul>
+      <li><a onclick="mostrarContenido('inicio')" href="javascript:void(0)"><i class="fas fa-home"></i> Inicio</a></li>
+      <li><a onclick="mostrarContenido('trabajos')" href="javascript:void(0)"><i class="fas fa-briefcase"></i> Trabajos Disponibles</a></li>
+      <li><a onclick="mostrarContenido('historial')" href="javascript:void(0)"><i class="fas fa-history"></i> Historial</a></li>
+      <li><a onclick="mostrarContenido('perfil')" href="javascript:void(0)"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>
+      <li><a onclick="mostrarContenido('notificaciones')" href="javascript:void(0)"><i class="fas fa-bell"></i> Notificaciones</a></li>
+    </ul>
+    
+    <div class="theme-selector">
+      <p style="color: white; margin-bottom: 0.5rem;">Tema:</p>
+      <div class="theme-options">
+        <div class="theme-btn theme-default" onclick="cambiarTema('default')" title="Tema claro"></div>
+        <div class="theme-btn theme-verde" onclick="cambiarTema('verde')" title="Tema verde"></div>
+        <div class="theme-btn theme-azul" onclick="cambiarTema('azul')" title="Tema azul"></div>
+        <div class="theme-btn theme-oscuro" onclick="cambiarTema('oscuro')" title="Tema oscuro"></div>
+      </div>
+    </div>
+    
+    <button class="logout-btn" onclick="window.location.href='/index.html'">
+      <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+    </button>
+  </nav>
+
+  <main id="main">
+    <!-- Contenido se carga dinámicamente aquí -->
+  </main>
+
+  <script src="Panel.js"></script>
+</body>
+</html>
