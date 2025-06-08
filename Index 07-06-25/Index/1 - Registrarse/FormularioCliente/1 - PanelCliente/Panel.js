@@ -230,40 +230,40 @@ case 'perfil':
       <form id="formPerfil">
         <div class="form-group">
           <label for="nombre"><i class="fas fa-user"></i> Nombre completo:</label>
-          <input type="text" id="nombre" name="nombre" value="Ana López" required>
+          <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
         </div>
 
         <div class="form-group">
           <label for="email"><i class="fas fa-envelope"></i> Correo electrónico:</label>
-          <input type="email" id="email" name="email" value="ana.lopez@example.com" required>
+          <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
         </div>
 
         <div class="form-group">
           <label for="telefono"><i class="fas fa-phone"></i> Teléfono:</label>
-          <input type="tel" id="telefono" name="telefono" value="+56912345678" required>
+          <input type="tel" id="telefono" name="telefono" placeholder="Ingresa tu número telefónico" required>
         </div>
 
         <div class="form-group">
           <label for="direccion"><i class="fas fa-home"></i> Dirección:</label>
-          <textarea id="direccion" name="direccion" required>Av. La Molina 1234, La Molina</textarea>
-          <div class="distrito-badge">Distrito: La Molina</div>
+          <textarea id="direccion" name="direccion" placeholder="Ingresa tu dirección completa" required></textarea>
+          <div class="distrito-badge">Distrito: <span id="distrito-text">No especificado</span></div>
         </div>
 
         <div class="form-group">
           <label><i class="fas fa-bell"></i> Preferencias de notificación:</label>
-          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
-            <label style="display: flex; align-items: center; gap: 0.5rem;">
+          <div class="notificacion-options">
+            <label class="checkbox-option">
               <input type="checkbox" checked> Correo electrónico
             </label>
-            <label style="display: flex; align-items: center; gap: 0.5rem;">
+            <label class="checkbox-option">
               <input type="checkbox" checked> Mensajes de texto
             </label>
           </div>
         </div>
 
-        <button type="submit"><i class="fas fa-save"></i> Guardar Cambios</button>
+        <button type="submit" class="btn-guardar"><i class="fas fa-save"></i> Guardar Cambios</button>
       </form>
-      <div id="mensajePerfil" style="margin-top: 1.5rem;"></div>
+      <div id="mensajePerfil" class="mensaje-perfil"></div>
     </div>
   `;
   break;

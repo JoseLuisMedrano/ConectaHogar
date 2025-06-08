@@ -63,13 +63,13 @@ function setupRoleModal() {
     });
 
     // Confirmar selección y redirigir (aquí está tu cambio)
-    confirmBtn.addEventListener('click', function() {
+confirmBtn.addEventListener('click', function() {
         if (!selectedRole) return;
         
         if (selectedRole === 'cliente') {
-            window.location.href = '/1 - Registrarse/FormularioCliente/FormularioC.html';
+            window.location.href = './1 - Registrarse/FormularioCliente/1 - PanelCliente/PanelCliente.html';
         } else if (selectedRole === 'trabajador') {
-            window.location.href = '/1 - Registrarse/FormularioTrabajador/FormularioT.html';
+            window.location.href = './1 - Registrarse/FormularioTrabajador/1 - PanelTrabajador/PanelTrabajador.html';
         }
     });
 }

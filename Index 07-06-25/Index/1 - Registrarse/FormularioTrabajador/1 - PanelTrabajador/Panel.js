@@ -200,67 +200,82 @@ function mostrarContenido(opcion) {
       `;
       break;
 
-    case 'perfil':
-      contenido = `
-        <div class="content-box">
-          <h2><i class="fas fa-user-edit"></i> Mi Perfil</h2>
-          
-          <div style="text-align: center; margin-bottom: 2rem;">
-            <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="profile-pic">
-            <button style="margin-top: 0.5rem;"><i class="fas fa-camera"></i> Cambiar foto</button>
-          </div>
-          
-          <form id="formPerfil">
-            <div class="form-group">
-              <label for="nombre"><i class="fas fa-user"></i> Nombre completo:</label>
-              <input type="text" id="nombre" name="nombre" value="Pedro Martínez" required>
-            </div>
-
-            <div class="form-group">
-              <label for="email"><i class="fas fa-envelope"></i> Correo electrónico:</label>
-              <input type="email" id="email" name="email" value="pedro.martinez@example.com" required>
-            </div>
-
-            <div class="form-group">
-              <label for="telefono"><i class="fas fa-phone"></i> Teléfono:</label>
-              <input type="tel" id="telefono" name="telefono" value="+51987654321" required>
-            </div>
-
-            <div class="form-group">
-              <label for="direccion"><i class="fas fa-home"></i> Dirección:</label>
-              <textarea id="direccion" name="direccion" required>Av. Javier Prado 1234, San Isidro</textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="habilidades"><i class="fas fa-tools"></i> Habilidades:</label>
-              <textarea id="habilidades" name="habilidades" required>Jardinería, Electricidad básica, Reparaciones domésticas</textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="experiencia"><i class="fas fa-briefcase"></i> Experiencia:</label>
-              <textarea id="experiencia" name="experiencia" required>5 años de experiencia en jardinería y 3 años en reparaciones domésticas.</textarea>
-            </div>
-
-            <div class="form-group">
-              <label><i class="fas fa-clock"></i> Disponibilidad:</label>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem;">
-                  <input type="checkbox" checked> Lunes a Viernes (8am - 6pm)
-                </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem;">
-                  <input type="checkbox"> Sábados (8am - 2pm)
-                </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem;">
-                  <input type="checkbox"> Domingos y feriados
-                </label>
-              </div>
-            </div>
-
-            <button type="submit"><i class="fas fa-save"></i> Guardar Cambios</button>
-          </form>
-          <div id="mensajePerfil" style="margin-top: 1.5rem;"></div>
+case 'perfil':
+  contenido = `
+    <div class="content-box">
+      <h2><i class="fas fa-user-edit"></i> Mi Perfil</h2>
+      
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="profile-pic">
+        <button style="margin-top: 0.5rem;"><i class="fas fa-camera"></i> Cambiar foto</button>
+      </div>
+      
+      <form id="formPerfil">
+        <div class="form-group">
+          <label for="nombre"><i class="fas fa-user"></i> Nombre completo:</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
         </div>
-      `;
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Correo electrónico:</label>
+          <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono"><i class="fas fa-phone"></i> Teléfono:</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="Ingresa tu número telefónico" required>
+        </div>
+
+        <div class="form-group">
+          <label for="direccion"><i class="fas fa-home"></i> Dirección:</label>
+          <textarea id="direccion" name="direccion" placeholder="Ingresa tu dirección" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-tools"></i> Especialidad:</label>
+          <div class="especialidad-options">
+            <label class="radio-option">
+              <input type="radio" name="especialidad" value="gasfiteria" required> Gasfitería
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="especialidad" value="electricista"> Electricista
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="especialidad" value="jardineria"> Jardinería
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion"><i class="fas fa-align-left"></i> Descripción del perfil:</label>
+          <textarea id="descripcion" name="descripcion" placeholder="Describe brevemente tu experiencia y servicios que ofreces" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="experiencia"><i class="fas fa-briefcase"></i> Experiencia:</label>
+          <textarea id="experiencia" name="experiencia" placeholder="Detalla tus años de experiencia y trabajos realizados" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-clock"></i> Disponibilidad:</label>
+          <div class="disponibilidad-options">
+            <label class="checkbox-option">
+              <input type="checkbox"> Lunes a Viernes (8am - 6pm)
+            </label>
+            <label class="checkbox-option">
+              <input type="checkbox"> Sábados (8am - 2pm)
+            </label>
+            <label class="checkbox-option">
+              <input type="checkbox"> Domingos y feriados
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-guardar"><i class="fas fa-save"></i> Guardar Cambios</button>
+      </form>
+      <div id="mensajePerfil" class="mensaje-perfil"></div>
+    </div>
+  `;
       break;
 
     case 'notificaciones':
