@@ -1,0 +1,275 @@
+/* =================================================================
+  CSS PARA EL PANEL DEL TECNICO
+  Todas las reglas están prefijadas con #panel-tecnico-page
+  para evitar que afecten a otras partes del sitio web.
+  =================================================================
+*/
+
+:root {
+  --primary: #005f73;      /* Azul oscuro más serio */
+  --secondary: #0a9396;    /* Turquesa */
+  --accent: #94d2bd;       /* Verde claro */
+  --light: #f0efeb;
+  --dark: #222222;
+  --success: #52b788;
+  --warning: #ee6c4d;
+  --info: #3a86ff;
+}
+
+#panel-tecnico-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#panel-tecnico-page {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0fbfc 0%, #98c1d9 100%);
+  color: var(--dark);
+  transition: all 0.4s ease;
+}
+
+#panel-tecnico-page.theme-verde {
+  background: linear-gradient(135deg, #d9f0e1 0%, #a3d9b1 100%);
+}
+
+#panel-tecnico-page.theme-azul {
+  background: linear-gradient(135deg, #a3cef1 0%, #6aabd2 100%);
+}
+
+#panel-tecnico-page.theme-oscuro {
+  background: linear-gradient(135deg, #0a1f44 0%, #031627 100%);
+  color: var(--light);
+}
+
+/* Barra de navegación */
+#panel-tecnico-page nav {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+  width: 280px;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 5px 0 15px rgba(0,0,0,0.15);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+#panel-tecnico-page.theme-oscuro nav {
+  background: linear-gradient(180deg, #031627 0%, #02243a 100%);
+}
+
+#panel-tecnico-page nav h1 {
+  color: white;
+  font-size: 1.9rem;
+  margin-bottom: 2.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#panel-tecnico-page nav h1 i {
+  font-size: 1.6rem;
+  color: #fff;
+}
+
+#panel-tecnico-page nav ul {
+  list-style: none;
+  flex-grow: 1;
+}
+
+#panel-tecnico-page nav ul li {
+  margin-bottom: 1.3rem;
+  transition: transform 0.3s;
+}
+
+#panel-tecnico-page nav ul li:hover {
+  transform: translateX(6px);
+}
+
+#panel-tecnico-page nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1.15rem;
+  padding: 1rem 1.3rem;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.15);
+  transition: all 0.3s;
+}
+
+#panel-tecnico-page nav ul li a:hover {
+  background-color: rgba(255,255,255,0.3);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+#panel-tecnico-page nav ul li a i {
+  font-size: 1.3rem;
+  width: 26px;
+  text-align: center;
+}
+
+/* Contenido principal */
+#panel-tecnico-page main {
+  flex-grow: 1;
+  padding: 3.2rem;
+  overflow-y: auto;
+  transition: all 0.3s;
+}
+
+#panel-tecnico-page.theme-oscuro main {
+  background: transparent;
+}
+
+#panel-tecnico-page .content-box {
+  background: var(--light);
+  border-radius: 14px;
+  padding: 2.3rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-bottom: 2.5rem;
+  transition: all 0.3s ease;
+  border-left: 5px solid var(--accent);
+  animation: fadeIn 0.4s ease-out;
+}
+
+#panel-tecnico-page.theme-oscuro .content-box {
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  border-left: 5px solid var(--warning);
+}
+
+#panel-tecnico-page .content-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+#panel-tecnico-page .content-box h2 {
+  color: var(--primary);
+  margin-bottom: 1.8rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#panel-tecnico-page.theme-oscuro .content-box h2 {
+  color: var(--success);
+}
+
+#panel-tecnico-page .content-box h2 i {
+  font-size: 1.6rem;
+}
+
+/* Formularios */
+#panel-tecnico-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+}
+
+#panel-tecnico-page .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+#panel-tecnico-page label {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+#panel-tecnico-page.theme-oscuro label {
+  color: var(--light);
+}
+
+#panel-tecnico-page input, 
+#panel-tecnico-page select, 
+#panel-tecnico-page textarea {
+  padding: 0.9rem 1.2rem;
+  border: 1.5px solid #ccc;
+  border-radius: 9px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  transition: all 0.3s;
+}
+
+#panel-tecnico-page.theme-oscuro input, 
+#panel-tecnico-page.theme-oscuro select, 
+#panel-tecnico-page.theme-oscuro textarea {
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: var(--light);
+}
+
+#panel-tecnico-page input:focus, 
+#panel-tecnico-page select:focus, 
+#panel-tecnico-page textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(148, 210, 189, 0.25);
+}
+
+#panel-tecnico-page textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+#panel-tecnico-page button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.85rem 1.6rem;
+  border-radius: 9px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#panel-tecnico-page button:hover {
+  background-color: var(--secondary);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+#panel-tecnico-page.theme-oscuro button {
+  background-color: var(--warning);
+}
+
+#panel-tecnico-page.theme-oscuro button:hover {
+  background-color: #e65540;
+}
+
+/* Mensajes */
+#panel-tecnico-page .mensaje {
+  padding: 1.2rem;
+  border-radius: 9px;
+  margin: 1.2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#panel-tecnico-page .mensaje-exito {
+  background-color: rgba(82, 183, 136, 0.2);
+  border-left: 5px solid var(--success);
+  color: #2b6a40;
+}
+
+#panel-tecnico-page.theme-oscuro .mensaje-exito {
+  background-color: rgba(82, 183, 136, 0.15);
+}
+
+/* Tarjetas de servicios */
+#panel-tecnico-page .servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1
