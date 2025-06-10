@@ -1,0 +1,141 @@
+/* Variables CSS */
+:root {
+    --primary-color: #28a745;
+    --secondary-color: #007bff;
+    --dark-color: #2c3e50;
+    --light-color: #f8f9fa;
+    --text-color: #333;
+    --text-light: #fff;
+    --shadow: 0 5px 15px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Estructura base */
+body {
+    padding-top: 80px;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar mejorado */
+.navbar {
+    transition: var(--transition);
+    padding: 1rem 0;
+    background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.navbar-shrink {
+    padding: 0.5rem 0;
+    box-shadow: var(--shadow);
+}
+
+/* Hero section */
+.hero-bg {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('${pageContext.request.contextPath}/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Tarjetas de categorías */
+.category-card {
+    transition: var(--transition);
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-img-container {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-img-container img {
+    transition: transform 0.5s ease;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Testimonios */
+.testimonio {
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-color);
+}
+
+.testimonio:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+/* Modal de roles */
+.role-option {
+    transition: var(--transition);
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.role-option:hover {
+    background: rgba(40, 167, 69, 0.1) !important;
+    border-color: rgba(40, 167, 69, 0.5) !important;
+}
+
+/* Efectos hover para botones principales */
+.contratar-btn, .trabajar-btn {
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    padding: 10px 20px !important;
+    border-radius: 6px !important;
+}
+
+.contratar-btn {
+    background-color: rgba(40, 167, 69, 0.1) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.trabajar-btn {
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    border: 1px solid var(--secondary-color) !important;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-bg {
+        padding: 100px 15px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+}
