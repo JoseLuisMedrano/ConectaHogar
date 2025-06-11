@@ -1,4 +1,4 @@
-package com.mycompany.conectahogar.model;
+/*package com.mycompany.conectahogar.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -73,4 +73,4 @@ public class Recarga {
      
     
     
-}
+}*/

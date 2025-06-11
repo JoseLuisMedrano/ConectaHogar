@@ -1,4 +1,6 @@
 // Archivo: com/mycompany/conectahogar/model/SolicitudTrabajo.java
+
+
 package com.mycompany.conectahogar.model;
 
 import java.util.Date;

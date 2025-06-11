@@ -1,4 +1,4 @@
-package com.mycompany.conectahogar.model;
+/*package com.mycompany.conectahogar.model;
 
 import java.time.LocalDateTime;
 
@@ -72,3 +72,4 @@ public class Resena {
     }
 
 }
+*/
