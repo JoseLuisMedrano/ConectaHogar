@@ -16,7 +16,9 @@
             </p>
             <div class="d-flex justify-content-center flex-wrap gap-2">
                 <button class="btn btn-success btn-lg px-4 py-3 fw-bold" id="openRoleModalBtn">
-                    <i class="fas fa-user-plus me-2"></i>Registrarse
+                    <i class="fas fa-user-plus me-2"></i>
+                    <a href="${pageContext.request.contextPath}/registro" class="btn btn-outline-primary">Registrarse</a>
+                    
                 </button>
             </div>
         </div>
@@ -36,7 +38,7 @@
                 <div class="col-md-4 col-6">
                     <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
                         <div class="category-img-container">
-                            <img src="${pageContext.request.contextPath}/images/jardineria.jpg" class="card-img-top" alt="Jardinero">
+                            <img src="${pageContext.request.contextPath}/static/images/jardineria.jpg" class="card-img-top" alt="Jardinero">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="card-body text-center">
@@ -53,7 +55,7 @@
                 <div class="col-md-4 col-6">
                     <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
                         <div class="category-img-container">
-                            <img src="${pageContext.request.contextPath}/images/electricista.jpg" class="card-img-top" alt="Electricista">
+                            <img src="${pageContext.request.contextPath}/static/images/electricista.jpg" class="card-img-top" alt="Electricista">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="card-body text-center">
@@ -126,7 +128,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <div class="position-relative" style="min-height: 350px;">
-                        <img src="${pageContext.request.contextPath}/images/sobre-nosotros.jpg" 
+                        <img src="${pageContext.request.contextPath}/static/images/bg-masthead.jpg" 
                              alt="Equipo ConectaHogar" 
                              class="img-fluid rounded shadow h-100 w-100"
                              style="object-fit: cover;">
