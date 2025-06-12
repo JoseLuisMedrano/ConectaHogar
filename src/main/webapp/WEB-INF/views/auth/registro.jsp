@@ -1,84 +1,133 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConectaHogar - Registro</title>
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
+    <title>Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 380px;
+            margin: 80px auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        select {
+            appearance: none;
+            background: #fff;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .social-button {
+            width: 22%;
+            padding: 10px;
+            background-color: #eee;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .social-button:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
 </head>
 <body>
+
     <div class="container">
-        <div class="form-box register">
-            <form action="${pageContext.request.contextPath}/registro" method="POST" id="registerForm">
-                <h1>Registro</h1>
-                
-                <c:if test="${not empty error}">
-                    <div class="alert alert-danger">${error}</div>
-                </c:if>
-                
-                <div class="input-box">
-                    <input type="text" name="nombre" placeholder="Nombre" required>
-                    <i class="bx bxs-user"></i>
-                </div>
-                <div class="input-box">
-                    <input type="text" name="apellido" placeholder="Apellido" required>
-                    <i class="bx bxs-user"></i>
-                </div>
-                <div class="input-box">
-                    <input type="email" name="email" placeholder="Correo Electrónico" required>
-                    <i class="bx bx-envelope"></i>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="password" placeholder="Contraseña" required>
-                    <i class="bx bxs-lock-alt"></i>
-                </div>
-                <div class="input-box">
-                    <input type="tel" name="telefono" placeholder="Teléfono (+51)" 
-                           pattern="^\+51\d{9}$" 
-                           title="Ingrese un número peruano válido (+51 seguido de 9 dígitos)" required>
-                    <i class="bx bxs-phone"></i>
-                </div>
-                <div class="input-box">
-                    <input type="text" name="dni" placeholder="DNI" pattern="[0-9]{8}" 
-                           title="Ingrese un DNI válido (8 dígitos)" required>
-                    <i class="bx bxs-id-card"></i>
-                </div>
-                
-                <div class="input-box">
-                    <select name="tipoUsuario" required>
-                        <option value="" disabled selected>Seleccione su tipo de usuario</option>
-                        <option value="cliente">Cliente</option>
-                        <option value="tecnico">Técnico</option>
-                    </select>
-                    <i class="bx bxs-user-detail"></i>
-                </div>
-                
-                <div class="forgot-link">
-                    <input type="checkbox" id="terminos" name="terminos" required>
-                    <label for="terminos">
-                        Acepto los <a href="#" class="modal-trigger">términos y condiciones</a>
-                    </label>
-                </div>
+        <h2>Registro</h2>
+        <form action="RegistrarUsuarioServlet" method="post">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <input type="email" name="correo" placeholder="Correo electr�nico" required>
+            <input type="password" name="contrasena" placeholder="Contrase�a" required>
+            <input type="tel" name="telefono" placeholder="Tel�fono" required>
+            <input type="number" name="edad" placeholder="Edad" required>
+            
+            <select name="sexo" required>
+                <option value="" disabled selected>Seleccione su sexo</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="no_decir">Prefiero no decirlo</option>
+            </select>
 
-                <button type="submit" class="btn">Registrarse</button>
-                <p>¿Ya tienes cuenta? <a href="${pageContext.request.contextPath}/login">Inicia sesión</a></p>
-            </form>
-        </div>
-    </div>
+            <div class="checkbox-container">
+                <input type="checkbox" name="terminos" required>
+                <label for="terminos">Acepto los t�rminos y condiciones</label>
+            </div>
 
-    <!-- Modal para términos y condiciones -->
-    <div id="termsModal" class="modal">
-        <div class="modal-content">
-            <h2>Términos y Condiciones</h2>
-            <p>Aquí van los términos y condiciones de ConectaHogar...</p>
-            <button class="btn modal-close">Aceptar</button>
-        </div>
-    </div>
+            <button type="submit">Registrarse</button>
+        </form>
 
-    <script src="${pageContext.request.contextPath}/js/auth.js"></script>
-</body>
-</html>
+        <div class="social-buttons">
+            <button class="social-button">?</button> <!-- Facebook -->
+            <button class="social-b
+
