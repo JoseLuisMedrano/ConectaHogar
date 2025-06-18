@@ -1,124 +1,93 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 3rem 2rem 2rem;
-            border-radius: 12px;
-            position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 350px;
-        }
-
-        .circle-icon {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #ff7e5f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 5px solid #fff;
-        }
-
-        .circle-icon img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .login-title {
-            margin-top: 50px;
-            margin-bottom: 25px;
-            text-align: center;
-            color: #333;
-        }
-
-        .form-control::placeholder {
-            color: #aaa;
-        }
-
-        .forgot-password {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .btn-login {
-            background-color: #ff7e5f;
-            color: white;
-        }
-
-        .btn-login:hover {
-            background-color: #feb47b;
-            color: white;
-        }
-
-        .form-check-label {
-            font-size: 0.9rem;
-        }
-    </style>
+    <title>ConectaHogar - Iniciar Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/auth.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-home fa-3x text-primary mb-3"></i>
+                            <h2 class="h3 mb-2">ConectaHogar</h2>
+                            <p class="text-muted">Bienvenido de vuelta</p>
+                        </div>
 
-    <div class="login-container">
-        <div class="circle-icon">
-            <img src="usuario.jpg" alt="Usuario">
+                        <c:if test="${not empty mensajeError}">
+                            <div class="alert alert-danger d-flex align-items-center">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <div>${mensajeError}</div>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${not empty mensajeExito}">
+                            <div class="alert alert-success d-flex align-items-center">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <div>${mensajeExito}</div>
+                            </div>
+                        </c:if>
+
+                        <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="correo" name="correo" 
+                                           placeholder="Correo Electrónico" value="${param.correo}" required>
+                                    <label for="correo">Correo Electrónico</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="contrasena" name="contrasena" 
+                                           placeholder="Contraseña" required>
+                                    <label for="contrasena">Contraseña</label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                                <i class="fas fa-sign-in-alt me-2"></i>
+                                Iniciar Sesión
+                            </button>
+                            
+                            <div class="text-center">
+                                <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <p class="mb-0">¿No tienes cuenta? <a href="${pageContext.request.contextPath}/register.jsp" class="text-decoration-none">Regístrate aquí</a></p>
+                        </div>
+                        
+                        <div class="mt-4 pt-3 border-top">
+                            <p class="small text-muted mb-2"><strong>Credenciales de prueba:</strong></p>
+                            <p class="small text-muted mb-1">Admin: admin@conectahogar.com / admin123</p>
+                            <p class="small text-muted mb-1">Cliente: cliente@test.com / 123456</p>
+                            <p class="small text-muted">Técnico: tecnico@test.com / 123456</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <h4 class="login-title">Iniciar Sesión</h4>
-
-        <form action="${pageContext.request.contextPath}/LoginServlet" method="POST">
-            <div class="mb-3 position-relative">
-                <i class="bi bi-person-fill position-absolute top-50 translate-middle-y ms-2 text-secondary"></i>
-                <input type="email" class="form-control ps-5" name="correo" placeholder="Correo Electrónico" required>
-            </div>
-
-            <div class="mb-3 position-relative">
-                <i class="bi bi-lock-fill position-absolute top-50 translate-middle-y ms-2 text-secondary"></i>
-                <input type="password" class="form-control ps-5" name="contrasena" placeholder="Contraseña" required>
-            </div>
-
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">Recordar contraseña</label>
-            </div>
-
-            <button type="submit" class="btn btn-login w-100">Ingresar</button>
-
-            <div class="forgot-password mt-2">
-                <a href="registro.jsp">¿No estas registrado?</a>
-            </div>
-        </form>
     </div>
 
-    <!-- Bootstrap JS (opcional, para componentes dinámicos) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+    </script>
 </body>
 </html>

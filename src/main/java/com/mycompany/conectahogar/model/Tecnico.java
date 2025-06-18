@@ -1,38 +1,39 @@
 // Archivo: src/main/java/com/mycompany/conectahogar/model/Tecnico.java
 package com.mycompany.conectahogar.model;
 
-import java.util.Date; // Necesario si usas fechaRegistro en el constructor de super
+import java.util.Date;
 
 public class Tecnico extends Usuario {
     private String especialidad;
-    private boolean disponible;
+    private String disponibilidad; // Aseguramos que es String
+    private String certificaciones;
+    private double calificacionPromedio;
 
     public Tecnico() {
         super();
     }
 
-    // Constructor completo para Técnico, pasando todos los datos de Usuario y los propios de Técnico
-    public Tecnico(int id_Usuario, String correoElectronico, String contrasena, 
-                   String nombre, String apellido, String telefono, String direccion, 
-                   String dni, Date fechaRegistro, String especialidad, boolean disponible) {
-        super(id_Usuario, correoElectronico, contrasena, nombre, apellido, telefono, 
-              direccion, dni, fechaRegistro, TipoUsuario.TECNICO); // El rol es siempre TECNICO
+    public Tecnico(String especialidad, String disponibilidad, String certificaciones, double calificacionPromedio, 
+                   int id_Usuario, String correoElectronico, String contrasena, String nombre, 
+                   String apellido, String telefono, String direccion, String dni, Date fechaRegistro) {
+        super(id_Usuario, correoElectronico, contrasena, nombre, apellido, telefono, direccion, dni, fechaRegistro, TipoUsuario.TECNICO);
         this.especialidad = especialidad;
-        this.disponible = disponible;
+        this.disponibilidad = disponibilidad;
+        this.certificaciones = certificaciones;
+        this.calificacionPromedio = calificacionPromedio;
     }
 
-    // Constructor para un nuevo registro de técnico (sin ID ni fechaRegistro inicial)
-    public Tecnico(String correoElectronico, String contrasena, 
-                   String nombre, String apellido, String telefono, String direccion, 
-                   String dni, String especialidad, boolean disponible) {
-        super(correoElectronico, contrasena, nombre, apellido, telefono, 
-              direccion, dni, TipoUsuario.TECNICO); // El rol es siempre TECNICO
+    public Tecnico(String especialidad, String disponibilidad, String certificaciones, double calificacionPromedio, 
+                   String correoElectronico, String contrasena, String nombre, String apellido, 
+                   String telefono, String direccion, String dni) {
+        super(correoElectronico, contrasena, nombre, apellido, telefono, direccion, dni, TipoUsuario.TECNICO);
         this.especialidad = especialidad;
-        this.disponible = disponible;
+        this.disponibilidad = disponibilidad;
+        this.certificaciones = certificaciones;
+        this.calificacionPromedio = calificacionPromedio;
     }
 
-    // --- Getters y Setters específicos de Tecnico ---
-
+    // Getters y Setters
     public String getEspecialidad() {
         return especialidad;
     }
@@ -41,22 +42,37 @@ public class Tecnico extends Usuario {
         this.especialidad = especialidad;
     }
 
-    public boolean isDisponible() {
-        return disponible;
+    public String getDisponibilidad() {
+        return disponibilidad;
     }
 
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
+    public void setDisponibilidad(String disponibilidad) {
+        this.disponibilidad = disponibilidad;
     }
-    
+
+    public String getCertificaciones() {
+        return certificaciones;
+    }
+
+    public void setCertificaciones(String certificaciones) {
+        this.certificaciones = certificaciones;
+    }
+
+    public double getCalificacionPromedio() {
+        return calificacionPromedio;
+    }
+
+    public void setCalificacionPromedio(double calificacionPromedio) {
+        this.calificacionPromedio = calificacionPromedio;
+    }
+
     @Override
     public String toString() {
         return "Tecnico{" +
-               "id_Usuario=" + getId_Usuario() + // Heredado de Usuario
-               ", correoElectronico='" + getCorreoElectronico() + '\'' + // Heredado de Usuario
-               ", nombre='" + getNombre() + '\'' + // Heredado de Usuario
-               ", especialidad='" + especialidad + '\'' +
-               ", disponible=" + disponible +
-               '}';
+                "especialidad='" + especialidad + '\'' +
+                ", disponibilidad='" + disponibilidad + '\'' +
+                ", certificaciones='" + certificaciones + '\'' +
+                ", calificacionPromedio=" + calificacionPromedio +
+                "} " + super.toString();
     }
 }

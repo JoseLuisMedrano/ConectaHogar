@@ -2,30 +2,32 @@
 package com.mycompany.conectahogar.controller;
 
 import com.mycompany.conectahogar.model.Cliente;
-import com.mycompany.conectahogar.model.Servicio; // Asegúrate de que Servicio esté importado
+import com.mycompany.conectahogar.model.Servicio;
 import com.mycompany.conectahogar.model.SolicitudTrabajo;
 import com.mycompany.conectahogar.service.SolicitudService;
-import jakarta.servlet.ServletException; // Cambiado de javax.servlet.ServletException
-import jakarta.servlet.annotation.WebServlet; // Cambiado de javax.servlet.annotation.WebServlet
-import jakarta.servlet.http.HttpServlet; // Cambiado de javax.servlet.http.HttpServlet
-import jakarta.servlet.http.HttpServletRequest; // Cambiado de javax.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse; // Cambiado de javax.servlet.http.HttpServletResponse
-import jakarta.servlet.http.HttpSession; // Cambiado de javax.servlet.http.HttpSession
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Arrays;
 
 @WebServlet("/panelCliente")
 public class PanelClienteServlet extends HttpServlet {
+
     private static final Logger logger = LoggerFactory.getLogger(PanelClienteServlet.class);
-    
-    private SolicitudService solicitudService; 
+
+    private SolicitudService solicitudService;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        this.solicitudService = new SolicitudService(); 
+        this.solicitudService = new SolicitudService();
     }
 
     @Override
@@ -33,16 +35,22 @@ public class PanelClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("usuario") == null || !"Cliente".equals(session.getAttribute("rol"))) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
         Cliente cliente = (Cliente) session.getAttribute("usuario");
-        
+
+        // 1. Obtener la lista de solicitudes
         List<SolicitudTrabajo> solicitudesCliente = solicitudService.listarSolicitudesPorCliente(cliente.getId_Usuario());
 
-        request.setAttribute("solicitudesCliente", solicitudesCliente);
-        request.getRequestDispatcher("panelCliente.jsp").forward(request, response);
+        // 2. CORRECCIÓN: Pasar la lista de servicios al JSP para el formulario
+        request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values()));
+
+        // 3. CORRECCIÓN: Usar el nombre de atributo que el JSP espera ("solicitudes")
+        request.setAttribute("solicitudes", solicitudesCliente);
+
+        request.getRequestDispatcher("/panelCliente.jsp").forward(request, response);
     }
 
     @Override
@@ -65,9 +73,9 @@ public class PanelClienteServlet extends HttpServlet {
                 String servicioStr = request.getParameter("servicio");
                 String precioSugeridoStr = request.getParameter("precioSugerido");
 
-                if (descripcion == null || descripcion.trim().isEmpty() ||
-                    servicioStr == null || servicioStr.trim().isEmpty() ||
-                    precioSugeridoStr == null || precioSugeridoStr.trim().isEmpty()) {
+                if (descripcion == null || descripcion.trim().isEmpty()
+                        || servicioStr == null || servicioStr.trim().isEmpty()
+                        || precioSugeridoStr == null || precioSugeridoStr.trim().isEmpty()) {
                     mensaje = "Error: Todos los campos de la solicitud son obligatorios.";
                     break;
                 }
@@ -117,4 +125,5 @@ public class PanelClienteServlet extends HttpServlet {
         request.setAttribute("mensaje", mensaje);
         doGet(request, response);
     }
+
 }

@@ -3,9 +3,7 @@ package com.mycompany.conectahogar.dao;
 
 import com.mycompany.conectahogar.config.ConexionBD;
 import com.mycompany.conectahogar.model.Tecnico;
-import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.model.TipoUsuario;
-import com.mycompany.conectahogar.model.Servicio; 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +30,6 @@ public class TecnicoDAO {
         boolean exito = false;
 
         try {
-            // ¡Cambiado a setTipoUsuario()!
             tecnico.setTipoUsuario(TipoUsuario.TECNICO);
             
             if (!usuarioDAO.crearUsuario(tecnico)) {
@@ -45,12 +42,14 @@ public class TecnicoDAO {
                 return false;
             }
 
-            String sql = "INSERT INTO tecnicos (id_Usuario, especialidad, disponible) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO tecnicos (id_Usuario, especialidad, disponibilidad, certificaciones, calificacionPromedio) VALUES (?, ?, ?, ?, ?)";
             conn = ConexionBD.obtenerConexion();
             stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, tecnico.getId_Usuario());
             stmt.setString(2, tecnico.getEspecialidad());
-            stmt.setBoolean(3, tecnico.isDisponible());
+            stmt.setString(3, tecnico.getDisponibilidad()); // Es un String
+            stmt.setString(4, tecnico.getCertificaciones()); // Añadido
+            stmt.setDouble(5, tecnico.getCalificacionPromedio()); // Añadido
 
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas > 0) {
@@ -64,7 +63,7 @@ public class TecnicoDAO {
 
         } catch (SQLException e) {
             logger.error("Error al crear técnico: " + e.getMessage(), e);
-            usuarioDAO.eliminarUsuario(tecnico.getId_Usuario());
+            usuarioDAO.eliminarUsuario(tecnico.getId_Usuario()); // Rollback si falla
         } finally {
             try {
                 if (stmt != null) stmt.close();
@@ -77,7 +76,8 @@ public class TecnicoDAO {
     }
 
     public Tecnico obtenerTecnicoPorIdUsuario(int idUsuario) {
-        String sql = "SELECT u.id_Usuario, u.nombre, u.apellido, u.correoElectronico, u.contrasena, u.telefono, u.direccion, u.dni, t.especialidad, t.disponible " + // Asegúrate de seleccionar direccion
+        String sql = "SELECT u.id_Usuario, u.nombre, u.apellido, u.correoElectronico, u.contrasena, u.telefono, u.direccion, u.dni, " +
+                     "t.especialidad, t.disponibilidad, t.certificaciones, t.calificacionPromedio " +
                      "FROM usuarios u JOIN tecnicos t ON u.id_Usuario = t.id_Usuario WHERE u.id_Usuario = ? AND u.rol = ?";
         Tecnico tecnico = null;
 
@@ -96,12 +96,13 @@ public class TecnicoDAO {
                     tecnico.setCorreoElectronico(rs.getString("correoElectronico"));
                     tecnico.setContrasena(rs.getString("contrasena"));
                     tecnico.setTelefono(rs.getString("telefono"));
-                    tecnico.setDireccion(rs.getString("direccion")); // ¡Añadido direccion!
+                    tecnico.setDireccion(rs.getString("direccion"));
                     tecnico.setDni(rs.getString("dni"));
-                    // ¡Cambiado a setTipoUsuario!
                     tecnico.setTipoUsuario(TipoUsuario.TECNICO); 
                     tecnico.setEspecialidad(rs.getString("especialidad"));
-                    tecnico.setDisponible(rs.getBoolean("disponible"));
+                    tecnico.setDisponibilidad(rs.getString("disponibilidad"));
+                    tecnico.setCertificaciones(rs.getString("certificaciones"));
+                    tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
                 }
             }
         } catch (SQLException e) {
@@ -117,13 +118,15 @@ public class TecnicoDAO {
         exitoUsuario = usuarioDAO.actualizarUsuario(tecnico);
 
         if (exitoUsuario) {
-            String sql = "UPDATE tecnicos SET especialidad = ?, disponible = ? WHERE id_Usuario = ?";
+            String sql = "UPDATE tecnicos SET especialidad = ?, disponibilidad = ?, certificaciones = ?, calificacionPromedio = ? WHERE id_Usuario = ?";
             try (Connection conn = ConexionBD.obtenerConexion();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, tecnico.getEspecialidad());
-                stmt.setBoolean(2, tecnico.isDisponible());
-                stmt.setInt(3, tecnico.getId_Usuario());
+                stmt.setString(2, tecnico.getDisponibilidad());
+                stmt.setString(3, tecnico.getCertificaciones());
+                stmt.setDouble(4, tecnico.getCalificacionPromedio());
+                stmt.setInt(5, tecnico.getId_Usuario());
 
                 int filasAfectadas = stmt.executeUpdate();
                 if (filasAfectadas > 0) {
@@ -154,7 +157,7 @@ public class TecnicoDAO {
                 exitoTecnico = true;
             } else {
                 logger.warn("No se encontró información de técnico para eliminar con id_Usuario {}.", idUsuario);
-                exitoTecnico = true;
+                exitoTecnico = true; // Consideramos éxito si no hay técnico pero sí usuario
             }
         } catch (SQLException e) {
             logger.error("Error al eliminar información específica del técnico con id_Usuario {}: {}", idUsuario, e.getMessage(), e);
@@ -170,16 +173,16 @@ public class TecnicoDAO {
         return exitoTecnico && exitoUsuario;
     }
     
-    public boolean actualizarDisponibilidadTecnico(int idUsuario, boolean disponible) {
-        String sql = "UPDATE tecnicos SET disponible = ? WHERE id_Usuario = ?";
+    public boolean actualizarDisponibilidadTecnico(int idUsuario, String disponibilidad) {
+        String sql = "UPDATE tecnicos SET disponibilidad = ? WHERE id_Usuario = ?";
         boolean exito = false;
         try (Connection conn = ConexionBD.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setBoolean(1, disponible);
+            stmt.setString(1, disponibilidad);
             stmt.setInt(2, idUsuario);
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas > 0) {
-                logger.info("Disponibilidad del técnico con id_Usuario {} actualizada a {}.", idUsuario, disponible);
+                logger.info("Disponibilidad del técnico con id_Usuario {} actualizada a {}.", idUsuario, disponibilidad);
                 exito = true;
             }
         } catch (SQLException e) {
@@ -190,9 +193,10 @@ public class TecnicoDAO {
 
     public List<Tecnico> obtenerTecnicosDisponiblesPorEspecialidad(String especialidad) {
         List<Tecnico> tecnicos = new ArrayList<>();
-        String sql = "SELECT u.id_Usuario, u.nombre, u.apellido, u.correoElectronico, u.telefono, u.direccion, u.dni, t.especialidad, t.disponible " + // Asegúrate de seleccionar direccion
+        String sql = "SELECT u.id_Usuario, u.nombre, u.apellido, u.correoElectronico, u.telefono, u.direccion, u.dni, " +
+                     "t.especialidad, t.disponibilidad, t.certificaciones, t.calificacionPromedio " +
                      "FROM usuarios u JOIN tecnicos t ON u.id_Usuario = t.id_Usuario " +
-                     "WHERE t.especialidad = ? AND t.disponible = TRUE AND u.rol = ?";
+                     "WHERE t.especialidad = ? AND t.disponibilidad = 'Disponible' AND u.rol = ?";
         
         try (Connection conn = ConexionBD.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -206,12 +210,13 @@ public class TecnicoDAO {
                     tecnico.setApellido(rs.getString("apellido"));
                     tecnico.setCorreoElectronico(rs.getString("correoElectronico"));
                     tecnico.setTelefono(rs.getString("telefono"));
-                    tecnico.setDireccion(rs.getString("direccion")); // ¡Añadido direccion!
+                    tecnico.setDireccion(rs.getString("direccion"));
                     tecnico.setDni(rs.getString("dni"));
-                    // ¡Cambiado a setTipoUsuario!
                     tecnico.setTipoUsuario(TipoUsuario.TECNICO);
                     tecnico.setEspecialidad(rs.getString("especialidad"));
-                    tecnico.setDisponible(rs.getBoolean("disponible"));
+                    tecnico.setDisponibilidad(rs.getString("disponibilidad"));
+                    tecnico.setCertificaciones(rs.getString("certificaciones"));
+                    tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
                     tecnicos.add(tecnico);
                 }
             }

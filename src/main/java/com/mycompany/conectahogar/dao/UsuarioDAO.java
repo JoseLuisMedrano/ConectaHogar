@@ -1,206 +1,274 @@
-// Archivo: com/mycompany/conectahogar/dao/UsuarioDAO.java
 package com.mycompany.conectahogar.dao;
 
 import com.mycompany.conectahogar.config.ConexionBD;
 import com.mycompany.conectahogar.model.Usuario;
-import com.mycompany.conectahogar.model.TipoUsuario; // ¡Importante para el enum!
-
+import com.mycompany.conectahogar.model.TipoUsuario;
+import com.mycompany.conectahogar.model.Cliente;
+import com.mycompany.conectahogar.model.Tecnico;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement; // Para obtener claves generadas
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UsuarioDAO {
-
     private static final Logger logger = LoggerFactory.getLogger(UsuarioDAO.class);
-
-    public boolean crearUsuario(Usuario usuario) {
-        // Asegúrate de que el 'direccion' también se incluya en el SQL si lo mapeas en la BD
-        String sql = "INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasena, telefono, direccion, dni, rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean exito = false;
-
-        try {
-            conn = ConexionBD.obtenerConexion();
-            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getApellido());
-            stmt.setString(3, usuario.getCorreoElectronico());
-            stmt.setString(4, usuario.getContrasena());
-            stmt.setString(5, usuario.getTelefono());
-            stmt.setString(6, usuario.getDireccion()); // ¡Añadido direccion!
-            stmt.setString(7, usuario.getDni());
-            stmt.setString(8, usuario.getTipoUsuario().getRolBD()); // ¡Cambiado a getTipoUsuario() y getRolBD()!
-
-            int filasAfectadas = stmt.executeUpdate();
-            if (filasAfectadas > 0) {
-                rs = stmt.getGeneratedKeys();
-                if (rs.next()) {
-                    usuario.setId_Usuario(rs.getInt(1));
-                    logger.info("Usuario creado exitosamente con ID: {}", usuario.getId_Usuario());
-                    exito = true;
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Error al crear usuario: " + e.getMessage(), e);
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                ConexionBD.cerrarConexion(conn);
-            } catch (SQLException e) {
-                logger.error("Error al cerrar recursos en crearUsuario: " + e.getMessage(), e);
-            }
-        }
-        return exito;
-    }
-
-    public Usuario obtenerUsuarioPorId(int idUsuario) {
-        // Asegúrate de seleccionar 'direccion' también si existe en tu tabla
-        String sql = "SELECT id_Usuario, nombre, apellido, correoElectronico, contrasena, telefono, direccion, dni, rol FROM usuarios WHERE id_Usuario = ?";
-        Usuario usuario = null;
-
+    
+    public Usuario obtenerUsuarioPorCredenciales(String correo, String contrasena) {
+        String sql = "SELECT * FROM usuarios WHERE correoElectronico = ? AND contrasena = ?";
+        
         try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, idUsuario);
-            try (ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, correo);
+            pstmt.setString(2, contrasena);
+            
+            logger.info("Ejecutando consulta de autenticación para: {}", correo);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    usuario = new Usuario();
-                    usuario.setId_Usuario(rs.getInt("id_Usuario"));
-                    usuario.setNombre(rs.getString("nombre"));
-                    usuario.setApellido(rs.getString("apellido"));
-                    usuario.setCorreoElectronico(rs.getString("correoElectronico"));
-                    usuario.setContrasena(rs.getString("contrasena"));
-                    usuario.setTelefono(rs.getString("telefono"));
-                    usuario.setDireccion(rs.getString("direccion")); // ¡Añadido direccion!
-                    usuario.setDni(rs.getString("dni"));
-                    // ¡Cambiado a setTipoUsuario y TipoUsuario.fromString!
-                    usuario.setTipoUsuario(TipoUsuario.fromString(rs.getString("rol"))); 
+                    return mapearUsuario(rs);
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error al obtener usuario por ID {}: {}", idUsuario, e.getMessage(), e);
+            logger.error("Error al obtener usuario por credenciales: {}", e.getMessage(), e);
         }
+        return null;
+    }
+    
+    public Usuario obtenerUsuarioPorCorreo(String correo) {
+        String sql = "SELECT * FROM usuarios WHERE correoElectronico = ?";
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, correo);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapearUsuario(rs);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al obtener usuario por correo: {}", e.getMessage(), e);
+        }
+        return null;
+    }
+    
+    public Usuario obtenerUsuarioPorId(int id) {
+        String sql = "SELECT * FROM usuarios WHERE id_Usuario = ?";
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapearUsuario(rs);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al obtener usuario por ID: {}", e.getMessage(), e);
+        }
+        return null;
+    }
+    
+    public boolean crearUsuario(Usuario usuario) {
+        String sql = "INSERT INTO usuarios (correoElectronico, contrasena, nombre, apellido, telefono, direccion, dni, tipoUsuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            pstmt.setString(1, usuario.getCorreoElectronico());
+            pstmt.setString(2, usuario.getContrasena());
+            pstmt.setString(3, usuario.getNombre());
+            pstmt.setString(4, usuario.getApellido());
+            pstmt.setString(5, usuario.getTelefono());
+            pstmt.setString(6, usuario.getDireccion());
+            pstmt.setString(7, usuario.getDni());
+            pstmt.setString(8, usuario.getTipoUsuario().name());
+            
+            int rowsAffected = pstmt.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        usuario.setId_Usuario(generatedKeys.getInt(1));
+                    }
+                }
+                logger.info("Usuario creado exitosamente: {}", usuario.getCorreoElectronico());
+                
+                // Si es técnico, crear registro adicional en tabla tecnicos
+                if (usuario instanceof Tecnico) {
+                    return crearTecnico((Tecnico) usuario);
+                }
+                
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.error("Error al crear usuario: {}", e.getMessage(), e);
+        }
+        return false;
+    }
+    
+    private boolean crearTecnico(Tecnico tecnico) {
+        String sql = "INSERT INTO tecnicos (id_Usuario, especialidad, disponibilidad, certificaciones, calificacionPromedio) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, tecnico.getId_Usuario());
+            pstmt.setString(2, tecnico.getEspecialidad());
+            pstmt.setString(3, tecnico.getDisponibilidad());
+            pstmt.setString(4, tecnico.getCertificaciones());
+            pstmt.setDouble(5, tecnico.getCalificacionPromedio());
+            
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            logger.error("Error al crear técnico: {}", e.getMessage(), e);
+        }
+        return false;
+    }
+    
+    public boolean actualizarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuarios SET correoElectronico = ?, contrasena = ?, nombre = ?, apellido = ?, telefono = ?, direccion = ?, dni = ?, tipoUsuario = ? WHERE id_Usuario = ?";
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, usuario.getCorreoElectronico());
+            pstmt.setString(2, usuario.getContrasena());
+            pstmt.setString(3, usuario.getNombre());
+            pstmt.setString(4, usuario.getApellido());
+            pstmt.setString(5, usuario.getTelefono());
+            pstmt.setString(6, usuario.getDireccion());
+            pstmt.setString(7, usuario.getDni());
+            pstmt.setString(8, usuario.getTipoUsuario().name());
+            pstmt.setInt(9, usuario.getId_Usuario());
+            
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            logger.error("Error al actualizar usuario: {}", e.getMessage(), e);
+        }
+        return false;
+    }
+    
+    public boolean eliminarUsuario(int id) {
+        String sql = "DELETE FROM usuarios WHERE id_Usuario = ?";
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            logger.error("Error al eliminar usuario: {}", e.getMessage(), e);
+        }
+        return false;
+    }
+    
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        String sql = "SELECT * FROM usuarios";
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                usuarios.add(mapearUsuario(rs));
+            }
+            
+        } catch (SQLException e) {
+            logger.error("Error al obtener todos los usuarios: {}", e.getMessage(), e);
+        }
+        return usuarios;
+    }
+    
+    private Usuario mapearUsuario(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id_Usuario");
+        String correo = rs.getString("correoElectronico");
+        String contrasena = rs.getString("contrasena");
+        String nombre = rs.getString("nombre");
+        String apellido = rs.getString("apellido");
+        String telefono = rs.getString("telefono");
+        String direccion = rs.getString("direccion");
+        String dni = rs.getString("dni");
+        java.util.Date fechaRegistro = rs.getTimestamp("fechaRegistro");
+        TipoUsuario tipoUsuario = TipoUsuario.valueOf(rs.getString("tipoUsuario"));
+        
+        Usuario usuario;
+        
+        switch (tipoUsuario) {
+            case TECNICO:
+                usuario = new Tecnico();
+                // Cargar datos específicos del técnico si es necesario
+                cargarDatosTecnico((Tecnico) usuario, id);
+                break;
+            case CLIENTE:
+                usuario = new Cliente();
+                break;
+            default:
+                usuario = new Usuario();
+                break;
+        }
+        
+        usuario.setId_Usuario(id);
+        usuario.setCorreoElectronico(correo);
+        usuario.setContrasena(contrasena);
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setTelefono(telefono);
+        usuario.setDireccion(direccion);
+        usuario.setDni(dni);
+        usuario.setFechaRegistro(fechaRegistro);
+        usuario.setTipoUsuario(tipoUsuario);
+        
         return usuario;
     }
     
-    public Usuario obtenerUsuarioPorCorreo(String correoElectronico) {
-        // Asegúrate de seleccionar 'direccion' también si existe en tu tabla
-        String sql = "SELECT id_Usuario, nombre, apellido, correoElectronico, contrasena, telefono, direccion, dni, rol FROM usuarios WHERE correoElectronico = ?";
-        Usuario usuario = null;
-
+    private void cargarDatosTecnico(Tecnico tecnico, int idUsuario) {
+        String sql = "SELECT * FROM tecnicos WHERE id_Usuario = ?";
+        
         try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, correoElectronico);
-            try (ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, idUsuario);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    usuario = new Usuario();
-                    usuario.setId_Usuario(rs.getInt("id_Usuario"));
-                    usuario.setNombre(rs.getString("nombre"));
-                    usuario.setApellido(rs.getString("apellido"));
-                    usuario.setCorreoElectronico(rs.getString("correoElectronico"));
-                    usuario.setContrasena(rs.getString("contrasena"));
-                    usuario.setTelefono(rs.getString("telefono"));
-                    usuario.setDireccion(rs.getString("direccion")); // ¡Añadido direccion!
-                    usuario.setDni(rs.getString("dni"));
-                    // ¡Cambiado a setTipoUsuario y TipoUsuario.fromString!
-                    usuario.setTipoUsuario(TipoUsuario.fromString(rs.getString("rol"))); 
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Error al obtener usuario por correo electrónico {}: {}", correoElectronico, e.getMessage(), e);
-        }
-        return usuario;
-    }
-
-    public boolean actualizarUsuario(Usuario usuario) {
-        // Asegúrate de que el 'direccion' también se actualice si lo mapeas en la BD
-        String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, correoElectronico = ?, contrasena = ?, telefono = ?, direccion = ?, dni = ?, rol = ? WHERE id_Usuario = ?";
-        boolean exito = false;
-
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getApellido());
-            stmt.setString(3, usuario.getCorreoElectronico());
-            stmt.setString(4, usuario.getContrasena());
-            stmt.setString(5, usuario.getTelefono());
-            stmt.setString(6, usuario.getDireccion()); // ¡Añadido direccion!
-            stmt.setString(7, usuario.getDni());
-            // ¡Cambiado a getTipoUsuario() y getRolBD()!
-            stmt.setString(8, usuario.getTipoUsuario().getRolBD());
-            stmt.setInt(9, usuario.getId_Usuario());
-
-            int filasAfectadas = stmt.executeUpdate();
-            if (filasAfectadas > 0) {
-                logger.info("Usuario con ID {} actualizado exitosamente.", usuario.getId_Usuario());
-                exito = true;
-            }
-        } catch (SQLException e) {
-            logger.error("Error al actualizar usuario con ID {}: {}", usuario.getId_Usuario(), e.getMessage(), e);
-        }
-        return exito;
-    }
-
-    public boolean eliminarUsuario(int idUsuario) {
-        String sql = "DELETE FROM usuarios WHERE id_Usuario = ?";
-        boolean exito = false;
-
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, idUsuario);
-            int filasAfectadas = stmt.executeUpdate();
-            if (filasAfectadas > 0) {
-                logger.info("Usuario con ID {} eliminado exitosamente.", idUsuario);
-                exito = true;
-            }
-        } catch (SQLException e) {
-            logger.error("Error al eliminar usuario con ID {}: {}", idUsuario, e.getMessage(), e);
-        }
-        return exito;
-    }
-
-    public Usuario validarCredenciales(String correoElectronico, String contrasena) {
-        // Asegúrate de seleccionar 'direccion' también si existe en tu tabla
-        String sql = "SELECT id_Usuario, nombre, apellido, correoElectronico, contrasena, telefono, direccion, dni, rol FROM usuarios WHERE correoElectronico = ? AND contrasena = ?";
-        Usuario usuario = null;
-
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, correoElectronico);
-            stmt.setString(2, contrasena);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    usuario = new Usuario();
-                    usuario.setId_Usuario(rs.getInt("id_Usuario"));
-                    usuario.setNombre(rs.getString("nombre"));
-                    usuario.setApellido(rs.getString("apellido"));
-                    usuario.setCorreoElectronico(rs.getString("correoElectronico"));
-                    usuario.setContrasena(rs.getString("contrasena"));
-                    usuario.setTelefono(rs.getString("telefono"));
-                    usuario.setDireccion(rs.getString("direccion")); // ¡Añadido direccion!
-                    usuario.setDni(rs.getString("dni"));
-                    // ¡Cambiado a setTipoUsuario y TipoUsuario.fromString!
-                    usuario.setTipoUsuario(TipoUsuario.fromString(rs.getString("rol"))); 
-                    logger.info("Credenciales válidas para el usuario: {}", correoElectronico);
+                    tecnico.setEspecialidad(rs.getString("especialidad"));
+                    tecnico.setDisponibilidad(rs.getString("disponibilidad"));
+                    tecnico.setCertificaciones(rs.getString("certificaciones"));
+                    tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
                 } else {
-                    logger.warn("Intento de login fallido para el correo: {}", correoElectronico);
+                    // Si no hay datos específicos del técnico, establecer valores por defecto
+                    tecnico.setEspecialidad("No especificada");
+                    tecnico.setDisponibilidad("No especificada");
+                    tecnico.setCertificaciones("No especificadas");
+                    tecnico.setCalificacionPromedio(0.0);
+                    logger.warn("No se encontraron datos específicos para el técnico con ID: {}", idUsuario);
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error al validar credenciales para el correo {}: {}", correoElectronico, e.getMessage(), e);
+            logger.error("Error al cargar datos del técnico ID {}: {}", idUsuario, e.getMessage(), e);
+            // Establecer valores por defecto en caso de error
+            tecnico.setEspecialidad("Error al cargar");
+            tecnico.setDisponibilidad("Error al cargar");
+            tecnico.setCertificaciones("Error al cargar");
+            tecnico.setCalificacionPromedio(0.0);
         }
-        return usuario;
     }
 }

@@ -15,11 +15,11 @@
                 Solicita servicios de confianza en segundos con ConectaHogar.
             </p>
             <div class="d-flex justify-content-center flex-wrap gap-2">
+                <a href="${pageContext.request.contextPath}/register" class="btn btn-outline-primary">
                 <button class="btn btn-success btn-lg px-4 py-3 fw-bold" id="openRoleModalBtn">
                     <i class="fas fa-user-plus me-2"></i>
-                    <a href="${pageContext.request.contextPath}/registro" class="btn btn-outline-primary">Registrarse</a>
-                    
-                </button>
+                    Registrarse  
+                </button></a>
             </div>
         </div>
     </header>
@@ -38,7 +38,7 @@
                 <div class="col-md-4 col-6">
                     <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
                         <div class="category-img-container">
-                            <img src="${pageContext.request.contextPath}/static/images/jardineria.jpg" class="card-img-top" alt="Jardinero">
+                            <img src="${pageContext.request.contextPath}/static/images/fotos_index/jardineria.jpg" class="card-img-top" alt="Jardinero">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="card-body text-center">
@@ -55,7 +55,7 @@
                 <div class="col-md-4 col-6">
                     <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
                         <div class="category-img-container">
-                            <img src="${pageContext.request.contextPath}/static/images/electricista.jpg" class="card-img-top" alt="Electricista">
+                            <img src="${pageContext.request.contextPath}/static/images/fotos_index/electricista.jpg" class="card-img-top" alt="Electricista">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="card-body text-center">
@@ -63,7 +63,7 @@
                             <p class="card-text">
                                 Soluciona fallas eléctricas con profesionales certificados.
                             </p>
-                            <a href="${pageContext.request.contextPath}/servicios/electricistas" class="btn btn-outline-primary">Ver perfiles</a>
+                            <a href="${pageContext.request.contextPath}/servicios/electricista.jsp" class="btn btn-outline-primary">Ver perfiles</a>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                 <div class="col-md-4 col-6">
                     <div class="card category-card border-0 shadow-sm overflow-hidden h-100">
                         <div class="category-img-container">
-                            <img src="${pageContext.request.contextPath}/images/gasfitero.jpg" class="card-img-top" alt="Gasfitero">
+                            <img src="${pageContext.request.contextPath}/static/images/fotos_index/gasfiteria.png" class="card-img-top" alt="Gasfitero">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="card-body text-center">
@@ -124,44 +124,51 @@
 
     <!-- Sección Sobre Nosotros -->
     <section class="py-5 bg-light" id="nosotros">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <div class="position-relative" style="min-height: 350px;">
-                        <img src="${pageContext.request.contextPath}/static/images/bg-masthead.jpg" 
-                             alt="Equipo ConectaHogar" 
-                             class="img-fluid rounded shadow h-100 w-100"
-                             style="object-fit: cover;">
-                    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="position-relative" style="min-height: 350px;">
+                    <img src="${pageContext.request.contextPath}/static/images/fotos_index/sobrenosotros.png" 
+                         alt="Equipo ConectaHogar" 
+                         class="img-fluid rounded shadow h-100 w-100"
+                         style="object-fit: cover;">
                 </div>
-                <div class="col-lg-6">
-                    <h2 class="fw-bold mb-4 text-center text-lg-start">SOBRE NOSOTROS</h2>
-                    <div class="bg-white p-4 rounded shadow-sm">
-                        <p class="fst-italic">${aboutUs.descripcion}</p>
-                        
-                        <p>${aboutUs.serviciosIntro}</p>
-                        
-                        <ul class="list-unstyled">
-                            <c:forEach items="${aboutUs.servicios}" var="servicio">
-                                <li class="mb-2"><i class="fas ${servicio.icono} text-success me-2"></i> ${servicio.nombre}</li>
-                            </c:forEach>
-                        </ul>
-                        
-                        <p>${aboutUs.conclusion}</p>
-                        
-                        <div class="text-center text-lg-start mt-4">
-                            <a href="#" class="btn btn-success px-4 me-2">
-                                <i class="fab fa-whatsapp me-2"></i> Contáctanos
-                            </a>
-                            <a href="#" class="btn btn-outline-secondary px-4">
-                                <i class="fas fa-users me-2"></i> Conoce al equipo
-                            </a>
-                        </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4 text-center text-lg-start">SOBRE NOSOTROS</h2>
+                <div class="bg-white p-4 rounded shadow-sm">
+                    <p class="fst-italic">
+                        Somos una plataforma que conecta hogares con técnicos confiables para resolver problemas de mantenimiento de forma rápida y segura.
+                    </p>
+                    
+                    <p>
+                        Ofrecemos los siguientes servicios especializados para tu comodidad:
+                    </p>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-bolt text-success me-2"></i> Electricista</li>
+                        <li class="mb-2"><i class="fas fa-wrench text-success me-2"></i> Gasfitero</li>
+                        <li class="mb-2"><i class="fas fa-leaf text-success me-2"></i> Jardinero</li>
+                    </ul>
+                    
+                    <p>
+                        Nuestro objetivo es brindarte soluciones eficientes con profesionales verificados. ¡Conecta con nosotros y vive sin preocupaciones!
+                    </p>
+                    
+                    <div class="text-center text-lg-start mt-4">
+                        <a href="#" class="btn btn-success px-4 me-2">
+                            <i class="fab fa-whatsapp me-2"></i> Contáctanos
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary px-4">
+                            <i class="fas fa-users me-2"></i> Conoce al equipo
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Modal de selección de rol -->
     <div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">

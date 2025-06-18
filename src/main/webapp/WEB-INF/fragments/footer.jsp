@@ -39,13 +39,13 @@
         </div>
         <hr class="my-4 bg-secondary">
         <div class="text-center pt-2">
-            <p class="mb-0">&copy; 2023 ConectaHogar. Todos los derechos reservados.</p>
+            <p class="mb-0">&copy; 2025 ConectaHogar. Todos los derechos reservados.</p>
         </div>
     </div>
 </footer>
 
 <!-- Scripts comunes -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/index.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/index.js"></script>
 </body>
 </html>

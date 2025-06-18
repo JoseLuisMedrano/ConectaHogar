@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <c:set var="clienteActual" value="${sessionScope.clienteActual}"/>
+    <c:set var="clienteActual" value="${sessionScope.usuario}"/>
     <c:if test="${empty clienteActual}">
         <c:redirect url="login.jsp"/>
     </c:if>
