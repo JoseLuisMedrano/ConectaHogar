@@ -3,7 +3,6 @@ package com.mycompany.conectahogar.dao;
 
 import com.mycompany.conectahogar.config.ConexionBD;
 import com.mycompany.conectahogar.model.Cliente;
-import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.model.TipoUsuario;
 
 import java.sql.Connection;

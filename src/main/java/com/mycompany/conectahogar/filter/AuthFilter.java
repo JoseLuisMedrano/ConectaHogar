@@ -64,8 +64,7 @@ public class AuthFilter implements Filter {
                 || path.endsWith(".css")
                 || path.endsWith(".js")
                 || path.endsWith(".png")
-                || path.endsWith(".jpg")
-                || path.endsWith(".jsp"); // Temporal para diagnóstico
+                || path.endsWith(".jpg");
     }
 
     @Override

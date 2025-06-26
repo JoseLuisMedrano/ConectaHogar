@@ -4,6 +4,8 @@ package com.mycompany.conectahogar.controller;
 import com.mycompany.conectahogar.model.Cliente;
 import com.mycompany.conectahogar.model.Servicio;
 import com.mycompany.conectahogar.model.SolicitudTrabajo;
+import com.mycompany.conectahogar.model.TipoUsuario;
+import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.service.SolicitudService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Arrays;
@@ -34,21 +35,33 @@ public class PanelClienteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null || !"Cliente".equals(session.getAttribute("rol"))) {
+
+        // Verificamos que el usuario exista en la sesión y sea un Cliente
+        if (session == null || session.getAttribute("usuario") == null
+                || !(((Usuario) session.getAttribute("usuario")).getTipoUsuario() == TipoUsuario.CLIENTE)) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
+        // ¡CORRECCIÓN! Ahora el casting es seguro porque creamos un Cliente en el LoginServlet.
         Cliente cliente = (Cliente) session.getAttribute("usuario");
 
-        // 1. Obtener la lista de solicitudes
-        List<SolicitudTrabajo> solicitudesCliente = solicitudService.listarSolicitudesPorCliente(cliente.getId_Usuario());
+        // --- SIMULACIÓN DE DATOS (sin base de datos) ---
+        // Comentamos la línea que usa el servicio de base de datos
+        // List<SolicitudTrabajo> solicitudesCliente = solicitudService.listarSolicitudesPorCliente(cliente.getId_Usuario());
+        // En su lugar, creamos datos de prueba para que el JSP funcione
+        request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values())); //
+        request.setAttribute("solicitudes", new java.util.ArrayList<SolicitudTrabajo>()); // Enviamos una lista vacía por ahora
+        request.setAttribute("clienteActual", cliente); // Pasamos el cliente al JSP
 
-        // 2. CORRECCIÓN: Pasar la lista de servicios al JSP para el formulario
-        request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values()));
-
-        // 3. CORRECCIÓN: Usar el nombre de atributo que el JSP espera ("solicitudes")
-        request.setAttribute("solicitudes", solicitudesCliente);
+        // Mostramos mensajes de éxito/error si existen
+        if (request.getAttribute("mensajeExito") != null) {
+            request.setAttribute("mensajeExito", request.getAttribute("mensajeExito"));
+        }
+        if (request.getAttribute("mensajeError") != null) {
+            request.setAttribute("mensajeError", request.getAttribute("mensajeError"));
+        }
+        // --- FIN DE SIMULACIÓN ---
 
         request.getRequestDispatcher("/panelCliente.jsp").forward(request, response);
     }
@@ -57,73 +70,26 @@ public class PanelClienteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null || !"Cliente".equals(session.getAttribute("rol"))) {
+        if (session == null || session.getAttribute("usuario") == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        Cliente cliente = (Cliente) session.getAttribute("usuario");
-        String action = request.getParameter("action");
-        String mensaje = "";
-        boolean exito = false;
+        String action = request.getParameter("accion"); //
 
-        switch (action) {
-            case "crearSolicitud":
-                String descripcion = request.getParameter("descripcion");
-                String servicioStr = request.getParameter("servicio");
-                String precioSugeridoStr = request.getParameter("precioSugerido");
-
-                if (descripcion == null || descripcion.trim().isEmpty()
-                        || servicioStr == null || servicioStr.trim().isEmpty()
-                        || precioSugeridoStr == null || precioSugeridoStr.trim().isEmpty()) {
-                    mensaje = "Error: Todos los campos de la solicitud son obligatorios.";
-                    break;
-                }
-
-                try {
-                    Servicio servicio = Servicio.valueOf(servicioStr.toUpperCase());
-                    Double precioSugerido = Double.parseDouble(precioSugeridoStr);
-
-                    SolicitudTrabajo nuevaSolicitud = new SolicitudTrabajo();
-                    nuevaSolicitud.setIdCliente(cliente.getId_Usuario());
-                    nuevaSolicitud.setDescripcion(descripcion);
-                    nuevaSolicitud.setServicio(servicio);
-                    nuevaSolicitud.setPrecioSugerido(precioSugerido);
-
-                    exito = solicitudService.crearSolicitud(nuevaSolicitud);
-                    if (exito) {
-                        mensaje = "Solicitud de trabajo creada con éxito.";
-                    } else {
-                        mensaje = "Error al crear la solicitud de trabajo. Intente nuevamente.";
-                    }
-                } catch (IllegalArgumentException e) {
-                    logger.error("Error al parsear servicio o precio sugerido: {}", e.getMessage(), e);
-                    mensaje = "Error: Datos de servicio o precio sugerido inválidos.";
-                }
-                break;
-            case "cancelarSolicitud":
-                int idSolicitudCancelar = 0;
-                try {
-                    idSolicitudCancelar = Integer.parseInt(request.getParameter("idSolicitud"));
-                } catch (NumberFormatException e) {
-                    logger.error("ID de solicitud a cancelar inválida: {}", request.getParameter("idSolicitud"), e);
-                    mensaje = "Error: ID de solicitud inválida para cancelar.";
-                    break;
-                }
-                exito = solicitudService.rechazarSolicitud(idSolicitudCancelar);
-                if (exito) {
-                    mensaje = "Solicitud cancelada con éxito.";
-                } else {
-                    mensaje = "Error al cancelar la solicitud.";
-                }
-                break;
-            default:
-                mensaje = "Acción no reconocida.";
-                break;
+        // Simulamos la creación de una solicitud para que veas el mensaje
+        if ("crearSolicitud".equals(action)) {
+            String descripcion = request.getParameter("descripcion");
+            if (descripcion != null && !descripcion.trim().isEmpty()) {
+                System.out.println("Simulación: Solicitud creada con descripción: " + descripcion);
+                request.setAttribute("mensajeExito", "Solicitud de trabajo creada con éxito (simulación).");
+            } else {
+                request.setAttribute("mensajeError", "Error: La descripción es obligatoria.");
+            }
         }
 
-        request.setAttribute("mensaje", mensaje);
+        // Finalmente, llamamos a doGet para recargar la página con los datos y mensajes actualizados.
         doGet(request, response);
     }
-
 }
+

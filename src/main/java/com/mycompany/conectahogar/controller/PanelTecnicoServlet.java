@@ -1,16 +1,17 @@
 // Archivo: com/mycompany/conectahogar/controller/PanelTecnicoServlet.java
 package com.mycompany.conectahogar.controller;
 
-import com.mycompany.conectahogar.model.EstadoSolicitud;
 import com.mycompany.conectahogar.model.SolicitudTrabajo;
 import com.mycompany.conectahogar.model.Tecnico;
+import com.mycompany.conectahogar.model.TipoUsuario;
+import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.service.SolicitudService;
-import jakarta.servlet.ServletException; // Cambiado de javax.servlet.ServletException
-import jakarta.servlet.annotation.WebServlet; // Cambiado de javax.servlet.annotation.WebServlet
-import jakarta.servlet.http.HttpServlet; // Cambiado de javax.servlet.http.HttpServlet
-import jakarta.servlet.http.HttpServletRequest; // Cambiado de javax.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse; // Cambiado de javax.servlet.http.HttpServletResponse
-import jakarta.servlet.http.HttpSession; // Cambiado de javax.servlet.http.HttpSession
+import jakarta.servlet.ServletException; 
+import jakarta.servlet.annotation.WebServlet; 
+import jakarta.servlet.http.HttpServlet; 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse; 
+import jakarta.servlet.http.HttpSession; 
 import java.io.IOException;
 import java.util.List;
 import org.slf4j.Logger;
@@ -18,33 +19,37 @@ import org.slf4j.LoggerFactory;
 
 @WebServlet("/panelTecnico")
 public class PanelTecnicoServlet extends HttpServlet {
+
     private static final Logger logger = LoggerFactory.getLogger(PanelTecnicoServlet.class);
-    
-    private SolicitudService solicitudService; 
+
+    private SolicitudService solicitudService;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        this.solicitudService = new SolicitudService(); 
+        this.solicitudService = new SolicitudService();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null || !"Tecnico".equals(session.getAttribute("rol"))) {
-            response.sendRedirect("login.jsp");
+
+        Usuario usuario = (session != null) ? (Usuario) session.getAttribute("usuario") : null;
+
+        if (usuario == null || usuario.getTipoUsuario() != TipoUsuario.TECNICO) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
         Tecnico tecnico = (Tecnico) session.getAttribute("usuario");
-        
+
         List<SolicitudTrabajo> solicitudesPendientes = solicitudService.listarSolicitudesPendientes();
         List<SolicitudTrabajo> solicitudesAsignadas = solicitudService.listarSolicitudesPorTecnico(tecnico.getId_Usuario());
 
         request.setAttribute("solicitudesPendientes", solicitudesPendientes);
         request.setAttribute("solicitudesAsignadas", solicitudesAsignadas);
-        request.getRequestDispatcher("panelTecnico.jsp").forward(request, response);
+          request.getRequestDispatcher("/WEB-INF/views/tecnico/panelTecnico.jsp").forward(request, response);
     }
 
     @Override
@@ -88,7 +93,7 @@ public class PanelTecnicoServlet extends HttpServlet {
                     mensaje = "Error: El precio ofrecido no puede estar vacío o ser menor o igual a cero.";
                     break;
                 }
-                
+
                 exito = solicitudService.aceptarSolicitud(tecnico.getId_Usuario(), idSolicitud, precioOfrecido);
                 if (exito) {
                     mensaje = "Solicitud aceptada y asignada con éxito.";
@@ -124,12 +129,12 @@ public class PanelTecnicoServlet extends HttpServlet {
                         break;
                     }
                 }
-                
+
                 if (nuevoPrecio == null || nuevoPrecio <= 0) {
                     mensaje = "Error: El nuevo precio de contraoferta no puede estar vacío o ser menor o igual a cero.";
                     break;
                 }
-                
+
                 exito = solicitudService.hacerContraoferta(idSolicitud, nuevoPrecio);
                 if (exito) {
                     mensaje = "Contraoferta realizada con éxito.";
