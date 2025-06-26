@@ -4,7 +4,6 @@ import com.mycompany.conectahogar.model.Cliente;
 import com.mycompany.conectahogar.model.Tecnico;
 import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.model.TipoUsuario;
-import com.mycompany.conectahogar.service.UsuarioService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,10 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login", "/LoginServlet"})
+@WebServlet("/login") // Asegúrate de que esta anotación esté en la clase LoginServlet
 public class LoginServlet extends HttpServlet {
-
-    private UsuarioService usuarioService = new UsuarioService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,62 +27,46 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    String correo = request.getParameter("correo");
-    String contrasena = request.getParameter("contrasena");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String correo = request.getParameter("correo");
+        String contrasena = request.getParameter("contrasena");
 
-    // Simulación de autenticación MEJORADA
-    Usuario usuario = null;
+        // Simulación de autenticación
+        Usuario usuario = null;
 
-    if ("cliente@test.com".equals(correo) && "123456".equals(contrasena)) {
-        // ¡CORRECCIÓN! Ahora creamos un objeto Cliente directamente.
-        Cliente cliente = new Cliente();
-        cliente.setId_Usuario(1);
-        cliente.setNombre("Juan");
-        cliente.setApellido("Pérez");
-        cliente.setCorreoElectronico(correo);
-        cliente.setTipoUsuario(TipoUsuario.CLIENTE); // El tipo sigue siendo importante
-        cliente.setDireccion("Av. de Prueba 123"); // Añadimos un dato específico de cliente
-        usuario = cliente; // Asignamos el objeto Cliente a la variable usuario
-        System.out.println("Simulando login exitoso para CLIENTE.");
-    } else if ("tecnico@test.com".equals(correo) && "123456".equals(contrasena)) {
-        // ¡CORRECCIÓN! Ahora creamos un objeto Tecnico directamente.
-        Tecnico tecnico = new Tecnico();
-        tecnico.setId_Usuario(2);
-        tecnico.setNombre("Ana");
-        tecnico.setApellido("García");
-        tecnico.setCorreoElectronico(correo);
-        tecnico.setTipoUsuario(TipoUsuario.TECNICO);
-        usuario = tecnico; // Asignamos el objeto Tecnico a la variable usuario
-        System.out.println("Simulando login exitoso para TECNICO.");
-    }
+        if ("cliente@test.com".equals(correo) && "123456".equals(contrasena)) {
+            Cliente cliente = new Cliente();
+            cliente.setCorreoElectronico(correo);
+            cliente.setNombre("Juan");
+            cliente.setApellido("Pérez");
+            cliente.setTipoUsuario(TipoUsuario.CLIENTE);
+            usuario = cliente;
+        } else if ("tecnico@test.com".equals(correo) && "123456".equals(contrasena)) {
+            Tecnico tecnico = new Tecnico();
+            tecnico.setCorreoElectronico(correo);
+            tecnico.setNombre("Ana");
+            tecnico.setApellido("García");
+            tecnico.setTipoUsuario(TipoUsuario.TECNICO);
+            usuario = tecnico;
+        }
 
-    if (usuario == null) {
-        request.setAttribute("mensajeError", "Credenciales de prueba inválidas.");
-        request.getRequestDispatcher("login.jsp").forward(request, response);
-        return;
-    }
+        if (usuario == null) {
+            request.setAttribute("mensajeError", "Credenciales inválidas.");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
+            return;
+        }
 
-        // Crear sesión y redirigir según rol
+        // Crear sesión y redirigir según el rol
         HttpSession session = request.getSession();
-        session.setAttribute("usuario", usuario); // 
+        session.setAttribute("usuario", usuario);
 
-        // ¡¡AQUÍ CORREGIMOS LAS RUTAS!! (Ver Paso 2)
         switch (usuario.getTipoUsuario()) {
-            
-            // En LoginServlet.java, dentro del switch
             case CLIENTE:
-                // La URL correcta que coincide con @WebServlet("/panelCliente")
                 response.sendRedirect(request.getContextPath() + "/panelCliente");
                 break;
             case TECNICO:
-                // La URL correcta que coincide con @WebServlet("/panelTecnico")
                 response.sendRedirect(request.getContextPath() + "/panelTecnico");
-                break;
-            case ADMINISTRADOR:
-                // Ajustar cuando tengas el panel de admin
-                response.sendRedirect(request.getContextPath() + "/admin/panel"); // 
                 break;
             default:
                 response.sendRedirect(request.getContextPath() + "/login.jsp");
