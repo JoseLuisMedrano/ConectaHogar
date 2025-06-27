@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-outline-light ms-lg-2" href="${pageContext.request.contextPath}/loginServlet">
+                            <a class="nav-link btn btn-outline-light ms-lg-2" href="${pageContext.request.contextPath}/login">
                                 <i class="fas fa-sign-in-alt me-1"></i> Ingresar
                             </a>
                         </li>

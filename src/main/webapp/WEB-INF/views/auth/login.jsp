@@ -36,7 +36,7 @@
                             </div>
                         </c:if>
 
-                        <form action="${pageContext.request.contextPath}/LoginServlet" method="post">
+                        <form action="${pageContext.request.contextPath}/login" method="post">
                             <div class="mb-3">
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="correo" name="correo" 
@@ -64,7 +64,7 @@
                         </form>
 
                         <div class="text-center mt-4 pt-3 border-top">
-                            <p class="mb-0">¿No tienes cuenta? <a href="${pageContext.request.contextPath}/register.jsp" class="text-decoration-none">Regístrate aquí</a></p>
+                            <p class="mb-0">¿No tienes cuenta? <a href="${pageContext.request.contextPath}/register" class="text-decoration-none">Regístrate aquí</a></p>
                         </div>
                         
                         <div class="mt-4 pt-3 border-top">

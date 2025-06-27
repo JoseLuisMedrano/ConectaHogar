@@ -3,16 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+         
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.mycompany.conectahogar.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
 
-    <!-- Configuración del filtro -->
-    <filter>
-        <filter-name>AuthFilter</filter-name>
-        <filter-class>com.mycompany.conectahogar.filter.AuthFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <servlet>
+        <servlet-name>PanelClienteServlet</servlet-name>
+        <servlet-class>com.mycompany.conectahogar.controller.PanelClienteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PanelClienteServlet</servlet-name>
+        <url-pattern>/panelCliente</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PanelTecnicoServlet</servlet-name>
+        <servlet-class>com.mycompany.conectahogar.controller.PanelTecnicoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PanelTecnicoServlet</servlet-name>
+        <url-pattern>/panelTecnico</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
