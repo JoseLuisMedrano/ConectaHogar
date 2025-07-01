@@ -68,11 +68,10 @@ public class UsuarioDAO {
         usuario.setApellido(rs.getString("apellido"));
         usuario.setContrasena(rs.getString("contrasena"));
         usuario.setCorreoElectronico(rs.getString("correoElectronico"));
-        // ... etc
-        
-        // Añadir mapeo para los nuevos campos
         usuario.setEdad(rs.getInt("edad"));
         usuario.setSexo(rs.getString("sexo"));
+        
+        usuario.setTipoUsuario(tipoUsuario);
         
         return usuario;
     }

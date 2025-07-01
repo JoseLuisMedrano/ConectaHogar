@@ -1,4 +1,3 @@
-// Archivo: com/mycompany/conectahogar/config/ConexionBD.java
 package com.mycompany.conectahogar.config;
 
 import java.sql.Connection;
@@ -10,9 +9,10 @@ import org.slf4j.LoggerFactory;
 public class ConexionBD {
     private static final Logger logger = LoggerFactory.getLogger(ConexionBD.class);
 
-    private static final String URL = "jdbc:mysql://localhost:3306/conectahogar";
+    // URL mejorada con parámetros para zona horaria y SSL
+    private static final String URL = "jdbc:mysql://localhost:3306/conectahogar?serverTimezone=UTC&useSSL=false";
     private static final String USUARIO = "root";
-    private static final String CONTRASENA = "";
+    private static final String CONTRASENA = ""; // Asegúrate que esta sea tu contraseña correcta
 
     static {
         try {
