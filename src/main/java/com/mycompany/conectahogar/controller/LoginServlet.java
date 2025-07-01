@@ -1,26 +1,23 @@
 package com.mycompany.conectahogar.controller;
 
-import com.mycompany.conectahogar.model.Cliente;
-import com.mycompany.conectahogar.model.Tecnico;
 import com.mycompany.conectahogar.model.Usuario;
-import com.mycompany.conectahogar.model.TipoUsuario;
+import com.mycompany.conectahogar.service.UsuarioService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
+    
+    private final UsuarioService usuarioService = new UsuarioService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Invalidar sesión previa al mostrar login
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
         request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
     }
 
@@ -30,32 +27,14 @@ public class LoginServlet extends HttpServlet {
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
 
-        // Simulación de autenticación
-        Usuario usuario = null;
-
-        if ("cliente@test.com".equals(correo) && "123456".equals(contrasena)) {
-            Cliente cliente = new Cliente();
-            cliente.setCorreoElectronico(correo);
-            cliente.setNombre("Juan");
-            cliente.setApellido("Pérez");
-            cliente.setTipoUsuario(TipoUsuario.CLIENTE);
-            usuario = cliente;
-        } else if ("tecnico@test.com".equals(correo) && "123456".equals(contrasena)) {
-            Tecnico tecnico = new Tecnico();
-            tecnico.setCorreoElectronico(correo);
-            tecnico.setNombre("Ana");
-            tecnico.setApellido("García");
-            tecnico.setTipoUsuario(TipoUsuario.TECNICO);
-            usuario = tecnico;
-        }
+        Usuario usuario = usuarioService.autenticarUsuario(correo, contrasena);
 
         if (usuario == null) {
-            request.setAttribute("mensajeError", "Credenciales inválidas.");
+            request.setAttribute("mensajeError", "Correo o contraseña incorrectos.");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
             return;
         }
 
-        // Crear sesión y redirigir según el rol
         HttpSession session = request.getSession();
         session.setAttribute("usuario", usuario);
 
@@ -66,8 +45,12 @@ public class LoginServlet extends HttpServlet {
             case TECNICO:
                 response.sendRedirect(request.getContextPath() + "/panelTecnico");
                 break;
+            case ADMINISTRADOR:
+                // Redirigir a un futuro panel de administrador
+                response.sendRedirect(request.getContextPath() + "/adminDashboard");
+                break;
             default:
-                response.sendRedirect(request.getContextPath() + "/login.jsp");
+                response.sendRedirect(request.getContextPath() + "/login");
                 break;
         }
     }
