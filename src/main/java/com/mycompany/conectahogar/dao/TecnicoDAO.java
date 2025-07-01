@@ -80,6 +80,35 @@ public class TecnicoDAO {
         tecnico.setDisponibilidad(rs.getString("disponibilidad"));
         tecnico.setCertificaciones(rs.getString("certificaciones"));
         tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
-        return tecnico;
+        return tecnico;    
+    }
+    
+    public void cargarDatosEspecificos(Tecnico tecnico) {
+        String sql = "SELECT especialidad, disponibilidad, certificaciones, calificacionPromedio FROM tecnicos WHERE id_Usuario = ?";
+        
+        // Log para saber qué estamos buscando
+        logger.info("Cargando datos específicos para el técnico ID: {}", tecnico.getId_Usuario());
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, tecnico.getId_Usuario());
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    tecnico.setEspecialidad(rs.getString("especialidad"));
+                    tecnico.setDisponibilidad(rs.getString("disponibilidad"));
+                    tecnico.setCertificaciones(rs.getString("certificaciones"));
+                    tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
+                    
+                    // Log para confirmar que se encontraron y asignaron los datos
+                    logger.info("Datos cargados para técnico ID {}: Especialidad='{}'", tecnico.getId_Usuario(), tecnico.getEspecialidad());
+                } else {
+                    logger.warn("No se encontraron datos específicos en la tabla 'tecnicos' para el ID: {}", tecnico.getId_Usuario());
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al cargar datos específicos para el técnico {}", tecnico.getId_Usuario(), e);
+        }
     }
 }

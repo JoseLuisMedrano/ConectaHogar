@@ -37,14 +37,24 @@
                 <c:if test="${not empty mensajeExito}"><div class="alert alert-success">${mensajeExito}</div></c:if>
                 <c:if test="${not empty mensajeError}"><div class="alert alert-danger">${mensajeError}</div></c:if>
 
-                    <div id="inicio-section" class="content-section"> ... </div>
+                    <div id="inicio-section" class="content-section">
+                        <h3><i class="bi bi-person-vcard"></i> Mi Perfil Profesional</h3>
+                        <div class="card card-body">
+                            <p><strong>Nombre:</strong> <c:out value="${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}"/></p>
 
-                    <div id="trabajos-section" class="content-section">
-                        <h3><i class="bi bi-briefcase-fill"></i> Trabajos Disponibles en tu Especialidad</h3>
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead><tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Presupuesto</th><th>Acción</th></tr></thead>
-                                <tbody>
+                        <p><strong>Especialidad:</strong> <c:out value="${sessionScope.usuario.especialidad}"/></p>
+                        <p><strong>Disponibilidad:</strong> <c:out value="${sessionScope.usuario.disponibilidad}"/></p>
+                        <p><strong>Calificación Promedio:</strong> <c:out value="${sessionScope.usuario.calificacionPromedio}"/></p>
+                        <p><strong>Certificaciones:</strong> <c:out value="${sessionScope.usuario.certificaciones != null ? sessionScope.usuario.certificaciones : 'No registradas'}"/></p>
+                    </div>
+                </div>
+
+                <div id="trabajos-section" class="content-section">
+                    <h3><i class="bi bi-briefcase-fill"></i> Trabajos Disponibles en tu Especialidad</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead><tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Presupuesto</th><th>Acción</th></tr></thead>
+                            <tbody>
                                 <c:forEach var="solicitud" items="${solicitudesPendientes}">
                                     <tr>
                                         <td>#<c:out value="${solicitud.id}"/></td>
