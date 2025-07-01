@@ -17,12 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SolicitudTrabajoDAO {
+
     private static final Logger logger = LoggerFactory.getLogger(SolicitudTrabajoDAO.class);
 
     public boolean crearSolicitud(SolicitudTrabajo solicitud) {
         String sql = "INSERT INTO solicitudes_trabajo (id_Cliente, descripcion, servicio, precioSugerido, estado, fechaCreacion) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, solicitud.getIdCliente());
             stmt.setString(2, solicitud.getDescripcion());
             stmt.setString(3, solicitud.getServicio().name());
@@ -46,8 +46,7 @@ public class SolicitudTrabajoDAO {
 
     public boolean asignarTecnicoASolicitud(int idSolicitud, int idTecnico, Double precioOfrecido) {
         String sql = "UPDATE solicitudes_trabajo SET id_Tecnico = ?, precioFinal = ?, estado = ? WHERE id_Solicitud = ? AND estado = 'PENDIENTE'";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idTecnico);
             stmt.setDouble(2, precioOfrecido);
             stmt.setString(3, EstadoSolicitud.ACEPTADA.name());
@@ -58,11 +57,10 @@ public class SolicitudTrabajoDAO {
         }
         return false;
     }
-    
+
     public boolean actualizarSolicitud(SolicitudTrabajo solicitud) {
         String sql = "UPDATE solicitudes_trabajo SET id_Tecnico = ?, descripcion = ?, precioFinal = ?, estado = ?, fechaFinalizacion = ? WHERE id_Solicitud = ?";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setObject(1, solicitud.getIdTecnico());
             stmt.setString(2, solicitud.getDescripcion());
             stmt.setObject(3, solicitud.getPrecioFinal());
@@ -75,11 +73,10 @@ public class SolicitudTrabajoDAO {
         }
         return false;
     }
-    
+
     public SolicitudTrabajo obtenerSolicitudPorId(int idSolicitud) {
         String sql = "SELECT * FROM solicitudes_trabajo WHERE id_Solicitud = ?";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idSolicitud);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -91,12 +88,11 @@ public class SolicitudTrabajoDAO {
         }
         return null;
     }
-    
+
     public List<SolicitudTrabajo> obtenerSolicitudesPorCliente(int idCliente) {
         List<SolicitudTrabajo> solicitudes = new ArrayList<>();
         String sql = "SELECT * FROM solicitudes_trabajo WHERE id_Cliente = ? ORDER BY fechaCreacion DESC";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idCliente);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -122,5 +118,45 @@ public class SolicitudTrabajoDAO {
         solicitud.setFechaCreacion(rs.getTimestamp("fechaCreacion"));
         solicitud.setFechaFinalizacion(rs.getTimestamp("fechaFinalizacion"));
         return solicitud;
+    }
+
+    public List<SolicitudTrabajo> obtenerSolicitudesPendientesPorEspecialidad(String especialidad) {
+        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
+        // La consulta busca solicitudes PENDIENTES y cuyo SERVICIO coincida con la especialidad del técnico.
+        String sql = "SELECT * FROM solicitudes_trabajo WHERE estado = 'PENDIENTE' AND servicio = ? ORDER BY fechaCreacion ASC";
+
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, especialidad);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    solicitudes.add(mapearSolicitud(rs)); // Reutilizamos el método que ya tienes
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al obtener solicitudes pendientes por especialidad {}: {}", especialidad, e.getMessage(), e);
+        }
+        return solicitudes;
+    }
+
+    public List<SolicitudTrabajo> obtenerSolicitudesPorTecnico(int idTecnico) {
+        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
+        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_Tecnico = ? ORDER BY fechaCreacion DESC";
+
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idTecnico);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Reutilizamos el método que ya tienes para crear el objeto
+                    solicitudes.add(mapearSolicitud(rs));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error al obtener solicitudes asignadas al técnico {}: {}", idTecnico, e.getMessage(), e);
+        }
+        return solicitudes;
     }
 }

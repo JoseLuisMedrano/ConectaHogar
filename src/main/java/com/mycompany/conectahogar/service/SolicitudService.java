@@ -72,4 +72,10 @@ public class SolicitudService {
     public List<SolicitudTrabajo> listarSolicitudesPorCliente(int idCliente) {
         return solicitudDao.obtenerSolicitudesPorCliente(idCliente);
     }
+    public List<SolicitudTrabajo> listarSolicitudesPendientesPorEspecialidad(String especialidad) {
+    return solicitudDao.obtenerSolicitudesPendientesPorEspecialidad(especialidad);
+}
+    public List<SolicitudTrabajo> listarSolicitudesPorTecnico(int idTecnico) {
+    return solicitudDao.obtenerSolicitudesPorTecnico(idTecnico);
+}
 }

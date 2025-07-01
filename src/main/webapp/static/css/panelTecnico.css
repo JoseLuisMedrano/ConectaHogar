@@ -1,296 +1,72 @@
-:root {
-    /* Puedes ajustar los colores si quieres que el panel del técnico se vea diferente */
-    --primary: #0077b6; /* Un azul diferente, por ejemplo */
-    --secondary: #00b4d8;
-    --accent: #90e0ef;
-    --light: #f0f8ff; /* Blanco azulado */
-    --dark: #2a2a2a;
-    --success: #28a745;
-    --warning: #ffc107;
-    --info: #17a2b8;
-    --danger: #dc3545;
-}
-
+/* Estilos para el panel del técnico. Ya estaban bien definidos. */
 #panel-tecnico-page {
-    font-family: 'Arial', sans-serif; /* Puedes usar la misma fuente que el cliente o una diferente */
     display: flex;
     min-height: 100vh;
-    background: linear-gradient(135deg, #e0f8fc, #c5e6ee); /* Fondo sutil */
-    color: var(--dark);
-    transition: all 0.4s ease;
 }
 
-#panel-tecnico-page nav {
+.sidebar { /* Renombrado de 'nav' para mayor claridad */
     width: 280px;
-    padding: 2.5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(180deg, var(--primary), var(--secondary));
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.15);
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 10;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding: 1.5rem;
+    flex-shrink: 0;
 }
 
-#panel-tecnico-page nav h1 {
-    color: #fff;
-    font-size: 1.9rem;
-    margin-bottom: 2.5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-#panel-tecnico-page nav h1 i {
-    font-size: 1.6rem;
-}
-
-#panel-tecnico-page .welcome-heading {
-    color: var(--primary);
-    font-weight: 700;
-    margin-bottom: 1rem !important;
-}
-
-#panel-tecnico-page .welcome-subheading {
-    color: var(--primary);
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-}
-
-
-#panel-tecnico-page nav ul {
-    list-style: none;
-    flex-grow: 1;
-    padding-left: 0;
-}
-
-#panel-tecnico-page nav ul li {
-    margin-bottom: 1.3rem;
-    transition: transform 0.3s;
-}
-
-#panel-tecnico-page nav ul li:hover {
-    transform: translateX(6px);
-}
-
-#panel-tecnico-page nav ul li a,
-#panel-tecnico-page nav ul li .nav-link-button {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-    color: #fff;
+.sidebar .navbar-brand {
+    font-size: 1.5rem;
     font-weight: 600;
-    font-size: 1.15rem;
-    padding: 1rem 1.3rem;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.15);
-    transition: all 0.3s;
-    width: 100%;
-    box-sizing: border-box;
-    border: none;
-    cursor: pointer;
-    text-align: left;
+    color: #343a40;
 }
 
-#panel-tecnico-page nav ul li a:hover,
-#panel-tecnico-page nav ul li .nav-link-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+.sidebar .nav-link {
+    color: #495057;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#panel-tecnico-page nav ul li a i,
-#panel-tecnico-page nav ul li .nav-link-button i {
-    font-size: 1.3rem;
-    width: 26px;
-    text-align: center;
+.sidebar .nav-link i {
+    margin-right: 1rem;
+    width: 20px;
 }
 
-#panel-tecnico-page .nav-item .nav-link.active-nav {
-    font-weight: bold;
+/* Estilo del enlace activo en el menú */
+.sidebar .nav-link.active-nav {
+    background-color: #0d6efd;
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.3);
+    font-weight: 500;
+}
+
+.sidebar .nav-link:not(.active-nav):hover {
+    background-color: #e9ecef;
 }
 
 .nav-link-button {
-    background-color: var(--danger); /* Rojo para cerrar sesión */
-    color: #fff;
+    background: none;
     border: none;
-    padding: 0.85rem 1.6rem;
-    border-radius: 0.25rem;
-    transition: background-color 0.2s ease-in-out;
-    border: none;
-    cursor: pointer;
-}
-.nav-link-button:hover,
-.nav-link-button:focus {
-    background-color: #c82333; /* Un rojo más oscuro al pasar el ratón */
-    color: #fff;
+    width: 100%;
+    text-align: left;
 }
 
-#panel-tecnico-page main {
+.main-content {
     flex-grow: 1;
-    padding: 3.2rem;
-    overflow-y: auto;
-    margin-left: 280px; /* Igual al ancho del nav */
-    background-color: #f9f9f9;
+    padding: 2rem;
+    background-color: #fff;
 }
 
+/* Lógica para mostrar y ocultar secciones */
 .content-section {
-    display: none; /* Crucial para ocultar secciones por defecto */
-    background: var(--light);
-    border-left: 5px solid var(--accent);
-    border-radius: 14px;
-    padding: 2.3rem;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    display: none; /* Ocultar todas las secciones por defecto */
+    animation: fadeIn 0.5s ease-in-out;
 }
+
 .content-section.active {
-    display: block; /* Crucial para mostrar la sección activa */
+    display: block; /* Mostrar solo la sección activa */
 }
 
-.content-section:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-.content-section h2 {
-    margin-bottom: 1.8rem;
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--primary);
-}
-
-.content-section h2 i {
-    font-size: 1.6rem;
-}
-
-/* Estilos para el formulario si hubiera uno en el técnico */
-#panel-tecnico-page form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.7rem;
-}
-
-#panel-tecnico-page .mb-3 {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-bottom: 1.7rem !important;
-}
-
-#panel-tecnico-page label {
-    font-weight: 600;
-    color: var(--dark);
-}
-
-#panel-tecnico-page input.form-control,
-#panel-tecnico-page select.form-select,
-#panel-tecnico-page textarea.form-control {
-    padding: 0.9rem 1.2rem;
-    border: 1.5px solid #ccc;
-    border-radius: 9px;
-    font-family: 'Arial', sans-serif;
-    font-size: 1.05rem;
-    transition: all 0.3s;
-}
-
-#panel-tecnico-page textarea.form-control {
-    min-height: 140px;
-    resize: vertical;
-}
-
-#panel-tecnico-page input.form-control:focus,
-#panel-tecnico-page select.form-select:focus,
-#panel-tecnico-page textarea.form-control:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(144, 224, 239, 0.25); /* Sombra de enfoque con color de acento */
-}
-
-#panel-tecnico-page button.btn-primary {
-    background-color: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 0.85rem 1.6rem;
-    border-radius: 9px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#panel-tecnico-page button.btn-primary:hover {
-    background-color: var(--secondary);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Estilos para los alerts */
-#panel-tecnico-page .alert {
-    padding: 1.2rem;
-    border-radius: 9px;
-    margin: 1.2rem 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-#panel-tecnico-page .alert-success {
-    background-color: rgba(40, 167, 69, 0.2);
-    border-left: 5px solid var(--success);
-    color: #155724;
-}
-
-#panel-tecnico-page .alert-danger {
-    background-color: rgba(220, 53, 69, 0.2);
-    border-left: 5px solid var(--danger);
-    color: #721c24;
-}
-
-#panel-tecnico-page .alert-info {
-    background-color: rgba(23, 162, 184, 0.2);
-    border-left: 5px solid var(--info);
-    color: #0c5460;
-}
-
-/* Estilos para los badges de estado */
-#panel-tecnico-page .badge {
-    padding: 0.5em 0.8em;
-    border-radius: 0.4rem;
-    font-size: 0.85em;
-    font-weight: 700;
-}
-
-/* Estilos para las tablas */
-#panel-tecnico-page .table {
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-#panel-tecnico-page .table thead th {
-    background-color: var(--primary);
-    color: #fff;
-    border-bottom: none;
-    padding: 1.2rem 1.5rem;
-}
-
-#panel-tecnico-page .table tbody tr:nth-child(even) {
-    background-color: rgba(0, 119, 182, 0.05); /* Ligeramente más oscuro para filas pares */
-}
-
-#panel-tecnico-page .table tbody td {
-    padding: 1rem 1.5rem;
-    vertical-align: middle;
-    border-top: 1px solid #e9ecef;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
