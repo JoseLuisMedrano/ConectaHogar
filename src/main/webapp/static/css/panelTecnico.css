@@ -1,37 +1,25 @@
 :root {
-    --primary: #005f73;
-    --secondary: #0a9396;
-    --accent: #94d2bd;
-    --light: #f0efeb;
-    --dark: #222222;
-    --success: #52b788;
-    --warning: #ee6c4d;
-    --info: #3a86ff;
+    /* Puedes ajustar los colores si quieres que el panel del técnico se vea diferente */
+    --primary: #0077b6; /* Un azul diferente, por ejemplo */
+    --secondary: #00b4d8;
+    --accent: #90e0ef;
+    --light: #f0f8ff; /* Blanco azulado */
+    --dark: #2a2a2a;
+    --success: #28a745;
+    --warning: #ffc107;
+    --info: #17a2b8;
+    --danger: #dc3545;
 }
 
 #panel-tecnico-page {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif; /* Puedes usar la misma fuente que el cliente o una diferente */
     display: flex;
     min-height: 100vh;
-    background: linear-gradient(135deg, #e0fbfc, #98c1d9);
+    background: linear-gradient(135deg, #e0f8fc, #c5e6ee); /* Fondo sutil */
     color: var(--dark);
     transition: all 0.4s ease;
 }
 
-#panel-tecnico-page.theme-verde {
-    background: linear-gradient(135deg, #d9f0e1, #a3d9b1);
-}
-
-#panel-tecnico-page.theme-azul {
-    background: linear-gradient(135deg, #a3cef1, #6aabd2);
-}
-
-#panel-tecnico-page.theme-oscuro {
-    background: linear-gradient(135deg, #0a1f44, #031627);
-    color: var(--light);
-}
-
-/* NAV LATERAL */
 #panel-tecnico-page nav {
     width: 280px;
     padding: 2.5rem 1.5rem;
@@ -39,10 +27,11 @@
     flex-direction: column;
     background: linear-gradient(180deg, var(--primary), var(--secondary));
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.15);
-}
-
-#panel-tecnico-page.theme-oscuro nav {
-    background: linear-gradient(180deg, #031627, #02243a);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
 }
 
 #panel-tecnico-page nav h1 {
@@ -59,9 +48,23 @@
     font-size: 1.6rem;
 }
 
+#panel-tecnico-page .welcome-heading {
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 1rem !important;
+}
+
+#panel-tecnico-page .welcome-subheading {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+
 #panel-tecnico-page nav ul {
     list-style: none;
     flex-grow: 1;
+    padding-left: 0;
 }
 
 #panel-tecnico-page nav ul li {
@@ -73,7 +76,8 @@
     transform: translateX(6px);
 }
 
-#panel-tecnico-page nav ul li a {
+#panel-tecnico-page nav ul li a,
+#panel-tecnico-page nav ul li .nav-link-button {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -85,27 +89,58 @@
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.15);
     transition: all 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    text-align: left;
 }
 
-#panel-tecnico-page nav ul li a:hover {
+#panel-tecnico-page nav ul li a:hover,
+#panel-tecnico-page nav ul li .nav-link-button:hover {
     background-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
-#panel-tecnico-page nav ul li a i {
+#panel-tecnico-page nav ul li a i,
+#panel-tecnico-page nav ul li .nav-link-button i {
     font-size: 1.3rem;
     width: 26px;
     text-align: center;
 }
 
-/* CONTENIDO PRINCIPAL */
+#panel-tecnico-page .nav-item .nav-link.active-nav {
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link-button {
+    background-color: var(--danger); /* Rojo para cerrar sesión */
+    color: #fff;
+    border: none;
+    padding: 0.85rem 1.6rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+.nav-link-button:hover,
+.nav-link-button:focus {
+    background-color: #c82333; /* Un rojo más oscuro al pasar el ratón */
+    color: #fff;
+}
+
 #panel-tecnico-page main {
     flex-grow: 1;
     padding: 3.2rem;
     overflow-y: auto;
+    margin-left: 280px; /* Igual al ancho del nav */
+    background-color: #f9f9f9;
 }
 
-#panel-tecnico-page .content-box {
+.content-section {
+    display: none; /* Crucial para ocultar secciones por defecto */
     background: var(--light);
     border-left: 5px solid var(--accent);
     border-radius: 14px;
@@ -114,13 +149,16 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
 }
+.content-section.active {
+    display: block; /* Crucial para mostrar la sección activa */
+}
 
-#panel-tecnico-page .content-box:hover {
+.content-section:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-#panel-tecnico-page .content-box h2 {
+.content-section h2 {
     margin-bottom: 1.8rem;
     font-size: 2rem;
     display: flex;
@@ -129,31 +167,22 @@
     color: var(--primary);
 }
 
-#panel-tecnico-page .content-box h2 i {
+.content-section h2 i {
     font-size: 1.6rem;
 }
 
-#panel-tecnico-page.theme-oscuro .content-box {
-    background: rgba(255, 255, 255, 0.07);
-    border-left-color: var(--warning);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-}
-
-#panel-tecnico-page.theme-oscuro .content-box h2 {
-    color: var(--success);
-}
-
-/* FORMULARIOS */
+/* Estilos para el formulario si hubiera uno en el técnico */
 #panel-tecnico-page form {
     display: flex;
     flex-direction: column;
     gap: 1.7rem;
 }
 
-#panel-tecnico-page .form-group {
+#panel-tecnico-page .mb-3 {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+    margin-bottom: 1.7rem !important;
 }
 
 #panel-tecnico-page label {
@@ -161,44 +190,31 @@
     color: var(--dark);
 }
 
-#panel-tecnico-page.theme-oscuro label {
-    color: var(--light);
-}
-
-#panel-tecnico-page input,
-#panel-tecnico-page select,
-#panel-tecnico-page textarea {
+#panel-tecnico-page input.form-control,
+#panel-tecnico-page select.form-select,
+#panel-tecnico-page textarea.form-control {
     padding: 0.9rem 1.2rem;
     border: 1.5px solid #ccc;
     border-radius: 9px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 1.05rem;
     transition: all 0.3s;
 }
 
-#panel-tecnico-page textarea {
+#panel-tecnico-page textarea.form-control {
     min-height: 140px;
     resize: vertical;
 }
 
-#panel-tecnico-page input:focus,
-#panel-tecnico-page select:focus,
-#panel-tecnico-page textarea:focus {
+#panel-tecnico-page input.form-control:focus,
+#panel-tecnico-page select.form-select:focus,
+#panel-tecnico-page textarea.form-control:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(148, 210, 189, 0.25);
+    box-shadow: 0 0 0 4px rgba(144, 224, 239, 0.25); /* Sombra de enfoque con color de acento */
 }
 
-#panel-tecnico-page.theme-oscuro input,
-#panel-tecnico-page.theme-oscuro select,
-#panel-tecnico-page.theme-oscuro textarea {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: var(--light);
-}
-
-/* BOTONES */
-#panel-tecnico-page button {
+#panel-tecnico-page button.btn-primary {
     background-color: var(--primary);
     color: #fff;
     border: none;
@@ -213,22 +229,14 @@
     gap: 10px;
 }
 
-#panel-tecnico-page button:hover {
+#panel-tecnico-page button.btn-primary:hover {
     background-color: var(--secondary);
     transform: translateY(-3px);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
-#panel-tecnico-page.theme-oscuro button {
-    background-color: var(--warning);
-}
-
-#panel-tecnico-page.theme-oscuro button:hover {
-    background-color: #e65540;
-}
-
-/* MENSAJES */
-#panel-tecnico-page .mensaje {
+/* Estilos para los alerts */
+#panel-tecnico-page .alert {
     padding: 1.2rem;
     border-radius: 9px;
     margin: 1.2rem 0;
@@ -237,12 +245,52 @@
     gap: 12px;
 }
 
-#panel-tecnico-page .mensaje-exito {
-    background-color: rgba(82, 183, 136, 0.2);
+#panel-tecnico-page .alert-success {
+    background-color: rgba(40, 167, 69, 0.2);
     border-left: 5px solid var(--success);
-    color: #2b6a40;
+    color: #155724;
 }
 
-#panel-tecnico-page.theme-oscuro .mensaje-exito {
-    background-color: rgba(82, 183, 136, 0.15);
+#panel-tecnico-page .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-left: 5px solid var(--danger);
+    color: #721c24;
+}
+
+#panel-tecnico-page .alert-info {
+    background-color: rgba(23, 162, 184, 0.2);
+    border-left: 5px solid var(--info);
+    color: #0c5460;
+}
+
+/* Estilos para los badges de estado */
+#panel-tecnico-page .badge {
+    padding: 0.5em 0.8em;
+    border-radius: 0.4rem;
+    font-size: 0.85em;
+    font-weight: 700;
+}
+
+/* Estilos para las tablas */
+#panel-tecnico-page .table {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#panel-tecnico-page .table thead th {
+    background-color: var(--primary);
+    color: #fff;
+    border-bottom: none;
+    padding: 1.2rem 1.5rem;
+}
+
+#panel-tecnico-page .table tbody tr:nth-child(even) {
+    background-color: rgba(0, 119, 182, 0.05); /* Ligeramente más oscuro para filas pares */
+}
+
+#panel-tecnico-page .table tbody td {
+    padding: 1rem 1.5rem;
+    vertical-align: middle;
+    border-top: 1px solid #e9ecef;
 }

@@ -44,4 +44,20 @@ public class PanelTecnicoServlet extends HttpServlet {
         // 5. Redirigir al JSP correcto
         request.getRequestDispatcher("/WEB-INF/views/tecnico/panelTecnico.jsp").forward(request, response);
     }
+@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("logout".equals(action)) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        } else {
+            doGet(request, response);
+        }
+    }    
 }

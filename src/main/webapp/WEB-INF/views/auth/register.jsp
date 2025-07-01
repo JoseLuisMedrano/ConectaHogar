@@ -21,7 +21,7 @@
                                 <p class="text-muted">Crea tu cuenta</p>
                             </div>
 
-                            <form id="registerForm" action="${pageContext.request.contextPath}/RegistrarUsuarioServlet" method="post">
+                            <form id="registerForm" action="${pageContext.request.contextPath}/register" method="post">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="form-floating">
@@ -38,14 +38,14 @@
 
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
+                                            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo Electrónico" required>
                                             <label for="email">Correo Electrónico</label>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                                            <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" required>
                                             <label for="password">Contraseña</label>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                             </form>
 
                             <div class="text-center mt-3">
-                                <p class="mb-0">¿Ya tienes cuenta? <a href="${pageContext.request.contextPath}/login.jsp" class="text-decoration-none">Inicia sesión</a></p>
+                                <p class="mb-0">¿Ya tienes cuenta? <a href="${pageContext.request.contextPath}/login" class="text-decoration-none">Inicia sesión</a></p>
                             </div>
 
                             <div class="text-center mt-4">
