@@ -28,6 +28,7 @@ public class AceptarSolicitudServlet extends HttpServlet {
             int idSolicitud = Integer.parseInt(request.getParameter("idSolicitud"));
             double precioFinal = Double.parseDouble(request.getParameter("precioSugerido"));
 
+            // En AceptarSolicitudServlet
             boolean exito = solicitudService.aceptarSolicitud(tecnico.getId_Usuario(), idSolicitud, precioFinal);
 
             if (exito) {
@@ -38,7 +39,7 @@ public class AceptarSolicitudServlet extends HttpServlet {
         } catch (Exception e) {
             session.setAttribute("mensajeError", "Ocurrió un error al procesar la solicitud.");
         }
-        
+
         response.sendRedirect(request.getContextPath() + "/panelTecnico");
     }
 }

@@ -22,120 +22,50 @@
                             <p class="text-muted">Crea tu cuenta para empezar</p>
                         </div>
 
-                        <c:if test="${not empty mensajeError}">
-                            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                <div>${mensajeError}</div>
-                            </div>
-                        </c:if>
+                        <c:if test="${not empty mensajeError}"><div class="alert alert-danger">${mensajeError}</div></c:if>
 
                         <form id="registerForm" action="${pageContext.request.contextPath}/register" method="post" class="needs-validation" novalidate>
                             <div class="row g-3">
-                                
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
-                                        <label for="nombre">Nombre</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
-                                        <label for="apellido">Apellido</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo Electrónico" required>
-                                        <label for="correo">Correo Electrónico</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" required minlength="6">
-                                        <label for="contrasena">Contraseña (mín. 6 caracteres)</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="password" class="form-control" id="confirmarContrasena" name="confirmarContrasena" placeholder="Confirmar Contraseña" required>
-                                        <label for="confirmarContrasena">Confirmar Contraseña</label>
-                                        <div class="invalid-feedback">Las contraseñas no coinciden.</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="dni" name="dni" placeholder="DNI" required pattern="[0-9]{8}" title="El DNI debe tener 8 dígitos.">
-                                        <label for="dni">DNI (8 dígitos)</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="+51987654321" required>
-                                        <label for="telefono">Teléfono</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
-                                        <label for="direccion">Dirección</label>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="number" class="form-control" id="edad" name="edad" min="18" max="100" placeholder="Edad" required>
-                                        <label for="edad">Edad (mín. 18 años)</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="sexo" name="sexo" required>
-                                            <option value="" disabled selected>Seleccione...</option>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Otro">Prefiero no decir</option>
-                                        </select>
-                                        <label for="sexo">Sexo</label>
-                                    </div>
-                                </div>
-
                                 <div class="col-12">
                                     <label class="form-label">Quiero registrarme como:</label>
-                                    <div class="form-check mb-2">
+                                    <div class="form-check">
                                         <input class="form-check-input" type="radio" name="tipoUsuario" id="cliente" value="CLIENTE" required>
-                                        <label class="form-check-label fw-bold" for="cliente">
-                                            <i class="fas fa-user me-2 text-primary"></i>Cliente
-                                            <small class="d-block text-muted fw-normal">Para buscar y contratar servicios para mi hogar.</small>
-                                        </label>
+                                        <label class="form-check-label" for="cliente">Cliente</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="tipoUsuario" id="tecnico" value="TECNICO" required>
-                                        <label class="form-check-label fw-bold" for="tecnico">
-                                            <i class="fas fa-tools me-2 text-primary"></i>Técnico
-                                            <small class="d-block text-muted fw-normal">Para ofrecer mis servicios profesionales.</small>
-                                        </label>
+                                        <label class="form-check-label" for="tecnico">Técnico</label>
                                     </div>
                                 </div>
 
+                                <div id="camposTecnico" class="row g-3 mt-2" style="display: none;">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="especialidad" name="especialidad">
+                                                <option value="" selected>Elige tu especialidad...</option>
+                                                <option value="ELECTRICISTA">Electricista</option>
+                                                <option value="GASFITERO">Gasfitero</option>
+                                                <option value="JARDINERO">Jardinero</option>
+                                            </select>
+                                            <label for="especialidad">Especialidad</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="disponibilidad" name="disponibilidad">
+                                                <option value="Disponible" selected>Disponible</option>
+                                                <option value="No Disponible">No Disponible</option>
+                                            </select>
+                                            <label for="disponibilidad">Disponibilidad</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12 mt-4">
-                                    <button id="submitButton" type="submit" class="btn btn-primary w-100 py-2">
-                                        <span id="buttonText">
-                                            <i class="fas fa-user-plus me-2"></i>Registrarme
-                                        </span>
-                                        <span id="buttonSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                    </button>
+                                    <button id="submitButton" type="submit" class="btn btn-primary w-100">Registrarme</button>
                                 </div>
                             </div>
                         </form>
-
-                        <div class="text-center mt-4 pt-3 border-top">
-                            <p class="mb-0">¿Ya tienes una cuenta? <a href="${pageContext.request.contextPath}/login" class="text-decoration-none fw-bold">Inicia sesión</a></p>
-                        </div>
+                        <div class="text-center mt-4"><p>¿Ya tienes una cuenta? <a href="${pageContext.request.contextPath}/login">Inicia sesión</a></p></div>
                     </div>
                 </div>
             </div>

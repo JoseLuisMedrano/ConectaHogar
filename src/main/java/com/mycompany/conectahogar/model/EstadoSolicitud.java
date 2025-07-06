@@ -7,5 +7,6 @@ public enum EstadoSolicitud {
     EN_PROCESO, 
     COMPLETADA, 
     CANCELADA,
-    CONTRAOFERTA
+    CONTRAOFERTA,
+    ASIGNADA
 }

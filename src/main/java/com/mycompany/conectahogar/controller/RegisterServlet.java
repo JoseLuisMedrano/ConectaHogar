@@ -21,6 +21,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Simplemente muestra el formulario de registro
         request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
     }
 
@@ -28,52 +29,77 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Recoger todos los parámetros, incluyendo los nuevos
+        // 1. Recoger todos los parámetros del formulario
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
-        String dni = request.getParameter("dni");           
+        String dni = request.getParameter("dni");
         String direccion = request.getParameter("direccion");
         String telefono = request.getParameter("telefono");
-        String edadStr = request.getParameter("edad"); 
+        String edadStr = request.getParameter("edad");
         String sexo = request.getParameter("sexo");
         String tipoUsuarioStr = request.getParameter("tipoUsuario");
 
         try {
-            TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoUsuarioStr.toUpperCase());
-            int edad = Integer.parseInt(edadStr); // Convertir edad a número
+            // 2. Validaciones y conversiones
+            if (nombre == null || apellido == null || correo == null || contrasena == null || tipoUsuarioStr == null ||
+                nombre.trim().isEmpty() || apellido.trim().isEmpty() || correo.trim().isEmpty() || contrasena.trim().isEmpty()) {
+                throw new Exception("Todos los campos marcados son obligatorios.");
+            }
+            
+            TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoUsuarioStr);
+            int edad = Integer.parseInt(edadStr);
+            
+            Usuario nuevoUsuario;
 
-            Usuario nuevoUsuario = (tipoUsuario == TipoUsuario.TECNICO) ? new Tecnico() : new Cliente();
+            // 3. Crear el tipo de objeto correcto (Cliente o Tecnico)
+            if (tipoUsuario == TipoUsuario.TECNICO) {
+                Tecnico nuevoTecnico = new Tecnico();
+                
+                // Recoger los campos específicos del técnico
+                String especialidad = request.getParameter("especialidad");
+                String disponibilidad = request.getParameter("disponibilidad");
+                
+                nuevoTecnico.setEspecialidad(especialidad);
+                nuevoTecnico.setDisponibilidad(disponibilidad);
+                // Se pueden establecer valores por defecto para otros campos si se desea
+                nuevoTecnico.setCalificacionPromedio(0.0);
+                nuevoTecnico.setCertificaciones("Ninguna");
 
-            // Establecer todos los datos
+                nuevoUsuario = nuevoTecnico;
+            } else {
+                nuevoUsuario = new Cliente();
+            }
+
+            // 4. Establecer los datos comunes en el objeto
             nuevoUsuario.setNombre(nombre);
             nuevoUsuario.setApellido(apellido);
             nuevoUsuario.setCorreoElectronico(correo);
             nuevoUsuario.setContrasena(contrasena);
-            nuevoUsuario.setDni(dni);           
-        nuevoUsuario.setDireccion(direccion);
+            nuevoUsuario.setDni(dni);
+            nuevoUsuario.setDireccion(direccion);
             nuevoUsuario.setTelefono(telefono);
+            nuevoUsuario.setEdad(edad);
+            nuevoUsuario.setSexo(sexo);
             nuevoUsuario.setTipoUsuario(tipoUsuario);
-            nuevoUsuario.setEdad(edad); // ¡NUEVO!
-            nuevoUsuario.setSexo(sexo); // ¡NUEVO!
 
-            // DNI y Dirección son opcionales por ahora, se pueden añadir después
-            // nuevoUsuario.setDni("...");
-            // nuevoUsuario.setDireccion("...");
+            // 5. Llamar al servicio para registrar al usuario
             boolean exito = usuarioService.registrarUsuario(nuevoUsuario);
 
+            // 6. Redirigir con el mensaje apropiado
             if (exito) {
                 HttpSession session = request.getSession();
-                session.setAttribute("mensajeExito", "¡Registro exitoso! Por favor, inicia sesión.");
+                session.setAttribute("mensajeExito", "¡Registro exitoso! Ya puedes iniciar sesión.");
                 response.sendRedirect(request.getContextPath() + "/login");
             } else {
-                request.setAttribute("mensajeError", "No se pudo completar el registro. Inténtalo de nuevo.");
+                request.setAttribute("mensajeError", "No se pudo completar el registro. El correo o DNI podrían ya estar en uso.");
                 request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
-            request.setAttribute("mensajeError", "Error en los datos: " + e.getMessage());
+            // Capturar cualquier error (ej. email duplicado, datos inválidos)
+            request.setAttribute("mensajeError", "Error: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
         }
     }

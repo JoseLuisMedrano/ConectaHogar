@@ -1,162 +1,107 @@
 package com.mycompany.conectahogar.dao;
 
 import com.mycompany.conectahogar.config.ConexionBD;
-import com.mycompany.conectahogar.model.SolicitudTrabajo;
-import com.mycompany.conectahogar.model.Servicio;
 import com.mycompany.conectahogar.model.EstadoSolicitud;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import com.mycompany.conectahogar.model.Servicio;
+import com.mycompany.conectahogar.model.SolicitudTrabajo;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SolicitudTrabajoDAO {
 
-    private static final Logger logger = LoggerFactory.getLogger(SolicitudTrabajoDAO.class);
-
     public boolean crearSolicitud(SolicitudTrabajo solicitud) {
-        String sql = "INSERT INTO solicitudes_trabajo (id_Cliente, descripcion, servicio, precioSugerido, estado, fechaCreacion) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, solicitud.getIdCliente());
-            stmt.setString(2, solicitud.getDescripcion());
-            stmt.setString(3, solicitud.getServicio().name());
-            stmt.setDouble(4, solicitud.getPrecioSugerido());
-            stmt.setString(5, solicitud.getEstado().name());
-            stmt.setTimestamp(6, new Timestamp(solicitud.getFechaCreacion().getTime()));
-            int filasAfectadas = stmt.executeUpdate();
-            if (filasAfectadas > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        solicitud.setId(rs.getInt(1));
-                        return true;
-                    }
-                }
+        String sql = "INSERT INTO solicitudes_trabajo (id_cliente, servicio, descripcion, precio_sugerido, estado, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, solicitud.getIdCliente());
+            pstmt.setString(2, solicitud.getServicio().name());
+            pstmt.setString(3, solicitud.getDescripcion());
+            pstmt.setDouble(4, solicitud.getPrecioSugerido());
+            pstmt.setString(5, solicitud.getEstado().name());
+            pstmt.setTimestamp(6, new Timestamp(solicitud.getFechaCreacion().getTime()));
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<SolicitudTrabajo> obtenerSolicitudesPorEstado(EstadoSolicitud estado) {
+        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
+        String sql = "SELECT * FROM solicitudes_trabajo WHERE estado = ?";
+
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, estado.name());
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                solicitudes.add(mapearSolicitud(rs));
             }
         } catch (SQLException e) {
-            logger.error("Error al crear solicitud de trabajo: " + e.getMessage(), e);
+            e.printStackTrace();
         }
-        return false;
-    }
-
-    public boolean asignarTecnicoASolicitud(int idSolicitud, int idTecnico, Double precioOfrecido) {
-        String sql = "UPDATE solicitudes_trabajo SET id_Tecnico = ?, precioFinal = ?, estado = ? WHERE id_Solicitud = ? AND estado = 'PENDIENTE'";
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idTecnico);
-            stmt.setDouble(2, precioOfrecido);
-            stmt.setString(3, EstadoSolicitud.ACEPTADA.name());
-            stmt.setInt(4, idSolicitud);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            logger.error("Error SQL al asignar técnico {} a la solicitud {}: {}", idTecnico, idSolicitud, e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public boolean actualizarSolicitud(SolicitudTrabajo solicitud) {
-        String sql = "UPDATE solicitudes_trabajo SET id_Tecnico = ?, descripcion = ?, precioFinal = ?, estado = ?, fechaFinalizacion = ? WHERE id_Solicitud = ?";
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setObject(1, solicitud.getIdTecnico());
-            stmt.setString(2, solicitud.getDescripcion());
-            stmt.setObject(3, solicitud.getPrecioFinal());
-            stmt.setString(4, solicitud.getEstado().name());
-            stmt.setTimestamp(5, solicitud.getFechaFinalizacion() != null ? new Timestamp(solicitud.getFechaFinalizacion().getTime()) : null);
-            stmt.setInt(6, solicitud.getId());
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            logger.error("Error al actualizar solicitud de trabajo {}: {}", solicitud.getId(), e.getMessage(), e);
-        }
-        return false;
-    }
-
-    public SolicitudTrabajo obtenerSolicitudPorId(int idSolicitud) {
-        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_Solicitud = ?";
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idSolicitud);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return mapearSolicitud(rs);
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Error al obtener solicitud por ID {}: {}", idSolicitud, e.getMessage(), e);
-        }
-        return null;
+        return solicitudes;
     }
 
     public List<SolicitudTrabajo> obtenerSolicitudesPorCliente(int idCliente) {
         List<SolicitudTrabajo> solicitudes = new ArrayList<>();
-        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_Cliente = ? ORDER BY fechaCreacion DESC";
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idCliente);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    solicitudes.add(mapearSolicitud(rs));
-                }
+        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_cliente = ? ORDER BY fecha_creacion DESC";
+
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idCliente);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                solicitudes.add(mapearSolicitud(rs));
             }
         } catch (SQLException e) {
-            logger.error("Error al obtener solicitudes para el cliente {}: {}", idCliente, e.getMessage(), e);
+            e.printStackTrace();
         }
         return solicitudes;
     }
 
     private SolicitudTrabajo mapearSolicitud(ResultSet rs) throws SQLException {
-        SolicitudTrabajo solicitud = new SolicitudTrabajo();
-        solicitud.setId(rs.getInt("id_Solicitud"));
-        solicitud.setIdCliente(rs.getInt("id_Cliente"));
-        solicitud.setIdTecnico((Integer) rs.getObject("id_Tecnico"));
-        solicitud.setDescripcion(rs.getString("descripcion"));
-        solicitud.setServicio(Servicio.valueOf(rs.getString("servicio")));
-        solicitud.setPrecioSugerido(rs.getDouble("precioSugerido"));
-        solicitud.setPrecioFinal(rs.getDouble("precioFinal"));
-        solicitud.setEstado(EstadoSolicitud.valueOf(rs.getString("estado")));
-        solicitud.setFechaCreacion(rs.getTimestamp("fechaCreacion"));
-        solicitud.setFechaFinalizacion(rs.getTimestamp("fechaFinalizacion"));
-        return solicitud;
-    }
-
-    public List<SolicitudTrabajo> obtenerSolicitudesPendientesPorEspecialidad(String especialidad) {
-        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
-        // La consulta busca solicitudes PENDIENTES y cuyo SERVICIO coincida con la especialidad del técnico.
-        String sql = "SELECT * FROM solicitudes_trabajo WHERE estado = 'PENDIENTE' AND servicio = ? ORDER BY fechaCreacion ASC";
-
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, especialidad);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    solicitudes.add(mapearSolicitud(rs)); // Reutilizamos el método que ya tienes
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Error al obtener solicitudes pendientes por especialidad {}: {}", especialidad, e.getMessage(), e);
+        SolicitudTrabajo sol = new SolicitudTrabajo();
+        sol.setId(rs.getInt("id"));
+        sol.setIdCliente(rs.getInt("id_cliente"));
+        // El id_tecnico puede ser nulo, hay que manejarlo
+        if (rs.getObject("id_tecnico") != null) {
+            sol.setIdTecnico(rs.getInt("id_tecnico"));
         }
-        return solicitudes;
-    }
-
-    public List<SolicitudTrabajo> obtenerSolicitudesPorTecnico(int idTecnico) {
-        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
-        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_Tecnico = ? ORDER BY fechaCreacion DESC";
-
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, idTecnico);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    // Reutilizamos el método que ya tienes para crear el objeto
-                    solicitudes.add(mapearSolicitud(rs));
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Error al obtener solicitudes asignadas al técnico {}: {}", idTecnico, e.getMessage(), e);
+        sol.setServicio(Servicio.valueOf(rs.getString("servicio")));
+        sol.setDescripcion(rs.getString("descripcion"));
+        sol.setPrecioSugerido(rs.getDouble("precio_sugerido"));
+        // El precio_final puede ser nulo
+        if (rs.getObject("precio_final") != null) {
+            sol.setPrecioFinal(rs.getDouble("precio_final"));
         }
-        return solicitudes;
+        sol.setEstado(EstadoSolicitud.valueOf(rs.getString("estado")));
+        sol.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
+        sol.setFechaFinalizacion(rs.getTimestamp("fecha_finalizacion"));
+        return sol;
     }
+    
+    public boolean asignarTecnicoASolicitud(int idSolicitud, int idTecnico, double precioFinal) {
+    // Esta consulta actualiza el estado, asigna el técnico y fija el precio final.
+    String sql = "UPDATE solicitudes_trabajo SET estado = ?, id_tecnico = ?, precio_final = ? WHERE id = ?";
+    
+    try (Connection conn = ConexionBD.obtenerConexion();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, EstadoSolicitud.ASIGNADA.name()); // Cambiamos el estado
+        pstmt.setInt(2, idTecnico);
+        pstmt.setDouble(3, precioFinal);
+        pstmt.setInt(4, idSolicitud);
+
+        return pstmt.executeUpdate() > 0; // Devuelve true si se actualizó al menos 1 fila
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+    
+}
 }

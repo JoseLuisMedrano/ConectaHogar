@@ -45,7 +45,7 @@ public class CrearSolicitudServlet extends HttpServlet {
             nuevaSolicitud.setPrecioSugerido(precioSugerido);
 
             // 4. Llamar al servicio para guardar la solicitud
-            boolean exito = solicitudService.crearSolicitud(nuevaSolicitud);
+            boolean exito = solicitudService.crearNuevaSolicitud(nuevaSolicitud);
 
             // 5. Redirigir de vuelta al panel con un mensaje
             if (exito) {
