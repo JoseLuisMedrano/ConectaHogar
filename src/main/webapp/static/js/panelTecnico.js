@@ -1,39 +1,56 @@
+// Archivo: /static/js/panelTecnico.js
+
 document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('.sidebar .nav-link');
+
+    // --- LÓGICA DE NAVEGACIÓN PRINCIPAL (SIDEBAR) ---
+    const navLinks = document.querySelectorAll('.sidebar .nav-link[data-section]');
     const contentSections = document.querySelectorAll('.content-section');
 
+    // Función que muestra una sección y oculta las demás
     function showSection(sectionId) {
-        // Oculta todas las secciones
         contentSections.forEach(section => {
-            section.classList.remove('active');
-        });
-
-        // Muestra la sección deseada
-        const targetSection = document.getElementById(sectionId + '-section');
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-
-        // Resalta el enlace del menú correspondiente
-        navLinks.forEach(link => {
-            link.classList.remove('active-nav');
-            if (link.dataset.section === sectionId) {
-                link.classList.add('active-nav');
+            if (section.id === sectionId) {
+                section.classList.remove('d-none');
+            } else {
+                section.classList.add('d-none');
             }
         });
     }
 
-    // Añadir el evento 'click' a cada enlace del menú
+    // Asigna el evento de clic a cada enlace de la barra lateral
     navLinks.forEach(link => {
-        if (link.dataset.section) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                const sectionId = this.dataset.section;
-                showSection(sectionId);
-            });
-        }
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Previene la recarga de la página
+
+            // Actualiza cuál enlace se ve como 'activo'
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+
+            // Muestra la sección correspondiente
+            const targetSectionId = this.dataset.section + '-section';
+            showSection(targetSectionId);
+        });
     });
 
-    // Mostrar la sección de "Inicio" por defecto al cargar la página
-    showSection('inicio');
+    // --- LÓGICA PARA EDITAR/VISUALIZAR EL PERFIL ---
+    const btnEditar = document.getElementById('btn-editar-perfil');
+    const btnCancelar = document.getElementById('btn-cancelar-edicion');
+    const displayDiv = document.getElementById('perfil-display');
+    const editFormDiv = document.getElementById('perfil-edit-form');
+
+    // Se asegura de que los botones y divs existan antes de añadirles eventos
+    if (btnEditar && btnCancelar && displayDiv && editFormDiv) {
+
+        // Evento para el botón "Editar Perfil"
+        btnEditar.addEventListener('click', () => {
+            displayDiv.classList.add('d-none');    // Oculta la vista de datos
+            editFormDiv.classList.remove('d-none'); // Muestra el formulario de edición
+        });
+
+        // Evento para el botón "Cancelar" en el formulario
+        btnCancelar.addEventListener('click', () => {
+            editFormDiv.classList.add('d-none');    // Oculta el formulario
+            displayDiv.classList.remove('d-none');  // Vuelve a mostrar los datos
+        });
+    }
 });

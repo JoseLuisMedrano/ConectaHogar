@@ -34,11 +34,9 @@ public class PanelClienteServlet extends HttpServlet {
         // 2. Obtener el objeto Cliente de la sesión
         Cliente cliente = (Cliente) session.getAttribute("usuario");
 
-        // Creamos una instancia del DAO y le pedimos las solicitudes de este cliente.
+        // Llama al DAO para obtener las solicitudes SOLO de este cliente
         SolicitudTrabajoDAO dao = new SolicitudTrabajoDAO();
-
-        // 3. Obtener las solicitudes del cliente desde el gestor central
-        List<SolicitudTrabajo> misSolicitudes = new SolicitudTrabajoDAO().obtenerSolicitudesPorCliente(cliente.getId_Usuario());
+        List<SolicitudTrabajo> misSolicitudes = dao.obtenerSolicitudesPorCliente(cliente.getId_Usuario());
 
         // 4. Pasar los datos a la vista (JSP)
         request.setAttribute("solicitudes", misSolicitudes);
@@ -87,7 +85,7 @@ public class PanelClienteServlet extends HttpServlet {
                 } else {
                     request.setAttribute("mensajeError", "No se pudo guardar la solicitud.");
                 }
-                
+
             } catch (Exception e) {
                 // En caso de error (ej. datos de formulario incorrectos)
                 request.setAttribute("mensajeError", "Error al crear la solicitud. Verifique los datos.");

@@ -1,118 +1,167 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ConectaHogar - Panel Técnico</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <link href="${pageContext.request.contextPath}/static/css/panelTecnico.css" rel="stylesheet">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConectaHogar - Panel del Técnico</title>
 
-        <div id="panel-tecnico-page">
-            <nav class="sidebar">
-                <h1 class="navbar-brand"><i class="bi bi-person-workspace"></i> Panel Técnico</h1>
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link" href="#" data-section="inicio"><i class="bi bi-person-circle"></i> Mi Perfil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" data-section="trabajos"><i class="bi bi-briefcase-fill"></i> Trabajos Disponibles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" data-section="historial"><i class="bi bi-clock-history"></i> Mis Trabajos</a></li>
-                    <li class="nav-item mt-auto">
-                        <form action="${pageContext.request.contextPath}/logout" method="post">
-                            <button type="submit" class="nav-link nav-link-button">
-                                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </nav>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="${pageContext.request.contextPath}/static/css/panel.css" rel="stylesheet">
+</head>
+<body>
+    <c:set var="tecnico" value="${sessionScope.usuario}"/>
 
-            <main class="main-content">
-                <h2 class="mb-1">Bienvenido, <c:out value="${sessionScope.usuario.nombre}"/></h2>
-                <p class="text-muted mb-4">Revisa las solicitudes de servicio disponibles y gestiona tus trabajos.</p>
+    <div class="d-flex">
+        <nav class="sidebar">
+            <h1 class="sidebar-brand"><i class="bi bi-tools"></i> ConectaHogar</h1>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" data-section="inicio">
+                        <i class="bi bi-person-circle"></i> Mi Perfil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-section="trabajosDisponibles">
+                        <i class="bi bi-briefcase-fill"></i> Trabajos Disponibles
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-section="misTrabajos">
+                        <i class="bi bi-list-check"></i> Mis Trabajos
+                    </a>
+                </li>
+                <li class="nav-item mt-auto">
+                    <form action="${pageContext.request.contextPath}/logout" method="post" class="d-grid">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
 
-                <c:if test="${not empty mensajeExito}"><div class="alert alert-success">${mensajeExito}</div></c:if>
-                <c:if test="${not empty mensajeError}"><div class="alert alert-danger">${mensajeError}</div></c:if>
+        <main class="main-content">
+            <h2 class="mb-1">Panel de Técnico: <c:out value="${tecnico.nombre}"/></h2>
+            <p class="text-muted mb-4">Gestiona tu perfil y los trabajos disponibles.</p>
 
-                    <div id="inicio-section" class="content-section">
-                        <h3><i class="bi bi-person-vcard"></i> Mi Perfil Profesional</h3>
-                        <div class="card card-body">
-                            <p><strong>Nombre:</strong> <c:out value="${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}"/></p>
-
-                        <p><strong>Especialidad:</strong> <c:out value="${sessionScope.usuario.especialidad}"/></p>
-                        <p><strong>Disponibilidad:</strong> <c:out value="${sessionScope.usuario.disponibilidad}"/></p>
-                        <p><strong>Calificación Promedio:</strong> <c:out value="${sessionScope.usuario.calificacionPromedio}"/></p>
-                        <p><strong>Certificaciones:</strong> <c:out value="${sessionScope.usuario.certificaciones != null ? sessionScope.usuario.certificaciones : 'No registradas'}"/></p>
-                    </div>
+            <c:if test="${not empty sessionScope.mensajeExito}">
+                <div class="alert alert-success">${sessionScope.mensajeExito}</div>
+                <c:remove var="mensajeExito" scope="session"/>
+            </c:if>
+            <c:if test="${not empty sessionScope.mensajeError}">
+                <div class="alert alert-danger">${sessionScope.mensajeError}</div>
+                <c:remove var="mensajeError" scope="session"/>
+            </c:if>
+            
+            <div id="inicio-section" class="content-section">
+                <h3><i class="bi bi-person-vcard"></i> Mi Perfil Profesional</h3>
+                <div id="perfil-display" class="card card-body">
+                    <h5 class="card-title">Información de Contacto</h5>
+                    <p><strong>Nombre:</strong> <c:out value="${tecnico.nombre} ${tecnico.apellido}"/></p>
+                    <p><strong>Correo:</strong> <c:out value="${tecnico.correoElectronico}"/></p>
+                    <p><strong>Teléfono:</strong> <c:out value="${tecnico.telefono}"/></p>
+                    <hr>
+                    <h5 class="card-title mt-2">Información Profesional</h5>
+                    <p><strong>Especialidad:</strong> <c:out value="${tecnico.especialidad}"/></p>
+                    <p><strong>Disponibilidad:</strong> <c:out value="${tecnico.disponibilidad}"/></p>
+                    <button id="btn-editar-perfil" class="btn btn-secondary mt-3 align-self-start">
+                        <i class="bi bi-pencil-square"></i> Editar Perfil
+                    </button>
                 </div>
-
-                <div id="trabajos-section" class="content-section">
-                    <h3><i class="bi bi-briefcase-fill"></i> Trabajos Disponibles en tu Especialidad</h3>
+                <div id="perfil-edit-form" class="card card-body d-none">
+                    <h5 class="card-title">Actualiza tu Estado</h5>
+                    <form action="${pageContext.request.contextPath}/panelTecnico" method="post" onsubmit="return confirm('¿Estás seguro de que deseas guardar los cambios?');">
+                        <input type="hidden" name="accion" value="actualizarPerfil">
+                        <div class="mb-3">
+                            <label for="especialidad" class="form-label">Mi Especialidad:</label>
+                            <select class="form-select" id="especialidad" name="especialidad" required>
+                                <option value="">-- Selecciona una especialidad --</option>
+                                <c:forEach var="servicio" items="${serviciosDisponibles}">
+                                    <option value="${servicio.name()}" ${tecnico.especialidad == servicio.name() ? 'selected' : ''}><c:out value="${servicio}"/></option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="disponibilidad" class="form-label">Mi Disponibilidad:</label>
+                            <select class="form-select" id="disponibilidad" name="disponibilidad" required>
+                                <option value="Disponible" ${tecnico.disponibilidad == 'Disponible' ? 'selected' : ''}>Disponible</option>
+                                <option value="No Disponible" ${tecnico.disponibilidad == 'No Disponible' ? 'selected' : ''}>No Disponible</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Guardar Cambios</button>
+                        <button type="button" id="btn-cancelar-edicion" class="btn btn-light ms-2">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="trabajosDisponibles-section" class="content-section d-none">
+                <h3><i class="bi bi-briefcase-fill"></i> Trabajos Disponibles para Aceptar</h3>
+                <div class="card card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead><tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Presupuesto</th><th>Acción</th></tr></thead>
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Presupuesto</th><th>Acción</th></tr>
+                            </thead>
                             <tbody>
-                                <c:forEach var="solicitud" items="${solicitudesPendientes}">
+                                <c:forEach items="${solicitudesPendientes}" var="solicitud">
                                     <tr>
                                         <td>#<c:out value="${solicitud.id}"/></td>
-                                        <td><c:out value="${solicitud.servicio.name()}"/></td>
+                                        <td><c:out value="${solicitud.servicio}"/></td>
                                         <td><c:out value="${solicitud.descripcion}"/></td>
                                         <td>S/. <fmt:formatNumber value="${solicitud.precioSugerido}" type="number" minFractionDigits="2"/></td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/aceptar-solicitud" method="post">
-                                                <input type="hidden" name="idSolicitud" value="${solicitud.id}"/>
-                                                <input type="hidden" name="precioSugerido" value="${solicitud.precioSugerido}"/>
-                                                <button type="submit" class="btn btn-sm btn-success">Aceptar</button>
+                                            <form action="${pageContext.request.contextPath}/aceptarSolicitud" method="post" class="d-grid">
+                                                <input type="hidden" name="idSolicitud" value="${solicitud.id}">
+                                                <input type="hidden" name="precioFinal" value="${solicitud.precioSugerido}">
+                                                <button type="submit" class="btn btn-success btn-sm">Aceptar</button>
                                             </form>
                                         </td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty solicitudesPendientes}">
-                                    <tr><td colspan="5" class="text-center text-muted">No hay trabajos disponibles en tu especialidad por el momento.</td></tr>
+                                    <tr><td colspan="5" class="text-center text-muted">No hay trabajos disponibles por el momento.</td></tr>
                                 </c:if>
                             </tbody>
                         </table>
                     </div>
                 </div>
+            </div>
 
-                <div id="historial-section" class="content-section">
-                    <h3><i class="bi bi-clock-history"></i> Mis Trabajos Asignados</h3>
+            <div id="misTrabajos-section" class="content-section d-none">
+                <h3><i class="bi bi-list-check"></i> Mis Trabajos Asignados</h3>
+                 <div class="card card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead><tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Precio Final</th><th>Estado</th></tr></thead>
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Estado</th><th>Precio Acordado</th></tr>
+                            </thead>
                             <tbody>
-                                <c:forEach var="solicitud" items="${solicitudesAsignadas}">
+                                <c:forEach items="${solicitudesAsignadas}" var="solicitud">
                                     <tr>
                                         <td>#<c:out value="${solicitud.id}"/></td>
-                                        <td><c:out value="${solicitud.servicio.name()}"/></td>
+                                        <td><c:out value="${solicitud.servicio}"/></td>
                                         <td><c:out value="${solicitud.descripcion}"/></td>
+                                        <td><span class="badge rounded-pill bg-info"><c:out value="${solicitud.estado}"/></span></td>
                                         <td>S/. <fmt:formatNumber value="${solicitud.precioFinal}" type="number" minFractionDigits="2"/></td>
-                                        <td>
-                                            <span class="badge rounded-pill
-                                                  <c:choose>
-                                                      <c:when test='${solicitud.estado == "ACEPTADA"}'>bg-primary</c:when>
-                                                      <c:when test='${solicitud.estado == "EN_PROCESO"}'>bg-info text-dark</c:when>
-                                                      <c:when test='${solicitud.estado == "COMPLETADA"}'>bg-success</c:when>
-                                                  </c:choose>">
-                                                <c:out value="${solicitud.estado.name()}"/>
-                                            </span>
-                                        </td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty solicitudesAsignadas}">
-                                    <tr><td colspan="5" class="text-center text-muted">Aún no has aceptado ningún trabajo.</td></tr>
+                                    <tr><td colspan="5" class="text-center text-muted">Aún no tienes trabajos asignados.</td></tr>
                                 </c:if>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="${pageContext.request.contextPath}/static/js/panelTecnico.js"></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/panelTecnico.js"></script>
+</body>
 </html>

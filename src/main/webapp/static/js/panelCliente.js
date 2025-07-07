@@ -1,41 +1,43 @@
+/**
+ * Script para manejar la navegación por pestañas en el panel del cliente.
+ */
 document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('.sidebar .nav-link');
+    // Selecciona todos los enlaces de la barra lateral que tienen el atributo 'data-section'
+    const navLinks = document.querySelectorAll('.sidebar .nav-link[data-section]');
+    // Selecciona todos los contenedores de contenido
     const contentSections = document.querySelectorAll('.content-section');
 
-    // Función para mostrar la sección correcta y resaltar el enlace del menú
+    // Función para mostrar la sección correcta
     function showSection(sectionId) {
-        // 1. Ocultar todas las secciones de contenido
         contentSections.forEach(section => {
-            section.classList.remove('active');
-        });
-
-        // 2. Mostrar la sección seleccionada
-        const targetSection = document.getElementById(sectionId + '-section');
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-
-        // 3. Resaltar el enlace del menú correspondiente
-        navLinks.forEach(link => {
-            link.classList.remove('active-nav');
-            if (link.dataset.section === sectionId) {
-                link.classList.add('active-nav');
+            if (section.id === sectionId) {
+                section.classList.remove('d-none'); // Muestra la sección objetivo
+            } else {
+                section.classList.add('d-none'); // Oculta las demás
             }
         });
     }
 
-    // Añadir el evento 'click' a cada enlace del menú
+    // Añade un evento de clic a cada enlace de navegación
     navLinks.forEach(link => {
-        // Asegurarse de que el enlace tenga el atributo data-section
-        if (link.dataset.section) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault(); // Evita que el enlace recargue la página
-                const sectionId = this.dataset.section;
-                showSection(sectionId);
-            });
-        }
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Evita que el enlace recargue la página
+
+            // Marca el enlace actual como activo
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+
+            // Obtiene el ID de la sección a mostrar desde el atributo 'data-section'
+            const targetSectionId = this.dataset.section + '-section';
+            showSection(targetSectionId);
+        });
     });
 
-    // Mostrar la sección de "Inicio" por defecto al cargar la página
-    showSection('inicio');
+    // Por defecto, al cargar la página, muestra la primera sección ("Mi Perfil")
+    // y asegúrate de que su enlace esté activo.
+    const initialActiveLink = document.querySelector('.sidebar .nav-link.active');
+    if (initialActiveLink) {
+        const initialSectionId = initialActiveLink.dataset.section + '-section';
+        showSection(initialSectionId);
+    }
 });

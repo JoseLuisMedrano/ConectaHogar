@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TecnicoDAO {
+
     private static final Logger logger = LoggerFactory.getLogger(TecnicoDAO.class);
 
     public boolean crearRegistroTecnico(Tecnico tecnico) {
@@ -21,8 +22,7 @@ public class TecnicoDAO {
             return false;
         }
         String sql = "INSERT INTO tecnicos (id_Usuario, especialidad, disponibilidad, certificaciones, calificacionPromedio) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, tecnico.getId_Usuario());
             stmt.setString(2, tecnico.getEspecialidad());
             stmt.setString(3, tecnico.getDisponibilidad());
@@ -37,10 +37,9 @@ public class TecnicoDAO {
 
     public List<Tecnico> obtenerTecnicosDisponiblesPorEspecialidad(String especialidad) {
         List<Tecnico> tecnicosDisponibles = new ArrayList<>();
-        String sql = "SELECT * FROM usuarios u JOIN tecnicos t ON u.id_Usuario = t.id_Usuario " +
-                     "WHERE u.tipoUsuario = 'TECNICO' AND t.especialidad = ? AND t.disponibilidad = 'Disponible'";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT * FROM usuarios u JOIN tecnicos t ON u.id_Usuario = t.id_Usuario "
+                + "WHERE u.tipoUsuario = 'TECNICO' AND t.especialidad = ? AND t.disponibilidad = 'Disponible'";
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, especialidad);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -55,8 +54,7 @@ public class TecnicoDAO {
 
     public boolean actualizarDisponibilidadTecnico(int idUsuario, String nuevaDisponibilidad) {
         String sql = "UPDATE tecnicos SET disponibilidad = ? WHERE id_Usuario = ?";
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, nuevaDisponibilidad);
             stmt.setInt(2, idUsuario);
             return stmt.executeUpdate() > 0;
@@ -80,27 +78,43 @@ public class TecnicoDAO {
         tecnico.setDisponibilidad(rs.getString("disponibilidad"));
         tecnico.setCertificaciones(rs.getString("certificaciones"));
         tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
-        return tecnico;    
+        return tecnico;
     }
-    
+
+    public boolean actualizarPerfil(int idTecnico, String especialidad, String disponibilidad) {
+        // Asumimos que la tabla 'tecnicos' tiene columnas 'especialidad' y 'disponibilidad'
+        String sql = "UPDATE tecnicos SET especialidad = ?, disponibilidad = ? WHERE id_Usuario = ?";
+
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, especialidad);
+            pstmt.setString(2, disponibilidad);
+            pstmt.setInt(3, idTecnico);
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void cargarDatosEspecificos(Tecnico tecnico) {
         String sql = "SELECT especialidad, disponibilidad, certificaciones, calificacionPromedio FROM tecnicos WHERE id_Usuario = ?";
-        
+
         // Log para saber qué estamos buscando
         logger.info("Cargando datos específicos para el técnico ID: {}", tecnico.getId_Usuario());
 
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, tecnico.getId_Usuario());
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     tecnico.setEspecialidad(rs.getString("especialidad"));
                     tecnico.setDisponibilidad(rs.getString("disponibilidad"));
                     tecnico.setCertificaciones(rs.getString("certificaciones"));
                     tecnico.setCalificacionPromedio(rs.getDouble("calificacionPromedio"));
-                    
+
                     // Log para confirmar que se encontraron y asignaron los datos
                     logger.info("Datos cargados para técnico ID {}: Especialidad='{}'", tecnico.getId_Usuario(), tecnico.getEspecialidad());
                 } else {

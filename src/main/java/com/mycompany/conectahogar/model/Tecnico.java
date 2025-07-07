@@ -1,6 +1,5 @@
 package com.mycompany.conectahogar.model;
 
-import java.util.Date;
 
 public class Tecnico extends Usuario {
     private String especialidad;

@@ -1,0 +1,70 @@
+/* Estilo general del cuerpo de la página */
+body {
+    background-color: #f8f9fa; /* Un gris claro para el fondo del contenido */
+}
+
+/* Contenedor principal que usa Flexbox (de Bootstrap) */
+.d-flex {
+    min-height: 100vh; /* Asegura que el layout ocupe toda la altura de la pantalla */
+}
+
+/* Estilo de la barra lateral de navegación */
+.sidebar {
+    width: 260px;
+    min-height: 100vh; /* La barra siempre ocupará toda la altura */
+    background-color: #212529; /* Un color oscuro para la barra */
+    color: #fff;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en columna */
+}
+
+/* Estilo para la marca o logo en la barra lateral */
+.sidebar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffc107; /* Un color de acento, como el amarillo de Bootstrap */
+    text-align: center;
+    margin-bottom: 2rem;
+    text-decoration: none;
+}
+
+/* Estilo para los enlaces de navegación en la barra */
+.sidebar .nav-link {
+    color: #ced4da; /* Un color gris claro para el texto de los enlaces */
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s, color 0.2s; /* Transición suave para el hover */
+}
+
+/* Estilo para el ícono dentro del enlace */
+.sidebar .nav-link i {
+    margin-right: 0.8rem; /* Espacio entre el ícono y el texto */
+    width: 20px; /* Ancho fijo para alinear los íconos */
+}
+
+/* Efecto al pasar el mouse sobre un enlace */
+.sidebar .nav-link:hover {
+    background-color: #495057;
+    color: #fff;
+}
+
+/* Estilo para el enlace que está activo (la sección actual) */
+.sidebar .nav-link.active {
+    background-color: #0d6efd; /* Color primario de Bootstrap */
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Contenedor del contenido principal a la derecha */
+.main-content {
+    flex-grow: 1; /* Hace que esta sección ocupe todo el espacio restante */
+    padding: 2.5rem;
+    overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+}
+
+/* Ocultar secciones de contenido por defecto */
+.content-section.d-none {
+    display: none;
+}

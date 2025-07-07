@@ -64,6 +64,26 @@ public class SolicitudTrabajoDAO {
         return solicitudes;
     }
 
+    public List<SolicitudTrabajo> obtenerSolicitudesPorTecnico(int idTecnico) {
+        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
+        // Esta consulta busca todas las solicitudes donde el id_tecnico coincida
+        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_tecnico = ? ORDER BY fecha_creacion DESC";
+
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idTecnico);
+            ResultSet rs = pstmt.executeQuery();
+
+            // El helper 'mapearSolicitud' que ya tienes hace el trabajo pesado
+            while (rs.next()) {
+                solicitudes.add(mapearSolicitud(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Es buena idea registrar el error
+        }
+        return solicitudes;
+    }
+
     private SolicitudTrabajo mapearSolicitud(ResultSet rs) throws SQLException {
         SolicitudTrabajo sol = new SolicitudTrabajo();
         sol.setId(rs.getInt("id"));
@@ -84,24 +104,23 @@ public class SolicitudTrabajoDAO {
         sol.setFechaFinalizacion(rs.getTimestamp("fecha_finalizacion"));
         return sol;
     }
-    
+
     public boolean asignarTecnicoASolicitud(int idSolicitud, int idTecnico, double precioFinal) {
-    // Esta consulta actualiza el estado, asigna el técnico y fija el precio final.
-    String sql = "UPDATE solicitudes_trabajo SET estado = ?, id_tecnico = ?, precio_final = ? WHERE id = ?";
-    
-    try (Connection conn = ConexionBD.obtenerConexion();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        // Esta consulta actualiza el estado, asigna el técnico y fija el precio final.
+        String sql = "UPDATE solicitudes_trabajo SET estado = ?, id_tecnico = ?, precio_final = ? WHERE id = ?";
 
-        pstmt.setString(1, EstadoSolicitud.ASIGNADA.name()); // Cambiamos el estado
-        pstmt.setInt(2, idTecnico);
-        pstmt.setDouble(3, precioFinal);
-        pstmt.setInt(4, idSolicitud);
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        return pstmt.executeUpdate() > 0; // Devuelve true si se actualizó al menos 1 fila
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+            pstmt.setString(1, EstadoSolicitud.ASIGNADA.name()); // Cambiamos el estado
+            pstmt.setInt(2, idTecnico);
+            pstmt.setDouble(3, precioFinal);
+            pstmt.setInt(4, idSolicitud);
+
+            return pstmt.executeUpdate() > 0; // Devuelve true si se actualizó al menos 1 fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
-    
-}
 }
