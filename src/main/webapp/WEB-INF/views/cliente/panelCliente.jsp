@@ -28,6 +28,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="contraofertas">
+                            <i class="bi bi-cash-coin"></i> Contraofertas</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="#" data-section="misSolicitudes">
                             <i class="bi bi-list-task"></i> Mis Solicitudes
                         </a>
@@ -89,6 +94,44 @@
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="bi bi-send-fill"></i> Enviar Solicitud</button>
                         </form>
+                    </div>
+                </div>
+                <div id="contraofertas-section" class="content-section d-none">
+                    <h3><i class="bi bi-cash-coin"></i> Contraofertas Recibidas</h3>
+                    <div class="card card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr><th>ID</th><th>Servicio</th><th>Tu Precio</th><th>Precio Técnico</th><th>Acción</th></tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${contraofertas}" var="solicitud">
+                                        <tr>
+                                            <td>#<c:out value="${solicitud.id}"/></td>
+                                            <td><c:out value="${solicitud.servicio}"/></td>
+                                            <td>S/. <fmt:formatNumber value="${solicitud.precioSugerido}" type="number" minFractionDigits="2"/></td>
+                                            <td><strong>S/. <fmt:formatNumber value="${solicitud.precioFinal}" type="number" minFractionDigits="2"/></strong></td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <form action="${pageContext.request.contextPath}/aceptarContraoferta" method="post" class="m-0">
+                                                        <input type="hidden" name="idSolicitud" value="${solicitud.id}">
+                                                        <button type="submit" class="btn btn-primary btn-sm">Aceptar</button>
+                                                    </form>
+
+                                                    <form action="${pageContext.request.contextPath}/rechazarContraoferta" method="post" class="m-0">
+                                                        <input type="hidden" name="idSolicitud" value="${solicitud.id}">
+                                                        <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    <c:if test="${empty contraofertas}">
+                                        <tr><td colspan="5" class="text-center text-muted">No tienes contraofertas pendientes.</td></tr>
+                                    </c:if>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

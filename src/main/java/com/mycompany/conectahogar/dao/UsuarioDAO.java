@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,47 +59,45 @@ public class UsuarioDAO {
     }
 
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
+        // Lee el tipo de usuario primero para saber qué objeto crear (Cliente o Tecnico)
         TipoUsuario tipoUsuario = TipoUsuario.valueOf(rs.getString("tipoUsuario"));
-        
-        // Log para saber qué tipo de usuario se está mapeando
-        logger.info("Mapeando usuario con correo {} como TIPO: {}", rs.getString("correoElectronico"), tipoUsuario);
-        
+
         Usuario usuario;
-
-        // Se crean los campos comunes del usuario
-        int id = rs.getInt("id_Usuario");
-        String nombre = rs.getString("nombre");
-        // ... (etc.)
-
-        // Si el usuario es un Técnico, creamos una instancia de Tecnico
-        if (tipoUsuario == TipoUsuario.TECNICO) {
-            usuario = new Tecnico();
-            logger.info("Usuario es Técnico. Procediendo a cargar datos específicos.");
-            // ¡Llamada clave! Se cargan los datos de la tabla 'tecnicos'
-            ((Tecnico) usuario).setId_Usuario(id); // Asignamos el ID antes para que la consulta funcione
-            tecnicoDAO.cargarDatosEspecificos((Tecnico) usuario);
-        } else {
-            usuario = new Cliente();
+        switch (tipoUsuario) {
+            case CLIENTE:
+                usuario = new Cliente();
+                break;
+            case TECNICO:
+                // Aquí podrías cargar datos adicionales si la tabla 'tecnicos' tuviera más info
+                usuario = new Tecnico();
+                break;
+            default:
+                usuario = new Usuario();
+                break;
         }
 
-        // Se asignan todos los campos comunes al objeto (sea Cliente o Tecnico)
-        usuario.setId_Usuario(id);
-        usuario.setNombre(nombre);
+        usuario.setId_Usuario(rs.getInt("id_Usuario"));
+        usuario.setNombre(rs.getString("nombre"));
         usuario.setApellido(rs.getString("apellido"));
-        usuario.setDni(rs.getString("dni"));
         usuario.setCorreoElectronico(rs.getString("correoElectronico"));
-        usuario.setContrasena(rs.getString("contrasena"));
+        usuario.setContrasena(rs.getString("contrasena")); // Importante para la gestión de sesión
+        usuario.setTipoUsuario(tipoUsuario);
+
+        // --- AQUÍ LA CORRECCIÓN IMPORTANTE ---
         usuario.setTelefono(rs.getString("telefono"));
         usuario.setDireccion(rs.getString("direccion"));
-        usuario.setFechaRegistro(rs.getTimestamp("fechaRegistro"));
-        usuario.setEdad(rs.getInt("edad"));
-        usuario.setSexo(rs.getString("sexo"));
-        usuario.setTipoUsuario(tipoUsuario);
-        
+        usuario.setDni(rs.getString("dni"));
+
+        // Manejo de la fecha
+        Timestamp fechaRegistroTimestamp = rs.getTimestamp("fechaRegistro");
+        if (fechaRegistroTimestamp != null) {
+            usuario.setFechaRegistro(new Date(fechaRegistroTimestamp.getTime()));
+        }
+
         return usuario;
     }
-    
-    public Usuario obtenerUsuarioPorId(int id) {
+
+public Usuario obtenerUsuarioPorId(int id) {
         String sql = "SELECT * FROM usuarios WHERE id_Usuario = ?";
         try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);

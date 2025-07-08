@@ -105,7 +105,13 @@
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead>
-                                <tr><th>ID</th><th>Servicio</th><th>Descripción</th><th>Presupuesto</th><th>Acción</th></tr>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Servicio</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Presupuesto Cliente</th>
+                                    <th scope="col" style="min-width: 220px;">Acción</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items="${solicitudesPendientes}" var="solicitud">
@@ -115,11 +121,20 @@
                                         <td><c:out value="${solicitud.descripcion}"/></td>
                                         <td>S/. <fmt:formatNumber value="${solicitud.precioSugerido}" type="number" minFractionDigits="2"/></td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/aceptarSolicitud" method="post" class="d-grid">
-                                                <input type="hidden" name="idSolicitud" value="${solicitud.id}">
-                                                <input type="hidden" name="precioFinal" value="${solicitud.precioSugerido}">
-                                                <button type="submit" class="btn btn-success btn-sm">Aceptar</button>
-                                            </form>
+                                            <div class="d-grid gap-2">
+                                                <form action="${pageContext.request.contextPath}/aceptarSolicitud" method="post" class="m-0">
+                                                    <input type="hidden" name="idSolicitud" value="${solicitud.id}">
+                                                    <input type="hidden" name="precioFinal" value="${solicitud.precioSugerido}">
+                                                    <button type="submit" class="btn btn-success btn-sm w-100">Aceptar por S/. <fmt:formatNumber value="${solicitud.precioSugerido}" type="number" minFractionDigits="2"/></button>
+                                                </form>
+                                                <form action="${pageContext.request.contextPath}/contraoferta" method="post" class="m-0">
+                                                    <input type="hidden" name="idSolicitud" value="${solicitud.id}">
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="number" name="nuevoPrecio" class="form-control" placeholder="Tu precio (S/.)" required step="0.01" min="0">
+                                                        <button type="submit" class="btn btn-warning">Contraoferta</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 </c:forEach>

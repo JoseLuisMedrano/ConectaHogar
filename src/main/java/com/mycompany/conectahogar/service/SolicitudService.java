@@ -47,6 +47,22 @@ public class SolicitudService {
         // Por ahora, solo llama al DAO. En el futuro podría hacer más.
         return solicitudDAO.asignarTecnicoASolicitud(idSolicitud, idTecnico, precioFinal);
     }
+
+    public boolean hacerContraoferta(int idSolicitud, double nuevoPrecio) {
+        return solicitudDAO.hacerContraoferta(idSolicitud, nuevoPrecio);
+    }
+
+    public List<SolicitudTrabajo> listarContraofertasParaCliente(int idCliente) {
+        return solicitudDAO.obtenerContraofertasParaCliente(idCliente);
+    }
+
+    public boolean aceptarContraoferta(int idSolicitud) {
+        return solicitudDAO.aceptarContraoferta(idSolicitud);
+    }
+
+    public boolean rechazarContraoferta(int idSolicitud) {
+        return solicitudDAO.rechazarContraoferta(idSolicitud);
+    }
     // Todos los métodos antiguos que daban error (aceptar, rechazar, etc.) han sido eliminados.
     // Los añadiremos de nuevo cuando necesitemos esa funcionalidad.
 }

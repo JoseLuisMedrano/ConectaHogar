@@ -53,4 +53,29 @@
         <url-pattern>/aceptarSolicitud</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ContraofertaServlet</servlet-name>
+        <servlet-class>com.mycompany.conectahogar.controller.ContraofertaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContraofertaServlet</servlet-name>
+        <url-pattern>/contraoferta</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AceptarContraofertaServlet</servlet-name>
+        <servlet-class>com.mycompany.conectahogar.controller.AceptarContraofertaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AceptarContraofertaServlet</servlet-name>
+        <url-pattern>/aceptarContraoferta</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RechazarContraofertaServlet</servlet-name>
+        <servlet-class>com.mycompany.conectahogar.controller.RechazarContraofertaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RechazarContraofertaServlet</servlet-name>
+        <url-pattern>/rechazarContraoferta</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -7,6 +7,7 @@ import com.mycompany.conectahogar.model.Servicio;
 import com.mycompany.conectahogar.model.SolicitudTrabajo;
 import com.mycompany.conectahogar.model.TipoUsuario;
 import com.mycompany.conectahogar.model.Usuario;
+import com.mycompany.conectahogar.service.SolicitudService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,25 +25,29 @@ public class PanelClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        // 1. Validar que el usuario en sesión exista y sea un Cliente
+        // 1. Validación de sesión
         if (session == null || session.getAttribute("usuario") == null
                 || !(((Usuario) session.getAttribute("usuario")).getTipoUsuario() == TipoUsuario.CLIENTE)) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // 2. Obtener el objeto Cliente de la sesión
         Cliente cliente = (Cliente) session.getAttribute("usuario");
 
-        // Llama al DAO para obtener las solicitudes SOLO de este cliente
-        SolicitudTrabajoDAO dao = new SolicitudTrabajoDAO();
-        List<SolicitudTrabajo> misSolicitudes = dao.obtenerSolicitudesPorCliente(cliente.getId_Usuario());
+        // --- CÓDIGO CORREGIDO ---
+        // 2. Creamos UNA instancia del servicio
+        SolicitudService service = new SolicitudService();
 
-        // 4. Pasar los datos a la vista (JSP)
+        // 3. Usamos el servicio para obtener TODA la información necesaria
+        List<SolicitudTrabajo> misSolicitudes = service.listarSolicitudesPorCliente(cliente.getId_Usuario());
+        List<SolicitudTrabajo> contraofertas = service.listarContraofertasParaCliente(cliente.getId_Usuario());
+
+        // 4. Pasamos los datos a la vista (JSP)
         request.setAttribute("solicitudes", misSolicitudes);
+        request.setAttribute("contraofertas", contraofertas);
         request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values()));
 
-        // 5. Enviar la petición al JSP para que se renderice
+        // 5. Redirigimos al JSP
         request.getRequestDispatcher("/WEB-INF/views/cliente/panelCliente.jsp").forward(request, response);
     }
 

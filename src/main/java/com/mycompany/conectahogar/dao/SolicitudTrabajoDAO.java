@@ -105,6 +105,41 @@ public class SolicitudTrabajoDAO {
         return sol;
     }
 
+    public boolean hacerContraoferta(int idSolicitud, double nuevoPrecio) {
+        String sql = "UPDATE solicitudes_trabajo SET estado = ?, precio_final = ? WHERE id = ?";
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, EstadoSolicitud.CONTRAOFERTA.name());
+            pstmt.setDouble(2, nuevoPrecio);
+            pstmt.setInt(3, idSolicitud);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<SolicitudTrabajo> obtenerContraofertasParaCliente(int idCliente) {
+        List<SolicitudTrabajo> solicitudes = new ArrayList<>();
+        String sql = "SELECT * FROM solicitudes_trabajo WHERE id_cliente = ? AND estado = 'CONTRAOFERTA'";
+
+        // El try-with-resources se encarga de cerrar la conexión y el statement
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // --- LÍNEA CORREGIDA ---
+            // Usamos la variable correcta que recibe el método: idCliente
+            pstmt.setInt(1, idCliente);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                solicitudes.add(mapearSolicitud(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return solicitudes;
+    }
+
     public boolean asignarTecnicoASolicitud(int idSolicitud, int idTecnico, double precioFinal) {
         // Esta consulta actualiza el estado, asigna el técnico y fija el precio final.
         String sql = "UPDATE solicitudes_trabajo SET estado = ?, id_tecnico = ?, precio_final = ? WHERE id = ?";
@@ -121,6 +156,33 @@ public class SolicitudTrabajoDAO {
             e.printStackTrace();
             return false;
         }
-
+        
     }
+
+    public boolean aceptarContraoferta(int idSolicitud) {
+        // Cuando el cliente acepta, el estado final es ASIGNADA
+        String sql = "UPDATE solicitudes_trabajo SET estado = ? WHERE id = ?";
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, EstadoSolicitud.ASIGNADA.name());
+            pstmt.setInt(2, idSolicitud);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean rechazarContraoferta(int idSolicitud) {
+        // Si el cliente rechaza, podemos considerar la solicitud CANCELADA
+        String sql = "UPDATE solicitudes_trabajo SET estado = ? WHERE id = ?";
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, EstadoSolicitud.CANCELADA.name());
+            pstmt.setInt(2, idSolicitud);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
