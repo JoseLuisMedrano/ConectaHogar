@@ -160,11 +160,15 @@ public class SolicitudTrabajoDAO {
     }
 
     public boolean aceptarContraoferta(int idSolicitud) {
-        // Cuando el cliente acepta, el estado final es ASIGNADA
+        // Esta consulta es la correcta: SOLO cambia el estado a ASIGNADA.
+        // NO toca la columna precio_final, conservando el valor de la contraoferta.
         String sql = "UPDATE solicitudes_trabajo SET estado = ? WHERE id = ?";
+
         try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setString(1, EstadoSolicitud.ASIGNADA.name());
             pstmt.setInt(2, idSolicitud);
+
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

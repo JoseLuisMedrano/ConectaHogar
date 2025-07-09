@@ -117,7 +117,6 @@
                                                         <input type="hidden" name="idSolicitud" value="${solicitud.id}">
                                                         <button type="submit" class="btn btn-primary btn-sm">Aceptar</button>
                                                     </form>
-
                                                     <form action="${pageContext.request.contextPath}/rechazarContraoferta" method="post" class="m-0">
                                                         <input type="hidden" name="idSolicitud" value="${solicitud.id}">
                                                         <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
