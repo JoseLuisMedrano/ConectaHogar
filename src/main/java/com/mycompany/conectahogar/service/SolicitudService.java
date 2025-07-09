@@ -65,4 +65,9 @@ public class SolicitudService {
     }
     // Todos los métodos antiguos que daban error (aceptar, rechazar, etc.) han sido eliminados.
     // Los añadiremos de nuevo cuando necesitemos esa funcionalidad.
+
+    public List<SolicitudTrabajo> listarSolicitudesPorTecnico(int idTecnico) {
+        // El servicio simplemente le pasa la petición al DAO
+        return solicitudDAO.obtenerSolicitudesPorTecnico(idTecnico);
+    }
 }

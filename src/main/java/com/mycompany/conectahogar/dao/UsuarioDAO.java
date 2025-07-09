@@ -25,37 +25,37 @@ public class UsuarioDAO {
         this.tecnicoDAO = new TecnicoDAO();
     }
 
-    public boolean crearUsuario(Usuario usuario) {
-        // Se añaden los nuevos campos a la consulta SQL
-        String sql = "INSERT INTO usuarios (nombre, apellido, dni, correoElectronico, contrasena, telefono, direccion, tipoUsuario, edad, sexo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public boolean crearUsuarioBase(Usuario usuario) {
+        String sql = "INSERT INTO usuarios (nombre, apellido, correoElectronico, contrasena, telefono, direccion, dni, tipoUsuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            String hashedPassword = SecurityUtil.hashPassword(usuario.getContrasena());
 
             pstmt.setString(1, usuario.getNombre());
             pstmt.setString(2, usuario.getApellido());
-            pstmt.setString(3, usuario.getDni());
-            pstmt.setString(4, usuario.getCorreoElectronico());
-            pstmt.setString(5, hashedPassword);
-            pstmt.setString(6, usuario.getTelefono());
-            pstmt.setString(7, usuario.getDireccion());
+            pstmt.setString(3, usuario.getCorreoElectronico());
+            pstmt.setString(4, usuario.getContrasena()); // Recibe la contraseña ya hasheada
+            pstmt.setString(5, usuario.getTelefono());
+            pstmt.setString(6, usuario.getDireccion());
+            pstmt.setString(7, usuario.getDni());
             pstmt.setString(8, usuario.getTipoUsuario().name());
-            pstmt.setInt(9, usuario.getEdad()); // ¡NUEVO!
-            pstmt.setString(10, usuario.getSexo()); // ¡NUEVO!
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        usuario.setId_Usuario(generatedKeys.getInt(1));
-                        return true;
-                    }
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                return false;
+            }
+
+            // Obtenemos el ID generado para el nuevo usuario
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    usuario.setId_Usuario(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Fallo al crear usuario, no se obtuvo el ID.");
                 }
             }
+            return true;
         } catch (SQLException e) {
-            logger.error("Error al crear usuario: {}", e.getMessage(), e);
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
@@ -63,17 +63,27 @@ public class UsuarioDAO {
         TipoUsuario tipoUsuario = TipoUsuario.valueOf(rs.getString("tipoUsuario"));
 
         Usuario usuario;
-        switch (tipoUsuario) {
-            case CLIENTE:
-                usuario = new Cliente();
-                break;
-            case TECNICO:
-                // Aquí podrías cargar datos adicionales si la tabla 'tecnicos' tuviera más info
-                usuario = new Tecnico();
-                break;
-            default:
-                usuario = new Usuario();
-                break;
+        if (tipoUsuario == TipoUsuario.TECNICO) {
+            // Si es un técnico, creamos un objeto Tecnico
+            Tecnico tecnico = new Tecnico();
+
+            // --- LÓGICA NUEVA PARA CARGAR DATOS DEL TÉCNICO ---
+            // Buscamos los datos adicionales en la tabla 'tecnicos'
+            try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement("SELECT especialidad, disponibilidad, perfil_activo FROM tecnicos WHERE id_Usuario = ?")) {
+
+                pstmt.setInt(1, rs.getInt("id_Usuario"));
+                try (ResultSet tecnicoRs = pstmt.executeQuery()) {
+                    if (tecnicoRs.next()) {
+                        tecnico.setEspecialidad(tecnicoRs.getString("especialidad"));
+                        tecnico.setDisponibilidad(tecnicoRs.getString("disponibilidad"));
+                        tecnico.setPerfilActivo(tecnicoRs.getBoolean("perfil_activo"));
+                    }
+                }
+            }
+            usuario = tecnico;
+
+        } else {
+            usuario = new Cliente();
         }
 
         usuario.setId_Usuario(rs.getInt("id_Usuario"));
@@ -97,7 +107,7 @@ public class UsuarioDAO {
         return usuario;
     }
 
-public Usuario obtenerUsuarioPorId(int id) {
+    public Usuario obtenerUsuarioPorId(int id) {
         String sql = "SELECT * FROM usuarios WHERE id_Usuario = ?";
         try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);

@@ -34,6 +34,14 @@ public class PanelClienteServlet extends HttpServlet {
 
         Cliente cliente = (Cliente) session.getAttribute("usuario");
 
+        if (cliente.getDireccion() == null || cliente.getDireccion().isEmpty()) {
+            // Si no tiene dirección, lo mandamos a una página para que la complete
+            request.setAttribute("mensajeAdvertencia", "Por favor, completa tu dirección para poder crear una solicitud.");
+            // Aquí podrías redirigirlo a una sección de "Editar Perfil"
+            request.getRequestDispatcher("/WEB-INF/views/cliente/completarPerfil.jsp").forward(request, response);
+            return; // Detenemos la ejecución para que no muestre la página de crear solicitud
+        }
+
         // --- CÓDIGO CORREGIDO ---
         // 2. Creamos UNA instancia del servicio
         SolicitudService service = new SolicitudService();
@@ -82,8 +90,8 @@ public class PanelClienteServlet extends HttpServlet {
                 nuevaSolicitud.setFechaCreacion(new Date());
                 nuevaSolicitud.setEstado(EstadoSolicitud.PENDIENTE);
 
-                SolicitudTrabajoDAO dao = new SolicitudTrabajoDAO();
-                boolean exito = dao.crearSolicitud(nuevaSolicitud);
+                SolicitudService service = new SolicitudService();
+                boolean exito = service.crearNuevaSolicitud(nuevaSolicitud);
 
                 if (exito) {
                     request.setAttribute("mensajeExito", "¡Solicitud guardada en la base de datos!");

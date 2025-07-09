@@ -37,28 +37,6 @@
                                         <label class="form-check-label" for="tecnico">Técnico</label>
                                     </div>
                                 </div>
-
-                                <div id="camposTecnico" class="row g-3 mt-2" style="display: none;">
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <select class="form-select" id="especialidad" name="especialidad">
-                                                <option value="" selected>Elige tu especialidad...</option>
-                                                <option value="ELECTRICISTA">Electricista</option>
-                                                <option value="GASFITERO">Gasfitero</option>
-                                                <option value="JARDINERO">Jardinero</option>
-                                            </select>
-                                            <label for="especialidad">Especialidad</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <select class="form-select" id="disponibilidad" name="disponibilidad">
-                                                <option value="Disponible" selected>Disponible</option>
-                                                <option value="No Disponible">No Disponible</option>
-                                            </select>
-                                            <label for="disponibilidad">Disponibilidad</label>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-12 mt-4">
                                     <button id="submitButton" type="submit" class="btn btn-primary w-100">Registrarme</button>

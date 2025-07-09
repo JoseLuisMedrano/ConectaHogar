@@ -5,102 +5,94 @@ import com.mycompany.conectahogar.model.Tecnico;
 import com.mycompany.conectahogar.model.TipoUsuario;
 import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.service.UsuarioService;
+import com.mycompany.conectahogar.util.SecurityUtil;
+
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
 
-    private final UsuarioService usuarioService = new UsuarioService();
+    private UsuarioService usuarioService = new UsuarioService();
 
+    // El GET está perfecto, decide qué página mostrar.
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Simplemente muestra el formulario de registro
-        request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+        String role = request.getParameter("role");
+
+        if (role == null || role.isEmpty()) {
+            // Si no hay rol, muestra la página para elegir
+            request.getRequestDispatcher("/WEB-INF/views/auth/register_role_selection.jsp").forward(request, response);
+        } else {
+            // Si ya eligió rol, pasa el rol al JSP y muestra el formulario de detalles
+            request.setAttribute("role", role);
+            request.getRequestDispatcher("/WEB-INF/views/auth/register_details_form.jsp").forward(request, response);
+        }
     }
 
+    // El POST procesa el formulario de detalles
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Recoger todos los parámetros del formulario
+        // 1. Recoger todos los datos del formulario
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
-        String dni = request.getParameter("dni");
-        String direccion = request.getParameter("direccion");
         String telefono = request.getParameter("telefono");
-        String edadStr = request.getParameter("edad");
-        String sexo = request.getParameter("sexo");
+        String direccion = request.getParameter("direccion");
+        String dni = request.getParameter("dni");
         String tipoUsuarioStr = request.getParameter("tipoUsuario");
 
+        if (contrasena == null || contrasena.trim().isEmpty()) {
+            request.setAttribute("mensajeError", "La contraseña no puede estar vacía.");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register_details_form.jsp").forward(request, response);
+            return;
+        }
+
+        // 2. Crear el objeto de usuario correspondiente
+        Usuario nuevoUsuario;
+        TipoUsuario tipo = TipoUsuario.valueOf(tipoUsuarioStr.toUpperCase());
+
+        if (tipo == TipoUsuario.CLIENTE) {
+            nuevoUsuario = new Cliente();
+        } else {
+            nuevoUsuario = new Tecnico();
+        }
+
+        // 3. Asignar TODOS los datos comunes al objeto
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setApellido(apellido);
+        nuevoUsuario.setCorreoElectronico(correo);
+        nuevoUsuario.setTelefono(telefono);
+        nuevoUsuario.setDireccion(direccion);
+        nuevoUsuario.setDni(dni);
+        nuevoUsuario.setTipoUsuario(tipo);
+
+        // --- ESTA ES LA LÍNEA CLAVE Y LA ÚNICA CORRECCIÓN NECESARIA ---
+        // Le pasamos la contraseña en TEXTO PLANO al objeto.
+        // El servicio se encargará de encriptarla.
+        nuevoUsuario.setContrasena(contrasena);
+
+        // 4. Guardar el usuario usando el servicio
         try {
-            // 2. Validaciones y conversiones
-            if (nombre == null || apellido == null || correo == null || contrasena == null || tipoUsuarioStr == null ||
-                nombre.trim().isEmpty() || apellido.trim().isEmpty() || correo.trim().isEmpty() || contrasena.trim().isEmpty()) {
-                throw new Exception("Todos los campos marcados son obligatorios.");
-            }
-            
-            TipoUsuario tipoUsuario = TipoUsuario.valueOf(tipoUsuarioStr);
-            int edad = Integer.parseInt(edadStr);
-            
-            Usuario nuevoUsuario;
-
-            // 3. Crear el tipo de objeto correcto (Cliente o Tecnico)
-            if (tipoUsuario == TipoUsuario.TECNICO) {
-                Tecnico nuevoTecnico = new Tecnico();
-                
-                // Recoger los campos específicos del técnico
-                String especialidad = request.getParameter("especialidad");
-                String disponibilidad = request.getParameter("disponibilidad");
-                
-                nuevoTecnico.setEspecialidad(especialidad);
-                nuevoTecnico.setDisponibilidad(disponibilidad);
-                // Se pueden establecer valores por defecto para otros campos si se desea
-                nuevoTecnico.setCalificacionPromedio(0.0);
-                nuevoTecnico.setCertificaciones("Ninguna");
-
-                nuevoUsuario = nuevoTecnico;
-            } else {
-                nuevoUsuario = new Cliente();
-            }
-
-            // 4. Establecer los datos comunes en el objeto
-            nuevoUsuario.setNombre(nombre);
-            nuevoUsuario.setApellido(apellido);
-            nuevoUsuario.setCorreoElectronico(correo);
-            nuevoUsuario.setContrasena(contrasena);
-            nuevoUsuario.setDni(dni);
-            nuevoUsuario.setDireccion(direccion);
-            nuevoUsuario.setTelefono(telefono);
-            nuevoUsuario.setEdad(edad);
-            nuevoUsuario.setSexo(sexo);
-            nuevoUsuario.setTipoUsuario(tipoUsuario);
-
-            // 5. Llamar al servicio para registrar al usuario
+            UsuarioService usuarioService = new UsuarioService();
             boolean exito = usuarioService.registrarUsuario(nuevoUsuario);
-
-            // 6. Redirigir con el mensaje apropiado
             if (exito) {
-                HttpSession session = request.getSession();
-                session.setAttribute("mensajeExito", "¡Registro exitoso! Ya puedes iniciar sesión.");
+                request.getSession().setAttribute("mensajeExito", "¡Registro exitoso! Ya puedes iniciar sesión.");
                 response.sendRedirect(request.getContextPath() + "/login");
             } else {
-                request.setAttribute("mensajeError", "No se pudo completar el registro. El correo o DNI podrían ya estar en uso.");
-                request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+                request.setAttribute("mensajeError", "No se pudo completar el registro. El correo electrónico ya podría estar en uso.");
+                request.getRequestDispatcher("/WEB-INF/views/auth/register_details_form.jsp").forward(request, response);
             }
-
         } catch (Exception e) {
-            // Capturar cualquier error (ej. email duplicado, datos inválidos)
-            request.setAttribute("mensajeError", "Error: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            e.printStackTrace();
+            request.setAttribute("mensajeError", "Ocurrió un error inesperado en el servidor.");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register_details_form.jsp").forward(request, response);
         }
     }
 }

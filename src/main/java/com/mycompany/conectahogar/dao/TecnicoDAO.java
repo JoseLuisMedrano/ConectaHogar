@@ -17,22 +17,17 @@ public class TecnicoDAO {
     private static final Logger logger = LoggerFactory.getLogger(TecnicoDAO.class);
 
     public boolean crearRegistroTecnico(Tecnico tecnico) {
-        if (tecnico.getId_Usuario() == 0) {
-            logger.error("No se puede crear el registro de técnico sin un ID de usuario base.");
+        String sql = "INSERT INTO tecnicos (id_Usuario, especialidad, disponibilidad, perfil_activo) VALUES (?, ?, ?, ?)";
+        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, tecnico.getId_Usuario());
+            pstmt.setString(2, tecnico.getEspecialidad());
+            pstmt.setString(3, tecnico.getDisponibilidad());
+            pstmt.setBoolean(4, tecnico.isPerfilActivo());
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
-        String sql = "INSERT INTO tecnicos (id_Usuario, especialidad, disponibilidad, certificaciones, calificacionPromedio) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, tecnico.getId_Usuario());
-            stmt.setString(2, tecnico.getEspecialidad());
-            stmt.setString(3, tecnico.getDisponibilidad());
-            stmt.setString(4, tecnico.getCertificaciones());
-            stmt.setDouble(5, tecnico.getCalificacionPromedio());
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            logger.error("Error al crear registro de técnico: {}", e.getMessage(), e);
-        }
-        return false;
     }
 
     public List<Tecnico> obtenerTecnicosDisponiblesPorEspecialidad(String especialidad) {
@@ -96,6 +91,50 @@ public class TecnicoDAO {
             e.printStackTrace();
             return false;
         }
+    }
+    // En TecnicoDAO.java
+
+    public boolean activarPerfil(int idTecnico, String dni, String direccion, String descripcion) {
+        // Este método actualiza los datos faltantes en la tabla 'usuarios' y activa el perfil en 'tecnicos'
+        // Se debe hacer en una transacción para seguridad
+        Connection conn = null;
+        boolean exito = false;
+        try {
+            conn = ConexionBD.obtenerConexion();
+            conn.setAutoCommit(false); // Iniciar transacción
+
+            // 1. Actualizar tabla usuarios
+            String sqlUsuarios = "UPDATE usuarios SET dni = ?, direccion = ? WHERE id_Usuario = ?";
+            PreparedStatement pstmt1 = conn.prepareStatement(sqlUsuarios);
+            pstmt1.setString(1, dni);
+            pstmt1.setString(2, direccion);
+            pstmt1.setInt(3, idTecnico);
+            pstmt1.executeUpdate();
+
+            // 2. Actualizar tabla tecnicos
+            // Aquí podrías añadir campos como 'descripcion' a tu tabla tecnicos
+            String sqlTecnicos = "UPDATE tecnicos SET perfil_activo = TRUE WHERE id_Usuario = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(sqlTecnicos);
+            pstmt2.setInt(1, idTecnico);
+            pstmt2.executeUpdate();
+
+            conn.commit(); // Confirmar transacción
+            exito = true;
+        } catch (SQLException e) {
+            if (conn != null) try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            if (conn != null) try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exito;
     }
 
     public void cargarDatosEspecificos(Tecnico tecnico) {

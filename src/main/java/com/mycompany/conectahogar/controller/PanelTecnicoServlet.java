@@ -1,13 +1,12 @@
 package com.mycompany.conectahogar.controller;
 
-import com.mycompany.conectahogar.dao.SolicitudTrabajoDAO;
-import com.mycompany.conectahogar.dao.TecnicoDAO;
-import com.mycompany.conectahogar.model.EstadoSolicitud;
 import com.mycompany.conectahogar.model.Servicio;
 import com.mycompany.conectahogar.model.SolicitudTrabajo;
 import com.mycompany.conectahogar.model.Tecnico;
 import com.mycompany.conectahogar.model.TipoUsuario;
 import com.mycompany.conectahogar.model.Usuario;
+import com.mycompany.conectahogar.service.SolicitudService;
+import com.mycompany.conectahogar.service.UsuarioService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,8 +36,8 @@ public class PanelTecnicoServlet extends HttpServlet {
             String especialidad = request.getParameter("especialidad");
             String disponibilidad = request.getParameter("disponibilidad");
 
-            TecnicoDAO dao = new TecnicoDAO();
-            boolean exito = dao.actualizarPerfil(tecnico.getId_Usuario(), especialidad, disponibilidad);
+            UsuarioService usuarioService = new UsuarioService();
+            boolean exito = usuarioService.actualizarPerfilTecnico(tecnico.getId_Usuario(), especialidad, disponibilidad);
 
             if (exito) {
                 // Actualizar también el objeto en la sesión para que se refleje inmediatamente
@@ -55,12 +54,13 @@ public class PanelTecnicoServlet extends HttpServlet {
         doGet(request, response);
     }
 
+// En PanelTecnicoServlet.java
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        // 1. Validación de sesión (esto ya lo tienes)
+        // 1. Validación de sesión
         if (session == null || session.getAttribute("usuario") == null
                 || !(((Usuario) session.getAttribute("usuario")).getTipoUsuario() == TipoUsuario.TECNICO)) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -69,17 +69,20 @@ public class PanelTecnicoServlet extends HttpServlet {
 
         Tecnico tecnico = (Tecnico) session.getAttribute("usuario");
 
-        // 2. Creamos una instancia del DAO para hacer las consultas
-        SolicitudTrabajoDAO dao = new SolicitudTrabajoDAO();
+        // Lógica para el perfil inactivo
+        if (!tecnico.isPerfilActivo()) {
+            request.setAttribute("mensajeAdvertencia", "¡Tu perfil no está activo! Completa tus datos para empezar a recibir trabajos.");
+        }
 
-        // 3. Obtenemos los trabajos PENDIENTES (esto ya funciona)
-        List<SolicitudTrabajo> solicitudesPendientes = dao.obtenerSolicitudesPorEstado(EstadoSolicitud.PENDIENTE);
+        // --- CORRECCIÓN DE ARQUITECTURA ---
+        // 2. Creamos una instancia del servicio de solicitudes
+        SolicitudService solicitudService = new SolicitudService();
 
-        // 4. ---- LÍNEA CLAVE Y CORREGIDA ----
-        // Usamos el método para obtener los trabajos asignados a ESTE técnico
-        List<SolicitudTrabajo> solicitudesAsignadas = dao.obtenerSolicitudesPorTecnico(tecnico.getId_Usuario());
+        // 3. Usamos el servicio para obtener las listas de solicitudes
+        List<SolicitudTrabajo> solicitudesPendientes = solicitudService.listarSolicitudesPendientes();
+        List<SolicitudTrabajo> solicitudesAsignadas = solicitudService.listarSolicitudesPorTecnico(tecnico.getId_Usuario());
 
-        // 5. Pasamos AMBAS listas al JSP para que las muestre
+        // 4. Pasamos todas las listas y objetos al JSP
         request.setAttribute("tecnico", tecnico);
         request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values()));
         request.setAttribute("solicitudesPendientes", solicitudesPendientes);

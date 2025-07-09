@@ -74,12 +74,12 @@ public class SolicitudTrabajoDAO {
             pstmt.setInt(1, idTecnico);
             ResultSet rs = pstmt.executeQuery();
 
-            // El helper 'mapearSolicitud' que ya tienes hace el trabajo pesado
+            // Reutilizamos el método 'mapearSolicitud' que ya existe
             while (rs.next()) {
                 solicitudes.add(mapearSolicitud(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Es buena idea registrar el error
+            e.printStackTrace();
         }
         return solicitudes;
     }
@@ -156,7 +156,7 @@ public class SolicitudTrabajoDAO {
             e.printStackTrace();
             return false;
         }
-        
+
     }
 
     public boolean aceptarContraoferta(int idSolicitud) {
