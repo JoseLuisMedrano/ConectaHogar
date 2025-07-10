@@ -1,11 +1,10 @@
 // Archivo: com/mycompany/conectahogar/model/SolicitudTrabajo.java
-
-
 package com.mycompany.conectahogar.model;
 
 import java.util.Date;
 
 public class SolicitudTrabajo {
+
     private int id; // ID de la solicitud (autoincremental en DB)
     private int idCliente; // FK a usuarios (cliente)
     private Integer idTecnico; // FK a usuarios (tecnico), puede ser null
@@ -16,6 +15,19 @@ public class SolicitudTrabajo {
     private EstadoSolicitud estado; // Enum EstadoSolicitud (Ej: PENDIENTE, ACEPTADA)
     private Date fechaCreacion;
     private Date fechaFinalizacion; // Puede ser null
+    private String nombreTecnico;
+
+    public SolicitudTrabajo(String nombreTecnico) {
+        this.nombreTecnico = nombreTecnico;
+    }
+
+    public String getNombreTecnico() {
+        return nombreTecnico;
+    }
+
+    public void setNombreTecnico(String nombreTecnico) {
+        this.nombreTecnico = nombreTecnico;
+    }
 
     // Constructores
     public SolicitudTrabajo() {
@@ -32,7 +44,6 @@ public class SolicitudTrabajo {
     }
 
     // --- Getters y Setters ---
-
     public int getId() {
         return id;
     }

@@ -54,13 +54,13 @@ public class PanelTecnicoServlet extends HttpServlet {
         doGet(request, response);
     }
 
-// En PanelTecnicoServlet.java
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         HttpSession session = request.getSession(false);
 
-        // 1. Validación de sesión
+        // Validación de sesión
         if (session == null || session.getAttribute("usuario") == null
                 || !(((Usuario) session.getAttribute("usuario")).getTipoUsuario() == TipoUsuario.TECNICO)) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -68,21 +68,18 @@ public class PanelTecnicoServlet extends HttpServlet {
         }
 
         Tecnico tecnico = (Tecnico) session.getAttribute("usuario");
-
-        // Lógica para el perfil inactivo
-        if (!tecnico.isPerfilActivo()) {
-            request.setAttribute("mensajeAdvertencia", "¡Tu perfil no está activo! Completa tus datos para empezar a recibir trabajos.");
-        }
-
-        // --- CORRECCIÓN DE ARQUITECTURA ---
-        // 2. Creamos una instancia del servicio de solicitudes
         SolicitudService solicitudService = new SolicitudService();
 
-        // 3. Usamos el servicio para obtener las listas de solicitudes
+        // 1. Buscamos los trabajos PENDIENTES
         List<SolicitudTrabajo> solicitudesPendientes = solicitudService.listarSolicitudesPendientes();
+
+        // 2. ===== LÍNEA DE DEPURACIÓN CLAVE =====
+        System.out.println("DEBUG: Se encontraron " + solicitudesPendientes.size() + " solicitudes PENDIENTES en la base de datos.");
+
+        // 3. Buscamos los trabajos ASIGNADOS
         List<SolicitudTrabajo> solicitudesAsignadas = solicitudService.listarSolicitudesPorTecnico(tecnico.getId_Usuario());
 
-        // 4. Pasamos todas las listas y objetos al JSP
+        // 4. Pasamos los datos al JSP
         request.setAttribute("tecnico", tecnico);
         request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values()));
         request.setAttribute("solicitudesPendientes", solicitudesPendientes);

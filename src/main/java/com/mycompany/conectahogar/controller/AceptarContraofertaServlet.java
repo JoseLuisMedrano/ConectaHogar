@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class AceptarContraofertaServlet extends HttpServlet {
 
+    // En AceptarContraofertaServlet.java
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

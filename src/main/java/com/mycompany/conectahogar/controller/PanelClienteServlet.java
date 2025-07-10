@@ -1,6 +1,5 @@
 package com.mycompany.conectahogar.controller;
 
-import com.mycompany.conectahogar.dao.SolicitudTrabajoDAO;
 import com.mycompany.conectahogar.model.Cliente;
 import com.mycompany.conectahogar.model.EstadoSolicitud;
 import com.mycompany.conectahogar.model.Servicio;
@@ -59,54 +58,42 @@ public class PanelClienteServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/cliente/panelCliente.jsp").forward(request, response);
     }
 
+    // En PanelClienteServlet.java
+    // En PanelClienteServlet.java
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession(false);
-        // Validar que la sesión y el usuario existan antes de procesar
-        if (session == null || session.getAttribute("usuario") == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+        HttpSession session = request.getSession(true);
         Cliente cliente = (Cliente) session.getAttribute("usuario");
-
         String action = request.getParameter("accion");
+        String redirectURL = request.getContextPath() + "/panelCliente";
 
-        // Procesar la acción de crear una nueva solicitud
         if ("crearSolicitud".equals(action)) {
             try {
-                // 1. Recoger los datos del formulario
-                String descripcion = request.getParameter("descripcion");
-                Servicio servicio = Servicio.valueOf(request.getParameter("servicio"));
-                double precioSugerido = Double.parseDouble(request.getParameter("precioSugerido"));
-
-                // 2. Crear un nuevo objeto SolicitudTrabajo
                 SolicitudTrabajo nuevaSolicitud = new SolicitudTrabajo();
                 nuevaSolicitud.setIdCliente(cliente.getId_Usuario());
-                nuevaSolicitud.setDescripcion(descripcion);
-                nuevaSolicitud.setServicio(servicio);
-                nuevaSolicitud.setPrecioSugerido(precioSugerido);
+                nuevaSolicitud.setDescripcion(request.getParameter("descripcion"));
+                nuevaSolicitud.setServicio(Servicio.valueOf(request.getParameter("servicio")));
+                nuevaSolicitud.setPrecioSugerido(Double.parseDouble(request.getParameter("precioSugerido")));
                 nuevaSolicitud.setFechaCreacion(new Date());
                 nuevaSolicitud.setEstado(EstadoSolicitud.PENDIENTE);
 
+                // --- CORRECCIÓN DE ARQUITECTURA ---
+                // Llamamos al Service en lugar de al DAO directamente
                 SolicitudService service = new SolicitudService();
                 boolean exito = service.crearNuevaSolicitud(nuevaSolicitud);
 
                 if (exito) {
-                    request.setAttribute("mensajeExito", "¡Solicitud guardada en la base de datos!");
+                    session.setAttribute("mensajeExito", "¡Solicitud creada y enviada a los técnicos!");
+                    redirectURL += "?active_tab=misSolicitudes";
                 } else {
-                    request.setAttribute("mensajeError", "No se pudo guardar la solicitud.");
+                    session.setAttribute("mensajeError", "No se pudo guardar la solicitud.");
                 }
-
             } catch (Exception e) {
-                // En caso de error (ej. datos de formulario incorrectos)
-                request.setAttribute("mensajeError", "Error al crear la solicitud. Verifique los datos.");
-                e.printStackTrace(); // Es buena idea registrar el error en la consola del servidor
+                session.setAttribute("mensajeError", "Error al crear la solicitud. Verifique los datos.");
+                e.printStackTrace();
             }
         }
-
-        // 5. Después de procesar el POST, llamar a doGet para recargar la página con los datos actualizados
-        doGet(request, response);
+        response.sendRedirect(redirectURL);
     }
 }

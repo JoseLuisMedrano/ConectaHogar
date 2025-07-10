@@ -48,8 +48,9 @@ public class SolicitudService {
         return solicitudDAO.asignarTecnicoASolicitud(idSolicitud, idTecnico, precioFinal);
     }
 
-    public boolean hacerContraoferta(int idSolicitud, double nuevoPrecio) {
-        return solicitudDAO.hacerContraoferta(idSolicitud, nuevoPrecio);
+    public boolean hacerContraoferta(int idSolicitud, double nuevoPrecio, int idTecnico) {
+
+        return solicitudDAO.hacerContraoferta(idSolicitud, nuevoPrecio, idTecnico);
     }
 
     public List<SolicitudTrabajo> listarContraofertasParaCliente(int idCliente) {
