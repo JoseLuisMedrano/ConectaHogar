@@ -134,10 +134,6 @@
                             <label for="descripcion" class="form-label">Describe tu problema:</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required placeholder="Ej: Fuga de agua en el lavadero de la cocina."></textarea>
                         </div>
-                        <div class="mb-3">
-                            <label for="precioSugerido" class="form-label">Presupuesto Sugerido (S/.):</label>
-                            <input type="number" class="form-control" id="precioSugerido" name="precioSugerido" step="0.01" min="0" required placeholder="Ej: 50.00">
-                        </div>
                         <button type="submit" class="btn btn-primary"><i class="bi bi-send-fill"></i> Enviar Solicitud</button>
                     </form>
                 </div>

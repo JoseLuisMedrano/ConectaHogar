@@ -14,24 +14,20 @@ import java.util.List;
 
 public class SolicitudTrabajoDAO {
 
-    // --- CONSULTA BASE ---
-    // Se define una sola vez para reutilizarla y asegurar consistencia.
-    // El LEFT JOIN trae los datos del técnico solo si un trabajo ha sido asignado.
     private final String BASE_SELECT_SQL
             = "SELECT s.*, u.nombre AS nombre_tecnico, u.apellido AS apellido_tecnico "
             + "FROM solicitudes_trabajo s "
             + "LEFT JOIN usuarios u ON s.id_tecnico = u.id_Usuario ";
 
-    // --- MÉTODOS DE CREACIÓN Y ACTUALIZACIÓN ---
     public boolean crearSolicitud(SolicitudTrabajo solicitud) {
-        String sql = "INSERT INTO solicitudes_trabajo (id_cliente, servicio, descripcion, precio_sugerido, estado, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?)";
+        // Esta consulta ya está correcta (sin precio_sugerido)
+        String sql = "INSERT INTO solicitudes_trabajo (id_cliente, servicio, descripcion, estado, fecha_creacion) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConexionBD.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, solicitud.getIdCliente());
             pstmt.setString(2, solicitud.getServicio().name());
             pstmt.setString(3, solicitud.getDescripcion());
-            pstmt.setDouble(4, solicitud.getPrecioSugerido());
-            pstmt.setString(5, solicitud.getEstado().name());
-            pstmt.setTimestamp(6, new Timestamp(solicitud.getFechaCreacion().getTime()));
+            pstmt.setString(4, solicitud.getEstado().name());
+            pstmt.setTimestamp(5, new Timestamp(solicitud.getFechaCreacion().getTime()));
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +87,6 @@ public class SolicitudTrabajoDAO {
         }
     }
 
-    // --- MÉTODOS DE LECTURA ---
     public List<SolicitudTrabajo> obtenerSolicitudesPorEstado(EstadoSolicitud estado) {
         List<SolicitudTrabajo> solicitudes = new ArrayList<>();
         String sql = BASE_SELECT_SQL + "WHERE s.estado = ?";
@@ -161,7 +156,6 @@ public class SolicitudTrabajoDAO {
         sol.setId(rs.getInt("id"));
         sol.setIdCliente(rs.getInt("id_cliente"));
         sol.setDescripcion(rs.getString("descripcion"));
-        sol.setPrecioSugerido(rs.getDouble("precio_sugerido"));
         sol.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
         sol.setEstado(EstadoSolicitud.valueOf(rs.getString("estado")));
         sol.setServicio(Servicio.valueOf(rs.getString("servicio")));

@@ -5,7 +5,6 @@ import com.mycompany.conectahogar.model.Tecnico;
 import com.mycompany.conectahogar.model.TipoUsuario;
 import com.mycompany.conectahogar.model.Usuario;
 import com.mycompany.conectahogar.service.UsuarioService;
-import com.mycompany.conectahogar.util.SecurityUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -73,9 +72,7 @@ public class RegisterServlet extends HttpServlet {
         nuevoUsuario.setDni(dni);
         nuevoUsuario.setTipoUsuario(tipo);
 
-        // --- ESTA ES LA LÍNEA CLAVE Y LA ÚNICA CORRECCIÓN NECESARIA ---
-        // Le pasamos la contraseña en TEXTO PLANO al objeto.
-        // El servicio se encargará de encriptarla.
+       
         nuevoUsuario.setContrasena(contrasena);
 
         // 4. Guardar el usuario usando el servicio

@@ -54,46 +54,52 @@ public class PanelClienteServlet extends HttpServlet {
         request.setAttribute("contraofertas", contraofertas);
         request.setAttribute("serviciosDisponibles", Arrays.asList(Servicio.values()));
 
-        // 5. Redirigimos al JSP
         request.getRequestDispatcher("/WEB-INF/views/cliente/panelCliente.jsp").forward(request, response);
     }
 
-    // En PanelClienteServlet.java
-    // En PanelClienteServlet.java
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
-        Cliente cliente = (Cliente) session.getAttribute("usuario");
-        String action = request.getParameter("accion");
-        String redirectURL = request.getContextPath() + "/panelCliente";
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-        if ("crearSolicitud".equals(action)) {
-            try {
-                SolicitudTrabajo nuevaSolicitud = new SolicitudTrabajo();
-                nuevaSolicitud.setIdCliente(cliente.getId_Usuario());
-                nuevaSolicitud.setDescripcion(request.getParameter("descripcion"));
-                nuevaSolicitud.setServicio(Servicio.valueOf(request.getParameter("servicio")));
-                nuevaSolicitud.setPrecioSugerido(Double.parseDouble(request.getParameter("precioSugerido")));
-                nuevaSolicitud.setFechaCreacion(new Date());
-                nuevaSolicitud.setEstado(EstadoSolicitud.PENDIENTE);
-
-                // --- CORRECCIÓN DE ARQUITECTURA ---
-                // Llamamos al Service en lugar de al DAO directamente
-                SolicitudService service = new SolicitudService();
-                boolean exito = service.crearNuevaSolicitud(nuevaSolicitud);
-
-                if (exito) {
-                    session.setAttribute("mensajeExito", "¡Solicitud creada y enviada a los técnicos!");
-                    redirectURL += "?active_tab=misSolicitudes";
-                } else {
-                    session.setAttribute("mensajeError", "No se pudo guardar la solicitud.");
-                }
-            } catch (Exception e) {
-                session.setAttribute("mensajeError", "Error al crear la solicitud. Verifique los datos.");
-                e.printStackTrace();
-            }
-        }
-        response.sendRedirect(redirectURL);
+    HttpSession session = request.getSession(true);
+    // Es importante validar que el objeto en sesión no sea nulo antes de hacer el casting
+    if (session.getAttribute("usuario") == null) {
+        response.sendRedirect(request.getContextPath() + "/login");
+        return;
     }
+    
+    Cliente cliente = (Cliente) session.getAttribute("usuario");
+    String action = request.getParameter("accion");
+    String redirectURL = request.getContextPath() + "/panelCliente";
+
+    if ("crearSolicitud".equals(action)) {
+        try {
+            // 1. Creamos el objeto SolicitudTrabajo con los datos del formulario
+            SolicitudTrabajo nuevaSolicitud = new SolicitudTrabajo();
+            nuevaSolicitud.setIdCliente(cliente.getId_Usuario());
+            nuevaSolicitud.setDescripcion(request.getParameter("descripcion"));
+            nuevaSolicitud.setServicio(Servicio.valueOf(request.getParameter("servicio")));
+            nuevaSolicitud.setFechaCreacion(new Date());
+            
+            nuevaSolicitud.setEstado(EstadoSolicitud.PENDIENTE);
+
+            // 2. Llamamos al servicio para guardar en la base de datos
+            SolicitudService service = new SolicitudService();
+            boolean exito = service.crearNuevaSolicitud(nuevaSolicitud);
+
+            if (exito) {
+                session.setAttribute("mensajeExito", "¡Solicitud creada y enviada a los técnicos!");
+                redirectURL += "?active_tab=misSolicitudes";
+            } else {
+                session.setAttribute("mensajeError", "No se pudo guardar la solicitud.");
+            }
+        } catch (Exception e) {
+            session.setAttribute("mensajeError", "Error al crear la solicitud. Verifique los datos.");
+            e.printStackTrace();
+        }
+    }
+    
+    // 3. Redirigimos al usuario
+    response.sendRedirect(redirectURL);
+}
 }
