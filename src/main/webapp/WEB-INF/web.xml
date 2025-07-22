@@ -78,4 +78,14 @@
         <servlet-name>RechazarContraofertaServlet</servlet-name>
         <url-pattern>/rechazarContraoferta</url-pattern>
     </servlet-mapping>
+    
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.mycompany.conectahogar.filter.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

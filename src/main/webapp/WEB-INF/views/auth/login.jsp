@@ -68,13 +68,6 @@
                             <div class="text-center mt-4 pt-3 border-top">
                                 <p class="mb-0">¿No tienes cuenta? <a href="${pageContext.request.contextPath}/register" class="text-decoration-none">Regístrate aquí</a></p>
                             </div>
-
-                            <div class="mt-4 pt-3 border-top">
-                                <p class="small text-muted mb-2"><strong>Credenciales de prueba:</strong></p>
-                                <p class="small text-muted mb-1">Admin: admin@conectahogar.com / admin123</p>
-                                <p class="small text-muted mb-1">Cliente: cliente@test.com / 123456</p>
-                                <p class="small text-muted">Técnico: tecnico@test.com / 123456</p>
-                            </div>
                         </div>
                     </div>
                 </div>
