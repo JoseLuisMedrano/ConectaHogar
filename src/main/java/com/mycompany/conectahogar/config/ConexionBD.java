@@ -12,7 +12,7 @@ public class ConexionBD {
     // URL mejorada con parámetros para zona horaria y SSL
     private static final String URL = "jdbc:mysql://localhost:3306/conectahogar?serverTimezone=UTC&useSSL=false";
     private static final String USUARIO = "root";
-    private static final String CONTRASENA = ""; // Asegúrate que esta sea tu contraseña correcta
+    private static final String CONTRASENA = "";
 
     static {
         try {

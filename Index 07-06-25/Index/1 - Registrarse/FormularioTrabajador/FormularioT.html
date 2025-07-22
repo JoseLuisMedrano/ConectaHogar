@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Trabajador | ConectaHogar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('Trabajador.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+        
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .auth-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .auth-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .auth-body {
+            padding: 30px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .required-field::after {
+            content: " *";
+            color: #dc3545;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        
+        .service-checkbox {
+            margin-bottom: 10px;
+        }
+        
+        .service-checkbox .form-check-input {
+            margin-top: 0.35em;
+        }
+        
+        .location-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+        
+        .experience-slider {
+            width: 100%;
+        }
+        
+        .experience-value {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .document-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .document-upload:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .document-upload i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .specialty-badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .login-note {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .forgot-password {
+            display: block;
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2><i class="fas fa-tools me-2"></i> ConectaHogar</h2>
+                <p class="mb-0">Registro de Trabajador</p>
+            </div>
+            
+            <div class="auth-body">
+                <!-- Selección de tipo de usuario -->
+                <div id="userTypeSection" class="active">
+                    <div class="text-center mb-4">
+                        <img src="Logo.jpeg" alt="ConectaHogar Logo" class="logo">
+                        <h4>¿Ya tienes una cuenta?</h4>
+                        <p class="text-muted">Selecciona una opción para continuar</p>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center mb-4">
+                        <button id="newWorkerBtn" class="btn btn-primary-custom me-3">Soy nuevo</button>
+                        <button id="existingWorkerBtn" class="btn btn-outline-secondary">Ya tengo cuenta</button>
+                    </div>
+                </div>
+                
+                <!-- Formulario de registro para nuevos trabajadores -->
+                <form id="newWorkerForm" class="form-section">
+                    <h4 class="text-center mb-4">Registro de Trabajador</h4>
+                    
+                    <div class="mb-3">
+                        <label for="workerEmail" class="form-label required-field">Correo electrónico</label>
+                        <input type="email" class="form-control" id="workerEmail" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="workerPassword" class="form-label required-field">Contraseña</label>
+                        <input type="password" class="form-control" id="workerPassword" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="workerConfirmPassword" class="form-label required-field">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="workerConfirmPassword" required>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" id="backToWorkerType">Atrás</button>
+                        <button type="button" class="btn btn-primary-custom" id="continueToWorkerProfile">Continuar</button>
+                    </div>
+                </form>
+                
+                <!-- Formulario de perfil del trabajador -->
+                <form id="workerProfileForm" class="form-section">
+                    <h4 class="text-center mb-4">Completa tu perfil profesional</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="workerFirstName" class="form-label required-field">Nombres</label>
+                            <input type="text" class="form-control" id="workerFirstName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="workerLastName" class="form-label required-field">Apellidos</label>
+                            <input type="text" class="form-control" id="workerLastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="workerPhone" class="form-label required-field">Teléfono</label>
+                        <input type="tel" class="form-control" id="workerPhone" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="workerDni" class="form-label required-field">DNI</label>
+                        <input type="text" class="form-control" id="workerDni" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label required-field">Especialidad principal</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="workerSpecialty" id="electrician" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="electrician"><i class="fas fa-bolt me-2"></i>Electricista</label>
+                            
+                            <input type="radio" class="btn-check" name="workerSpecialty" id="plumber" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="plumber"><i class="fas fa-tint me-2"></i>Gasfitero</label>
+                            
+                            <input type="radio" class="btn-check" name="workerSpecialty" id="gardener" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="gardener"><i class="fas fa-leaf me-2"></i>Jardinero</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Otras especialidades</label>
+                        <div class="d-flex flex-wrap">
+                            <div class="form-check me-3 mb-2">
+                                <input class="form-check-input" type="checkbox" id="specialty1" value="instalaciones">
+                                <label class="form-check-label" for="specialty1">Instalaciones</label>
+                            </div>
+                            <div class="form-check me-3 mb-2">
+                                <input class="form-check-input" type="checkbox" id="specialty2" value="reparaciones">
+                                <label class="form-check-label" for="specialty2">Reparaciones</label>
+                            </div>
+                            <div class="form-check me-3 mb-2">
+                                <input class="form-check-input" type="checkbox" id="specialty3" value="mantenimiento">
+                                <label class="form-check-label" for="specialty3">Mantenimiento</label>
+                            </div>
+                            <div class="form-check me-3 mb-2">
+                                <input class="form-check-input" type="checkbox" id="specialty4" value="diseño">
+                                <label class="form-check-label" for="specialty4">Diseño</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="workerExperience" class="form-label required-field">Años de experiencia</label>
+                        <input type="range" class="form-range experience-slider" min="0" max="30" step="1" id="workerExperience">
+                        <div class="experience-value" id="experienceValue">0 años</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="workerBio" class="form-label">Descripción profesional</label>
+                        <textarea class="form-control" id="workerBio" rows="3" placeholder="Describe tus habilidades, formación y experiencia"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label required-field">Documentos requeridos</label>
+                        <div class="document-upload" id="dniUpload">
+                            <i class="fas fa-id-card"></i>
+                            <p>Subir DNI (ambos lados)</p>
+                            <small class="text-muted">Formatos aceptados: JPG, PNG, PDF</small>
+                        </div>
+                        
+                        <div class="document-upload" id="certificateUpload">
+                            <i class="fas fa-certificate"></i>
+                            <p>Certificados o constancias de trabajo</p>
+                            <small class="text-muted">Máximo 5 archivos, 5MB cada uno</small>
+                        </div>
+                    </div>
+                    
+                    <div class="location-info">
+                        <h5><i class="fas fa-map-marker-alt text-primary me-2"></i>Zona de trabajo</h5>
+                        <p class="mb-2"><strong>Actualmente operamos en:</strong> La Molina, Lima</p>
+                        <div class="mb-3">
+                            <label for="workerAddress" class="form-label required-field">Dirección de residencia</label>
+                            <input type="text" class="form-control" id="workerAddress" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="workerTerms" required>
+                        <label class="form-check-label" for="workerTerms">Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">términos y condiciones</a></label>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" id="backToWorkerForm">Atrás</button>
+                        <button type="submit" class="btn btn-primary-custom">Enviar solicitud</button>
+                    </div>
+                </form>
+                
+                <!-- Formulario de inicio de sesión para trabajadores existentes -->
+                <form id="existingWorkerForm" class="form-section">
+                    <h4 class="text-center mb-4">Inicio de sesión</h4>
+                    
+                    <div class="mb-3">
+                        <label for="loginWorkerEmail" class="form-label required-field">Correo electrónico</label>
+                        <input type="email" class="form-control" id="loginWorkerEmail" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="loginWorkerPassword" class="form-label required-field">Contraseña</label>
+                        <input type="password" class="form-control" id="loginWorkerPassword" required>
+                    </div>
+                    
+                    <a href="#" id="forgotWorkerPassword" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-outline-secondary" id="backToWorkerType2">Atrás</button>
+                        <button type="submit" class="btn btn-primary-custom">Ingresar</button>
+                    </div>
+                    
+                    <div class="login-note">
+                        <p><strong>Nota:</strong> Ingresa con tu correo y contraseña registrados</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Términos y Condiciones -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Términos y Condiciones para Trabajadores</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Servicios ofrecidos</h5>
+                    <p>ConectaHogar conecta profesionales independientes con clientes en tres áreas específicas:</p>
+                    <ul>
+                        <li>Servicios de electricidad</li>
+                        <li>Servicios de gasfitería</li>
+                        <li>Servicios de jardinería</li>
+                    </ul>
+                    <p>Actualmente solo operamos en el distrito de La Molina, Lima.</p>
+                    
+                    <h5 class="mt-4">2. Requisitos para trabajadores</h5>
+                    <p>Como profesional registrado, usted debe:</p>
+                    <ul>
+                        <li>Proporcionar información veraz sobre sus habilidades y experiencia</li>
+                        <li>Presentar documentos que acrediten su identidad y formación</li>
+                        <li>Mantener un comportamiento profesional con los clientes</li>
+                        <li>Cumplir con los horarios acordados</li>
+                    </ul>
+                    
+                    <h5 class="mt-4">3. Comisiones y pagos</h5>
+                    <p>ConectaHogar retendrá una comisión del 15% por cada servicio completado. Los pagos se realizarán semanalmente mediante transferencia bancaria.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM
+            const userTypeSection = document.getElementById('userTypeSection');
+            const newWorkerForm = document.getElementById('newWorkerForm');
+            const existingWorkerForm = document.getElementById('existingWorkerForm');
+            const workerProfileForm = document.getElementById('workerProfileForm');
+            const newWorkerBtn = document.getElementById('newWorkerBtn');
+            const existingWorkerBtn = document.getElementById('existingWorkerBtn');
+            const backToWorkerType = document.getElementById('backToWorkerType');
+            const backToWorkerType2 = document.getElementById('backToWorkerType2');
+            const backToWorkerForm = document.getElementById('backToWorkerForm');
+            const continueToWorkerProfile = document.getElementById('continueToWorkerProfile');
+            
+            // Control deslizante de experiencia
+            const experienceSlider = document.getElementById('workerExperience');
+            const experienceValue = document.getElementById('experienceValue');
+            
+            experienceSlider.addEventListener('input', function() {
+                experienceValue.textContent = this.value + (this.value === '1' ? ' año' : ' años');
+            });
+            
+            // Manejar clic en "Soy nuevo"
+            newWorkerBtn.addEventListener('click', function() {
+                userTypeSection.classList.remove('active');
+                newWorkerForm.classList.add('active');
+            });
+            
+            // Manejar clic en "Ya tengo cuenta"
+            existingWorkerBtn.addEventListener('click', function() {
+                userTypeSection.classList.remove('active');
+                existingWorkerForm.classList.add('active');
+            });
+            
+            // Manejar botones "Atrás"
+            backToWorkerType.addEventListener('click', function() {
+                newWorkerForm.classList.remove('active');
+                userTypeSection.classList.add('active');
+            });
+            
+            backToWorkerType2.addEventListener('click', function() {
+                existingWorkerForm.classList.remove('active');
+                userTypeSection.classList.add('active');
+            });
+            
+            backToWorkerForm.addEventListener('click', function() {
+                workerProfileForm.classList.remove('active');
+                newWorkerForm.classList.add('active');
+            });
+            
+            // Continuar al perfil después del registro
+            continueToWorkerProfile.addEventListener('click', function() {
+                // Validar formulario de registro
+                const email = document.getElementById('workerEmail').value;
+                const password = document.getElementById('workerPassword').value;
+                const confirmPassword = document.getElementById('workerConfirmPassword').value;
+                
+                if (!email || !password || !confirmPassword) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Las contraseñas no coinciden');
+                    return;
+                }
+                
+                newWorkerForm.classList.remove('active');
+                workerProfileForm.classList.add('active');
+            });
+            
+            // Manejar envío del formulario de perfil
+            workerProfileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar campos requeridos
+                const firstName = document.getElementById('workerFirstName').value;
+                const lastName = document.getElementById('workerLastName').value;
+                const phone = document.getElementById('workerPhone').value;
+                const dni = document.getElementById('workerDni').value;
+                const address = document.getElementById('workerAddress').value;
+                
+                if (!firstName || !lastName || !phone || !dni || !address) {
+                    alert('Por favor completa todos los campos requeridos');
+                    return;
+                }
+                
+                if (!document.getElementById('workerTerms').checked) {
+                    alert('Debes aceptar los términos y condiciones');
+                    return;
+                }
+                
+                // Mostrar mensaje de éxito y redirigir
+                alert('Tu solicitud de registro ha sido enviada. Serás contactado una vez revisemos tu información.');
+                window.location.href = './1 - PanelTrabajador/PanelTrabajador.html';
+            });
+            
+            // Manejar envío del formulario de inicio de sesión
+            existingWorkerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar campos completos
+                const email = document.getElementById('loginWorkerEmail').value;
+                const password = document.getElementById('loginWorkerPassword').value;
+                
+                if (!email || !password) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+                
+                // Redirigir al panel del trabajador
+                window.location.href = './1 - PanelTrabajador/PanelTrabajador.html';
+            });
+            
+            // Manejar "olvidé mi contraseña"
+            document.getElementById('forgotWorkerPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Se ha enviado un enlace para restablecer tu contraseña al correo electrónico proporcionado.');
+            });
+            
+            // Simular subida de documentos
+            document.getElementById('dniUpload').addEventListener('click', function() {
+                alert('Aquí se abriría el selector de archivos para subir el DNI');
+            });
+            
+            document.getElementById('certificateUpload').addEventListener('click', function() {
+                alert('Aquí se abriría el selector de archivos para subir certificados');
+            });
+        });
+    </script>
+</body>
+</html>

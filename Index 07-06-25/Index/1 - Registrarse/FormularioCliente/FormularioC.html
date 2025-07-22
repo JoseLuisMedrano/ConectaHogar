@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Cliente | ConectaHogar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #28a745;
+            --secondary-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('Cliente.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+        
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .auth-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .auth-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .auth-body {
+            padding: 30px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .required-field::after {
+            content: " *";
+            color: #dc3545;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+        }
+        
+        .service-checkbox {
+            margin-bottom: 10px;
+        }
+        
+        .service-checkbox .form-check-input {
+            margin-top: 0.35em;
+        }
+        
+        .location-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2><i class="fas fa-home me-2"></i> ConectaHogar</h2>
+                <p class="mb-0">Registro de Cliente</p>
+            </div>
+            
+            <div class="auth-body">
+                <!-- Selección de tipo de usuario -->
+                <div id="userTypeSection" class="active">
+                    <div class="text-center mb-4">
+                        <img src="Logo.jpeg" alt="ConectaHogar Logo" class="logo">
+                        <h4>¿Ya tienes una cuenta?</h4>
+                        <p class="text-muted">Selecciona una opción para continuar</p>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center mb-4">
+                        <button id="newClientBtn" class="btn btn-primary-custom me-3">Soy nuevo</button>
+                        <button id="existingClientBtn" class="btn btn-outline-secondary">Ya tengo cuenta</button>
+                    </div>
+                </div>
+                
+                <!-- Formulario de registro para nuevos clientes -->
+                <form id="newClientForm" class="form-section">
+                    <h4 class="text-center mb-4">Registro de Cliente</h4>
+                    
+                    <div class="mb-3">
+                        <label for="clientEmail" class="form-label required-field">Correo electrónico</label>
+                        <input type="email" class="form-control" id="clientEmail" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="clientPassword" class="form-label required-field">Contraseña</label>
+                        <input type="password" class="form-control" id="clientPassword" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="clientConfirmPassword" class="form-label required-field">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="clientConfirmPassword" required>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" id="backToClientType">Atrás</button>
+                        <button type="button" class="btn btn-primary-custom" id="continueToProfile">Continuar</button>
+                    </div>
+                </form>
+                
+                <!-- Formulario de perfil del cliente -->
+                <form id="clientProfileForm" class="form-section">
+                    <h4 class="text-center mb-4">Completa tu perfil</h4>
+                    
+                    <div class="mb-3">
+                        <label for="clientFullName" class="form-label required-field">Nombre completo</label>
+                        <input type="text" class="form-control" id="clientFullName" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="clientPhone" class="form-label required-field">Teléfono</label>
+                        <input type="tel" class="form-control" id="clientPhone" required>
+                    </div>
+                    
+                    <div class="location-info">
+                        <h5><i class="fas fa-map-marker-alt text-success me-2"></i>Ubicación del servicio</h5>
+                        <p class="mb-2"><strong>Distrito:</strong> La Molina, Lima</p>
+                        <div class="mb-3">
+                            <label for="clientAddress" class="form-label required-field">Dirección exacta</label>
+                            <input type="text" class="form-control" id="clientAddress" placeholder="Calle, número, piso, departamento" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label required-field">¿Qué servicios necesitas?</label>
+                        
+                        <div class="service-checkbox">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="electricianService" value="electricista" checked>
+                                <label class="form-check-label" for="electricianService">
+                                    <i class="fas fa-bolt text-warning me-2"></i> Servicio de electricista
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="service-checkbox">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="plumbingService" value="gasfiteria" checked>
+                                <label class="form-check-label" for="plumbingService">
+                                    <i class="fas fa-tint text-primary me-2"></i> Servicio de gasfitería
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="service-checkbox">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gardeningService" value="jardineria" checked>
+                                <label class="form-check-label" for="gardeningService">
+                                    <i class="fas fa-leaf text-success me-2"></i> Servicio de jardinería
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="clientTerms" required>
+                        <label class="form-check-label" for="clientTerms">Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">términos y condiciones</a></label>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" id="backToClientForm">Atrás</button>
+                        <button type="submit" class="btn btn-primary-custom">Completar registro</button>
+                    </div>
+                </form>
+                
+                <!-- Formulario de inicio de sesión para clientes existentes -->
+                <form id="existingClientForm" class="form-section">
+                    <h4 class="text-center mb-4">Inicio de sesión</h4>
+                    
+                    <div class="mb-3">
+                        <label for="loginClientEmail" class="form-label required-field">Correo electrónico</label>
+                        <input type="email" class="form-control" id="loginClientEmail" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="loginClientPassword" class="form-label required-field">Contraseña</label>
+                        <input type="password" class="form-control" id="loginClientPassword" required>
+                    </div>
+                    
+                    <div class="mb-3 text-end">
+                        <a href="#" id="forgotClientPassword">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary" id="backToClientType2">Atrás</button>
+                        <button type="submit" class="btn btn-primary-custom">Ingresar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Términos y Condiciones -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Términos y Condiciones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>1. Servicios ofrecidos</h5>
+                    <p>ConectaHogar conecta clientes con profesionales independientes en tres áreas específicas:</p>
+                    <ul>
+                        <li>Servicios de electricidad</li>
+                        <li>Servicios de gasfitería</li>
+                        <li>Servicios de jardinería</li>
+                    </ul>
+                    <p>Actualmente solo operamos en el distrito de La Molina, Lima.</p>
+                    
+                    <h5 class="mt-4">2. Responsabilidades del cliente</h5>
+                    <p>Como cliente, usted se compromete a:</p>
+                    <ul>
+                        <li>Proporcionar información veraz sobre los servicios requeridos</li>
+                        <li>Brindar acceso adecuado a los profesionales</li>
+                        <li>Pagar por los servicios recibidos según lo acordado</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM
+            const userTypeSection = document.getElementById('userTypeSection');
+            const newClientForm = document.getElementById('newClientForm');
+            const existingClientForm = document.getElementById('existingClientForm');
+            const clientProfileForm = document.getElementById('clientProfileForm');
+            const newClientBtn = document.getElementById('newClientBtn');
+            const existingClientBtn = document.getElementById('existingClientBtn');
+            const backToClientType = document.getElementById('backToClientType');
+            const backToClientType2 = document.getElementById('backToClientType2');
+            const backToClientForm = document.getElementById('backToClientForm');
+            const continueToProfile = document.getElementById('continueToProfile');
+            
+            // Manejar clic en "Soy nuevo"
+            newClientBtn.addEventListener('click', function() {
+                userTypeSection.classList.remove('active');
+                newClientForm.classList.add('active');
+            });
+            
+            // Manejar clic en "Ya tengo cuenta"
+            existingClientBtn.addEventListener('click', function() {
+                userTypeSection.classList.remove('active');
+                existingClientForm.classList.add('active');
+            });
+            
+            // Manejar botones "Atrás"
+            backToClientType.addEventListener('click', function() {
+                newClientForm.classList.remove('active');
+                userTypeSection.classList.add('active');
+            });
+            
+            backToClientType2.addEventListener('click', function() {
+                existingClientForm.classList.remove('active');
+                userTypeSection.classList.add('active');
+            });
+            
+            backToClientForm.addEventListener('click', function() {
+                clientProfileForm.classList.remove('active');
+                newClientForm.classList.add('active');
+            });
+            
+            // Continuar al perfil después del registro
+            continueToProfile.addEventListener('click', function() {
+                // Validar formulario de registro
+                const email = document.getElementById('clientEmail').value;
+                const password = document.getElementById('clientPassword').value;
+                const confirmPassword = document.getElementById('clientConfirmPassword').value;
+                
+                if (!email || !password || !confirmPassword) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Las contraseñas no coinciden');
+                    return;
+                }
+                
+                newClientForm.classList.remove('active');
+                clientProfileForm.classList.add('active');
+            });
+            
+            // Manejar envío del formulario de perfil
+            clientProfileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar campos requeridos
+                const fullName = document.getElementById('clientFullName').value;
+                const phone = document.getElementById('clientPhone').value;
+                const address = document.getElementById('clientAddress').value;
+                
+                if (!fullName || !phone || !address) {
+                    alert('Por favor completa todos los campos requeridos');
+                    return;
+                }
+                
+                if (!document.getElementById('clientTerms').checked) {
+                    alert('Debes aceptar los términos y condiciones');
+                    return;
+                }
+                
+                // Redirigir al panel del cliente
+                window.location.href = './1 - PanelCliente/PanelCliente.html';
+            });
+            
+            // Manejar envío del formulario de inicio de sesión
+            existingClientForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar campos completos
+                const email = document.getElementById('loginClientEmail').value;
+                const password = document.getElementById('loginClientPassword').value;
+                
+                if (!email || !password) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+                
+                // Redirigir al panel del cliente
+                window.location.href = './1 - PanelCliente/PanelCliente.html';
+            });
+            
+            // Manejar "olvidé mi contraseña"
+            document.getElementById('forgotClientPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Se ha enviado un enlace para restablecer tu contraseña al correo electrónico proporcionado.');
+            });
+        });
+    </script>
+
+</body>
+</html>

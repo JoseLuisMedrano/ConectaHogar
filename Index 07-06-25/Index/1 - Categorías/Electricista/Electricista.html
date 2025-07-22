@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricista | Conecta Hogar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="electricista.css">
+</head>
+<body>
+    <!-- Barra de navegación mejorada -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <i class="fas fa-arrow-left me-2"></i>Volver al inicio
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-warning mx-1" href="#servicios">
+                            <i class="fas fa-bolt me-1"></i> Servicios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-warning mx-1" href="#trabajadores">
+                            <i class="fas fa-users me-1"></i> Profesionales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-warning mx-1" href="#contacto">
+                            <i class="fas fa-phone-alt me-1"></i> Contacto
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-success mx-1" href="#" style="color: white;">
+                            <i class="fas fa-star me-1"></i> Destacados
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section con Video -->
+    <header class="electricista-hero">
+        <video autoplay muted loop id="heroVideo">
+            <source src="./Video/Electricista.mp4" type="video/mp4">
+            <img src="/0 - Imgenes/Variados/Electricista.jfif" alt="Electricista profesional">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Soluciones Eléctricas con Profesionales Certificados</h1>
+            <p class="lead">Expertos en instalaciones y reparaciones eléctricas para tu hogar o negocio</p>
+            <div class="hero-buttons">
+                <a href="#trabajadores" class="btn btn-warning btn-lg me-2">Ver Electricistas</a>
+                <a href="#servicios" class="btn btn-outline-light btn-lg">Nuestros Servicios</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Servicios Destacados -->
+    <section class="servicios-destacados" id="servicios">
+        <div class="container">
+            <h2 class="text-center mb-5">Servicios Destacados</h2>
+            <div class="row">
+                <!-- Servicio 1 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Instalaciones Eléctricas.jpg" class="card-img-top" alt="Instalaciones eléctricas">
+                        <div class="card-body">
+                            <h5 class="card-title">Instalaciones Eléctricas</h5>
+                            <p class="card-text">Instalaciones seguras y eficientes para tu hogar o negocio, cumpliendo con todos los estándares.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-warning"></i> Cableado estructurado</li>
+                                <li><i class="fas fa-check-circle text-warning"></i> Tableros eléctricos</li>
+                                <li><i class="fas fa-check-circle text-warning"></i> Tomas y enchufes</li>
+                            </ul>
+                            <a href="#" class="btn btn-warning">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Servicio 2 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Reparaciones Urgentes.jpg" class="card-img-top" alt="Reparaciones eléctricas">
+                        <div class="card-body">
+                            <h5 class="card-title">Reparaciones Urgentes</h5>
+                            <p class="card-text">Soluciones rápidas y efectivas para problemas eléctricos que no pueden esperar.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-warning"></i> Cortocircuitos</li>
+                                <li><i class="fas fa-check-circle text-warning"></i> Fallas en interruptores</li>
+                                <li><i class="fas fa-check-circle text-warning"></i> Problemas de iluminación</li>
+                            </ul>
+                            <a href="#" class="btn btn-warning">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Servicio 3 -->
+                <div class="col-md-4">
+                    <div class="card servicio-card">
+                        <img src="./Img/Automatización Residencial.jpg" class="card-img-top" alt="Automatización residencial">
+                        <div class="card-body">
+                            <h5 class="card-title">Automatización Residencial</h5>
+                            <p class="card-text">Convierte tu hogar en una casa inteligente con sistemas de automatización modernos.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check-circle text-warning"></i> Control de iluminación</li>
+                                <li><i class="fas fa-check-circle text-warning"></i> Sistemas de seguridad</li>
+                                <li><i class="fas fa-check-circle text-warning"></i> Domótica integrada</li>
+                            </ul>
+                            <a href="#" class="btn btn-warning">Contratar servicio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trabajadores Destacados -->
+    <section class="trabajadores-destacados bg-light py-5" id="trabajadores">
+        <div class="container">
+            <h2 class="text-center mb-5">Nuestros Electricistas Expertos</h2>
+            <div class="row g-4">
+                <!-- Trabajador 1 - Roberto Sánchez -->
+                <div class="col-lg-6">
+                    <div class="card trabajador-card h-100 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-4 text-center p-3">
+                                <img src="./Img/Perfil 1.jpg" class="worker-photo rounded-circle" alt="Roberto Sánchez">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title">Roberto Sánchez</h3>
+                                    <div class="rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span class="ms-2">4.7 (128)</span>
+                                    </div>
+                                    <p class="card-text">Electricista industrial con más de 15 años de experiencia en instalaciones de media y baja tensión.</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-map-marker-alt text-warning"></i> <strong>Zona:</strong> Urb. Los Jardines, Molina</li>
+                                        <li><i class="fas fa-clock text-warning"></i> <strong>Horario:</strong> Lunes a Viernes (9am - 5pm)</li>
+                                        <li><i class="fas fa-dollar-sign text-warning"></i> <strong>Tarifa:</strong> S/90 - S/180 por servicio</li>
+                                    </ul>
+                                    <div class="especialidades mb-3">
+                                        <span class="badge bg-light text-dark">Instalaciones industriales</span>
+                                        <span class="badge bg-light text-dark">Media tensión</span>
+                                        <span class="badge bg-light text-dark">Tableros eléctricos</span>
+                                    </div>
+                                    <a href="#roberto-perfil" class="btn btn-warning" data-bs-toggle="modal">Ver perfil completo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trabajador 2 - Manuel Vargas -->
+                <div class="col-lg-6">
+                    <div class="card trabajador-card h-100 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-4 text-center p-3">
+                                <img src="./Img/Perfil 2.jpg" class="worker-photo rounded-circle" alt="Manuel Vargas">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title">Manuel Vargas</h3>
+                                    <div class="rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span class="ms-2">4.2 (87)</span>
+                                    </div>
+                                    <p class="card-text">Especialista en domótica y automatización residencial con certificación internacional.</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-map-marker-alt text-warning"></i> <strong>Zona:</strong> Villa Hermosa, Molina</li>
+                                        <li><i class="fas fa-clock text-warning"></i> <strong>Horario:</strong> Martes a Sábado (2pm - 8pm)</li>
+                                        <li><i class="fas fa-dollar-sign text-warning"></i> <strong>Tarifa:</strong> S/120 - S/250 por servicio</li>
+                                    </ul>
+                                    <div class="especialidades mb-3">
+                                        <span class="badge bg-light text-dark">Domótica</span>
+                                        <span class="badge bg-light text-dark">Automatización</span>
+                                        <span class="badge bg-light text-dark">Sistemas inteligentes</span>
+                                    </div>
+                                    <a href="#manuel-perfil" class="btn btn-warning" data-bs-toggle="modal">Ver perfil completo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trabajador 3 - Javier Rojas -->
+                <div class="col-lg-6">
+                    <div class="card trabajador-card h-100 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-4 text-center p-3">
+                                <img src="./Img/Perfil 3.jpg" class="worker-photo rounded-circle" alt="Javier Rojas">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title">Javier Rojas</h3>
+                                    <div class="rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="ms-2">5.0 (75)</span>
+                                    </div>
+                                    <p class="card-text">Electricista residencial con amplia experiencia en reparaciones y mantenimiento eléctrico.</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-map-marker-alt text-warning"></i> <strong>Zona:</strong> Urb. Las Palmeras, Molina</li>
+                                        <li><i class="fas fa-clock text-warning"></i> <strong>Horario:</strong> Lunes a Domingo (8am - 6pm)</li>
+                                        <li><i class="fas fa-dollar-sign text-warning"></i> <strong>Tarifa:</strong> S/80 - S/150 por servicio</li>
+                                    </ul>
+                                    <div class="especialidades mb-3">
+                                        <span class="badge bg-light text-dark">Reparaciones</span>
+                                        <span class="badge bg-light text-dark">Mantenimiento</span>
+                                        <span class="badge bg-light text-dark">Instalaciones residenciales</span>
+                                    </div>
+                                    <a href="#" class="btn btn-warning">Ver perfil completo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trabajador 4 - Andrés Castillo -->
+                <div class="col-lg-6">
+                    <div class="card trabajador-card h-100 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-4 text-center p-3">
+                                <img src="./Img/Perfil 4.webp" class="worker-photo rounded-circle" alt="Andrés Castillo">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title">Andrés Castillo</h3>
+                                    <div class="rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span class="ms-2">4.8 (102)</span>
+                                    </div>
+                                    <p class="card-text">Especialista en iluminación y diseño de sistemas eléctricos eficientes.</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-map-marker-alt text-warning"></i> <strong>Zona:</strong> Urb. Golf Club, Molina</li>
+                                        <li><i class="fas fa-clock text-warning"></i> <strong>Horario:</strong> Lunes a Viernes (10am - 7pm)</li>
+                                        <li><i class="fas fa-dollar-sign text-warning"></i> <strong>Tarifa:</strong> S/100 - S/220 por servicio</li>
+                                    </ul>
+                                    <div class="especialidades mb-3">
+                                        <span class="badge bg-light text-dark">Iluminación</span>
+                                        <span class="badge bg-light text-dark">Diseño eléctrico</span>
+                                        <span class="badge bg-light text-dark">Eficiencia energética</span>
+                                    </div>
+                                    <a href="#" class="btn btn-warning">Ver perfil completo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trabajador 5 - Diego Morales -->
+                <div class="col-lg-6 mx-auto">
+                    <div class="card trabajador-card h-100 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-4 text-center p-3">
+                                <img src="./Img/Perfil 5.jpg" class="worker-photo rounded-circle" alt="Diego Morales">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title">Diego Morales</h3>
+                                    <div class="rating mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span class="ms-2">4.3 (64)</span>
+                                    </div>
+                                    <p class="card-text">Técnico especializado en reparación de electrodomésticos y sistemas eléctricos.</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-map-marker-alt text-warning"></i> <strong>Zona:</strong> Urb. Los Huertos, Molina</li>
+                                        <li><i class="fas fa-clock text-warning"></i> <strong>Horario:</strong> Miércoles a Domingo (11am - 7pm)</li>
+                                        <li><i class="fas fa-dollar-sign text-warning"></i> <strong>Tarifa:</strong> S/75 - S/140 por servicio</li>
+                                    </ul>
+                                    <div class="especialidades mb-3">
+                                        <span class="badge bg-light text-dark">Reparación electrodomésticos</span>
+                                        <span class="badge bg-light text-dark">Sistemas eléctricos</span>
+                                        <span class="badge bg-light text-dark">Diagnóstico de fallas</span>
+                                    </div>
+                                    <a href="#" class="btn btn-warning">Ver perfil completo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para perfil de Roberto Sánchez -->
+    <div class="modal fade" id="roberto-perfil" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h2 class="modal-title">Roberto Sánchez - Perfil Completo</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="./Img/Perfil 1.jpg" alt="Roberto Sánchez" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                            <div class="rating mb-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ms-2">4.7 (128 reseñas)</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="border-bottom pb-2">Información Profesional</h3>
+                            <p>Electricista industrial con más de 15 años de experiencia en instalaciones de media y baja tensión. Certificado por el Colegio de Ingenieros del Perú y con especialización en seguridad eléctrica.</p>
+                            
+                            <h4 class="mt-4 border-bottom pb-2">Experiencia</h4>
+                            <ul>
+                                <li>Instalación y mantenimiento de sistemas eléctricos industriales</li>
+                                <li>Diseño de tableros eléctricos para plantas industriales</li>
+                                <li>Especialista en sistemas de media tensión (hasta 10kV)</li>
+                                <li>Instructor en cursos de seguridad eléctrica</li>
+                            </ul>
+                            
+                            <h4 class="mt-4 border-bottom pb-2">Servicios Ofrecidos</h4>
+                            <div class="especialidades mb-3">
+                                <span class="badge bg-warning text-white">Instalaciones industriales</span>
+                                <span class="badge bg-warning text-white">Media tensión</span>
+                                <span class="badge bg-warning text-white">Tableros eléctricos</span>
+                                <span class="badge bg-warning text-white">Mantenimiento preventivo</span>
+                                <span class="badge bg-warning text-white">Seguridad eléctrica</span>
+                                <span class="badge bg-warning text-white">Consultoría</span>
+                            </div>
+                            
+                            <h4 class="mt-4 border-bottom pb-2">Disponibilidad</h4>
+                            <p><strong>Zona de cobertura:</strong> Urb. Los Jardines, Molina y distritos aledaños (radio de 15km)</p>
+                            <p><strong>Horario:</strong> Lunes a Viernes de 9am a 5pm</p>
+                            <p><strong>Tarifa base:</strong> S/90 - S/180 por servicio (dependiendo de la complejidad)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h4 class="border-bottom pb-2">Galería de Trabajos</h4>
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <img src="./Img/Roberto Sánchez01.png" class="img-thumbnail" alt="Instalación industrial">
+                                    <p class="small text-center mt-1">Instalación industrial</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="./Img/Roberto Sánchez02.png" class="img-thumbnail" alt="Tablero eléctrico">
+                                    <p class="small text-center mt-1">Tablero eléctrico</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="./Img/Roberto Sánchez03.webp" class="img-thumbnail" alt="Sistema de media tensión">
+                                    <p class="small text-center mt-1">Sistema de media tensión</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h4 class="border-bottom pb-2">Reseñas Recientes</h4>
+                            <div class="review">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Ana S.</strong>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p>"Roberto resolvió un problema complejo en nuestra fábrica que otros electricistas no pudieron. Profesional y muy conocedor."</p>
+                                <p class="text-muted small">Hace 2 semanas</p>
+                            </div>
+                            
+                            <div class="review mt-3">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Roberto M.</strong>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                                <p>"Excelente trabajo en nuestra planta. El sistema que instaló funciona perfectamente y nos dio valiosas recomendaciones de mantenimiento."</p>
+                                <p class="text-muted small">Hace 1 mes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para perfil de Manuel Vargas -->
+    <div class="modal fade" id="manuel-perfil" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h2 class="modal-title">Manuel Vargas - Perfil Completo</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="./Img/Perfil 2.jpg" alt="Manuel Vargas" class="img-fluid rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                            <div class="rating mb-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="ms-2">4.2 (87 reseñas)</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="border-bottom pb-2">Información Profesional</h3>
+                            <p>Especialista en domótica y automatización residencial con certificación internacional. Más de 8 años transformando hogares en espacios inteligentes y eficientes.</p>
+                            
+                            <h4 class="mt-4 border-bottom pb-2">Experiencia</h4>
+                            <ul>
+                                <li>Instalación de más de 50 sistemas de domótica en residencias</li>
+                                <li>Certificado por KNX y Crestron en sistemas inteligentes</li>
+                                <li>Especialista en integración de sistemas de seguridad</li>
+                                <li>Consultor en eficiencia energética para hogares</li>
+                            </ul>
+                            
+                            <h4 class="mt-4 border-bottom pb-2">Servicios Ofrecidos</h4>
+                            <div class="especialidades mb-3">
+                                <span class="badge bg-warning text-white">Domótica</span>
+                                <span class="badge bg-warning text-white">Automatización</span>
+                                <span class="badge bg-warning text-white">Sistemas inteligentes</span>
+                                <span class="badge bg-warning text-white">Control de iluminación</span>
+                                <span class="badge bg-warning text-white">Seguridad integrada</span>
+                                <span class="badge bg-warning text-white">Consultoría</span>
+                            </div>
+                            
+                            <h4 class="mt-4 border-bottom pb-2">Disponibilidad</h4>
+                            <p><strong>Zona de cobertura:</strong> Villa Hermosa, Molina y zonas cercanas (radio de 20km)</p>
+                            <p><strong>Horario:</strong> Martes a Sábado de 2pm a 8pm</p>
+                            <p><strong>Tarifa base:</strong> S/120 - S/250 por servicio (dependiendo de la complejidad)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h4 class="border-bottom pb-2">Galería de Trabajos</h4>
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <img src="./Img/Manuel Vargas01.jpg" class="img-thumbnail" alt="Sistema de domótica">
+                                    <p class="small text-center mt-1">Sistema de domótica</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="./Img/Manuel Vargas02.jpg" class="img-thumbnail" alt="Panel de control">
+                                    <p class="small text-center mt-1">Panel de control</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="./Img/Manuel Vargas03.jpg" class="img-thumbnail" alt="Instalación profesional">
+                                    <p class="small text-center mt-1">Instalación profesional</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h4 class="border-bottom pb-2">Reseñas Recientes</h4>
+                            <div class="review">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Lucía T.</strong>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p>"Manuel instaló un sistema de domótica en mi casa que puedo controlar desde mi celular. Funciona perfectamente y ha mejorado nuestra calidad de vida."</p>
+                                <p class="text-muted small">Hace 3 semanas</p>
+                            </div>
+                            
+                            <div class="review mt-3">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Carlos R.</strong>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <p>"Buen trabajo en general, aunque llegó un poco tarde a la cita. El sistema que instaló funciona muy bien y me dio buenas recomendaciones."</p>
+                                <p class="text-muted small">Hace 1 mes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4" id="contacto">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white me-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+                <a href="#" class="text-white me-3"><i class="fas fa-phone fa-2x"></i></a>
+                <a href="#" class="text-white"><i class="fas fa-envelope fa-2x"></i></a>
+            </div>
+            <p>© 2023 Conecta Hogar. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="electricista.js"></script>
+</body>
+</html>
